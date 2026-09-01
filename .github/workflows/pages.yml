@@ -1,0 +1,59 @@
+name: Deploy ISMS workbench to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; never cancel one that is mid-flight.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Publish index.html and nothing else. The learning notes, the auditor
+      # prompt and the retired Python stack stay out of the public site.
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp index.html _site/index.html
+          touch _site/.nojekyll
+
+      # Fail the build if a dependency or a remote call ever creeps in.
+      - name: Verify the page is self-contained
+        run: |
+          set -e
+          if grep -nEi 'src=["'"'"']https?:|href=["'"'"']https?://[^"'"'"']*\.css|@import|<link[^>]+stylesheet' _site/index.html; then
+            echo "::error::External resource reference found in index.html"; exit 1
+          fi
+          if grep -nE '\bfetch\(|XMLHttpRequest|navigator\.sendBeacon|new WebSocket|EventSource' _site/index.html; then
+            echo "::error::Network API used in index.html"; exit 1
+          fi
+          if grep -nE '\.innerHTML|\bdocument\.write\b|\beval\(|new Function\(' _site/index.html; then
+            echo "::error::Unsafe HTML/JS sink used in index.html"; exit 1
+          fi
+          echo "index.html is self-contained: no external refs, no network APIs, no unsafe sinks."
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,18 @@
+# ISMS data exports — never commit real or practice content
+*.json
+!.github/**/*.json
+
+# The retired Python/SQLite stack. Kept locally as a backup of the pre-refactor
+# app and its database; not part of the project and never deployed.
+legacy-python/
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Python leftovers, in case anything is ever run in here again
+__pycache__/
+*.py[cod]

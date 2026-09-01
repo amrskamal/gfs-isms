@@ -1,0 +1,1014 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="Offline ISO 27001 ISMS learning workbench for a fictional company. No network calls, no accounts, no tracking.">
+<title>GFS ISMS — Gulf Freight Systems</title>
+<style>
+/* ============ tokens ============ */
+:root{
+  --bg:#0c1016; --surface:#12171f; --surface-2:#171e28; --surface-3:#1d2632;
+  --border:#212a36; --border-2:#2c3846;
+  --text:#e8eef5; --text-2:#9fadbd; --text-3:#68788a;
+  --accent:#4b93f7; --accent-dim:#2b4a7a;
+  --accent-soft:rgba(75,147,247,.13); --accent-line:#2c4a78;
+  --green:#43bd8d; --green-soft:rgba(67,189,141,.12);
+  --amber:#e2a44f; --amber-soft:rgba(226,164,79,.13);
+  --blue:#63a5f5; --blue-soft:rgba(99,165,245,.12);
+  --red:#e2716a;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  --r:10px; --r-sm:7px;
+  --drawer:min(560px,46vw);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 var(--sans);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button,input,textarea,select{font-family:inherit}
+::selection{background:var(--accent-soft)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#232c38;border-radius:6px;border:3px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:#313d4c}
+
+#app{display:flex;min-height:100vh}
+
+/* ============ sidebar ============ */
+aside{width:252px;flex:0 0 252px;background:var(--surface);border-right:1px solid var(--border);
+  position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;padding:22px 0 16px}
+.brand{padding:0 20px 18px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.brand .mark{display:flex;align-items:center;gap:9px}
+.brand .glyph{width:26px;height:26px;border-radius:7px;background:linear-gradient(140deg,#4b93f7,#2f6fd0);
+  display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.brand h1{margin:0;font-size:14px;font-weight:600;letter-spacing:-.1px}
+.brand .sub{margin:7px 0 0;font-size:11px;color:var(--text-3);letter-spacing:.07em;text-transform:uppercase}
+
+nav{padding:0 10px;flex:1}
+nav .grouphead{padding:12px 10px 7px;font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+nav a{display:flex;align-items:center;gap:9px;padding:7px 10px;margin-bottom:1px;border-radius:var(--r-sm);
+  color:var(--text-2);text-decoration:none;font-size:13.5px;transition:background .12s,color .12s}
+nav a:hover{background:var(--surface-2);color:var(--text)}
+nav a.active{background:var(--accent-soft);color:#cfe0fa;font-weight:500}
+nav a.locked{color:var(--text-3)}
+nav a.locked:hover{background:transparent;color:var(--text-3);cursor:default}
+nav a .lbl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav a .tag{font-size:10px;font-family:var(--mono);color:var(--text-3);flex:none}
+nav a.active .tag{color:#7fa9e8}
+.sidefoot{padding:14px 20px 0;border-top:1px solid var(--border);margin-top:10px;
+  font-size:11px;color:var(--text-3);line-height:1.5}
+.sidefoot code{font-family:var(--mono);font-size:10.5px;color:var(--text-2)}
+
+/* ============ main ============ */
+main{flex:1;min-width:0;transition:padding-right .22s ease}
+.wrap{max-width:1080px;padding:30px 40px 100px}
+body.drawer-open main .wrap{max-width:820px}
+
+.pagehead{margin-bottom:22px}
+.crumb{font-size:11.5px;font-family:var(--mono);color:var(--text-3);margin-bottom:7px;letter-spacing:.02em}
+.pagehead h2{margin:0 0 6px;font-size:26px;font-weight:600;letter-spacing:-.35px}
+.pagehead .lede{margin:0;color:var(--text-2);font-size:14.5px;max-width:68ch}
+
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px;margin:20px 0 24px}
+.tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 15px}
+.tile .n{font-size:23px;font-weight:600;letter-spacing:-.5px;line-height:1.15}
+.tile .n small{font-size:13px;color:var(--text-3);font-weight:400;letter-spacing:0}
+.tile .k{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--text-2);margin-top:3px}
+.dot{width:7px;height:7px;border-radius:50%;flex:none}
+.dot.green{background:var(--green)} .dot.blue{background:var(--blue)}
+.dot.amber{background:var(--amber)} .dot.grey{background:var(--text-3)}
+.tile.progress .track{height:5px;background:#1e2733;border-radius:3px;overflow:hidden;margin-top:10px}
+.tile.progress .track i{display:block;height:100%;background:linear-gradient(90deg,#3f8de8,#43bd8d);border-radius:3px;transition:width .4s}
+
+/* teaching note */
+details.teach{background:var(--surface);border:1px solid var(--border);border-left:2px solid var(--accent);
+  border-radius:var(--r);margin:0 0 20px;overflow:hidden}
+details.teach>summary{list-style:none;cursor:pointer;padding:12px 16px;display:flex;align-items:center;gap:9px;
+  font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#9dc2f5;user-select:none}
+details.teach>summary::-webkit-details-marker{display:none}
+details.teach>summary:hover{background:var(--surface-2)}
+details.teach>summary .chev{margin-left:auto;color:var(--text-2);font-size:13px;line-height:1;transition:transform .18s}
+details.teach[open]>summary .chev{transform:rotate(180deg)}
+details.teach .tbody{padding:2px 18px 18px;max-width:74ch;color:#c6d3e0;font-size:14px}
+details.teach .tbody p{margin:0 0 10px} details.teach .tbody p:last-child{margin-bottom:0}
+details.teach .tbody ul{margin:8px 0 12px;padding-left:19px}
+details.teach .tbody li{margin:5px 0}
+details.teach .tbody b{color:var(--text)}
+details.teach .tbody em{color:#dbe6f2}
+details.teach .tbody code{font-family:var(--mono);font-size:12.5px;background:var(--surface-3);
+  padding:1px 5px;border-radius:4px;color:#a9c8ef}
+
+/* tabs */
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:22px}
+.tabs button{background:none;border:none;padding:9px 13px;font-size:13.5px;color:var(--text-2);cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px;display:flex;align-items:center;gap:7px;border-radius:6px 6px 0 0}
+.tabs button:hover{color:var(--text);background:var(--surface)}
+.tabs button.on{color:var(--text);border-bottom-color:var(--accent);font-weight:500}
+.tabs .count{font-size:11px;font-family:var(--mono);color:var(--text-3);background:var(--surface-3);
+  padding:1px 6px;border-radius:9px}
+.tabs button.on .count{color:#9dc2f5;background:var(--accent-soft)}
+
+/* ============ list ============ */
+.listbar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.chip{background:var(--surface);border:1px solid var(--border);color:var(--text-2);font-size:12px;
+  padding:5px 11px;border-radius:99px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.12s}
+.chip:hover{border-color:var(--border-2);color:var(--text)}
+.chip.on{background:var(--accent-soft);border-color:#33517c;color:#cfe0fa}
+.listbar .spacer{flex:1}
+.search{position:relative}
+.search input[type=text]{background:var(--surface);border:1px solid var(--border);border-radius:99px;
+  color:var(--text);font-size:12.5px;padding:6px 13px 6px 33px;width:210px;outline:none}
+.search input[type=text]:focus{border-color:var(--accent);box-shadow:none}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-3)}
+
+.list{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;
+  container-type:inline-size}
+
+/* rows restack whenever the LIST is narrow — small screen, or drawer open on a laptop */
+@container (max-width:620px){
+  .row{grid-template-columns:auto 1fr auto;grid-template-areas:"ref . st" "main main main";
+    row-gap:9px;column-gap:10px;padding:14px}
+  .row .ref{grid-area:ref} .row .st{grid-area:st;padding-top:0} .row .main{grid-area:main}
+  .row .chevron{display:none}
+  .row .ttl{-webkit-line-clamp:3}
+  .row .prev{-webkit-line-clamp:3}
+}
+.row{display:grid;grid-template-columns:62px minmax(0,1fr) auto 16px;gap:14px;align-items:start;
+  padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.row:last-child{border-bottom:none}
+.row:hover{background:var(--surface-2)}
+.row.sel{background:var(--accent-soft)}
+.row.gap{box-shadow:inset 2px 0 0 var(--amber)}
+.row .ref{font-family:var(--mono);font-size:11.5px;color:var(--text-3);padding-top:2px}
+.row.sel .ref{color:#8fb6ea}
+.row .main{min-width:0}
+.row .ttl{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px;
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.row .prev{font-size:13px;color:var(--text-2);line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.row .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.row .chevron{color:var(--text-3);font-size:13px;padding-top:2px;opacity:0;transition:.12s}
+.row:hover .chevron,.row.sel .chevron{opacity:1}
+
+.mini{font-size:10.5px;letter-spacing:.02em;padding:2px 8px;border-radius:99px;border:1px solid var(--border-2);
+  color:var(--text-2);background:var(--surface-2);white-space:nowrap}
+.mini.mono{font-family:var(--mono);font-size:10px}
+.mini.gap{color:var(--amber);border-color:#5a4527;background:var(--amber-soft);font-style:italic}
+.row .ttl.brief{color:var(--text-2);font-weight:400;font-style:italic}
+.st{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;white-space:nowrap;padding-top:2px}
+.st.green{color:var(--green)} .st.blue{color:var(--blue)} .st.amber{color:var(--amber)} .st.grey{color:var(--text-3)}
+
+.emptyrow{padding:34px 20px;text-align:center;color:var(--text-3);font-size:13.5px}
+.addrow{display:flex;justify-content:center;padding:11px;border-top:1px solid var(--border);background:var(--surface-2)}
+
+button.act{background:var(--surface-3);border:1px solid var(--border-2);color:var(--text);border-radius:var(--r-sm);
+  padding:7px 13px;font-size:12.5px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;gap:6px}
+button.act:hover{border-color:var(--accent);background:var(--surface-2)}
+button.act.ghost{background:transparent;border-color:var(--border)}
+button.act.danger:hover{border-color:var(--red);color:var(--red)}
+
+/* ============ forms ============ */
+.fieldset{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:16px;overflow:hidden}
+.fieldset > h3{margin:0;padding:12px 18px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-2);background:var(--surface-2);border-bottom:1px solid var(--border)}
+.fieldset .fs-body{padding:18px}
+.field{margin-bottom:19px;max-width:78ch}
+.field:last-child{margin-bottom:0}
+.field > label{display:block;font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:3px}
+.field .help{font-size:12px;color:var(--text-3);margin:0 0 7px;line-height:1.5}
+input[type=text],textarea,select{width:100%;background:#0a0e14;color:var(--text);border:1px solid var(--border-2);
+  border-radius:var(--r-sm);padding:9px 11px;font-size:13.5px;line-height:1.6;outline:none;transition:border-color .12s,box-shadow .12s}
+textarea{resize:vertical;overflow:hidden;min-height:40px;white-space:pre-wrap}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+select{cursor:pointer;background-image:none}
+.gapmark{border-color:#6b4f28!important;background:#161009!important}
+.gapmark:focus{border-color:var(--amber)!important;box-shadow:0 0 0 3px var(--amber-soft)!important}
+.field .gapnote{font-size:11.5px;color:var(--amber);margin-top:6px;display:flex;gap:6px;align-items:flex-start}
+
+/* ============ drawer ============ */
+#scrim{position:fixed;inset:0;background:rgba(6,9,13,.55);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+body.drawer-open #scrim{opacity:1;pointer-events:auto}
+@media(min-width:1500px){body.drawer-open #scrim{opacity:0;pointer-events:none}}
+
+#drawer{position:fixed;top:0;right:0;height:100vh;width:var(--drawer);min-width:400px;background:var(--surface);
+  border-left:1px solid var(--border);z-index:50;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .22s cubic-bezier(.3,.8,.3,1);box-shadow:-18px 0 44px rgba(0,0,0,.35)}
+body.drawer-open #drawer{transform:none}
+@media(min-width:1500px){body.drawer-open main{padding-right:var(--drawer)}#drawer{box-shadow:none}}
+@media(max-width:900px){#drawer{width:100vw;min-width:0}}
+
+#drawer .dhead{padding:15px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex:none}
+#drawer .dhead .who{min-width:0;flex:1}
+#drawer .dhead .r{font-family:var(--mono);font-size:11px;color:var(--text-3)}
+#drawer .dhead h3{margin:2px 0 0;font-size:15px;font-weight:600;letter-spacing:-.1px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.iconbtn{background:transparent;border:1px solid transparent;color:var(--text-3);width:28px;height:28px;
+  border-radius:6px;cursor:pointer;display:grid;place-items:center;font-size:15px;line-height:1;flex:none}
+.iconbtn:hover{background:var(--surface-3);color:var(--text)}
+#drawer .dbody{flex:1;overflow-y:auto;padding:18px}
+#drawer .dfoot{flex:none;border-top:1px solid var(--border);padding:11px 18px;display:flex;align-items:center;gap:10px;
+  background:var(--surface-2);font-size:11.5px;color:var(--text-3)}
+#drawer .dfoot .spacer{flex:1}
+kbd{font-family:var(--mono);font-size:10px;background:var(--surface-3);border:1px solid var(--border-2);
+  border-bottom-width:2px;border-radius:4px;padding:1px 5px;color:var(--text-2)}
+
+/* ============ misc ============ */
+#toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,12px);background:#1b2330;border:1px solid var(--border-2);
+  border-radius:99px;padding:8px 16px;font-size:12.5px;opacity:0;transition:.2s;pointer-events:none;z-index:60;
+  box-shadow:0 8px 26px rgba(0,0,0,.4);display:flex;align-items:center;gap:8px}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.pagefoot{margin-top:34px;padding-top:16px;border-top:1px solid var(--border);color:var(--text-3);
+  font-size:12px;max-width:74ch;line-height:1.6}
+.locked-state{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:40px;text-align:center;color:var(--text-2)}
+.locked-state .big{font-size:30px;margin-bottom:10px}
+.locked-state h3{margin:0 0 8px;color:var(--text);font-size:17px}
+.locked-state p{margin:0 auto;max-width:52ch;font-size:13.5px}
+
+@media(max-width:640px){
+  .tabs{overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:none;white-space:nowrap}
+  .listbar .search{width:100%;order:9}
+  .search input[type=text]{width:100%}
+  .listbar .spacer{display:none}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .field{max-width:none}
+}
+@media(max-width:820px){
+  #app{flex-direction:column}
+  aside{width:100%;flex:none;height:auto;position:static;padding-bottom:8px}
+  nav{display:flex;overflow-x:auto;gap:4px;padding:0 12px 8px}
+  nav .grouphead,.sidefoot{display:none}
+  nav a{white-space:nowrap}
+  .wrap{padding:22px 18px 80px}
+}
+
+/* ============ offline shell additions ============ */
+.datatools{padding:14px 16px 0;border-top:1px solid var(--border);margin-top:10px}
+.datatools h4{margin:0 0 9px;font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+.datatools .btns{display:flex;flex-wrap:wrap;gap:6px}
+.datatools button{flex:1 1 auto;min-width:88px;background:var(--surface-2);border:1px solid var(--border-2);
+  color:var(--text-2);border-radius:var(--r-sm);padding:6px 9px;font-size:11.5px;cursor:pointer;transition:.12s}
+.datatools button:hover{border-color:var(--accent);color:var(--text)}
+.datatools button.warn:hover{border-color:var(--red);color:var(--red)}
+.storage{margin:10px 0 0;font-size:10.5px;line-height:1.5;color:var(--text-3);display:flex;gap:6px;align-items:flex-start}
+.storage.bad{color:var(--amber)}
+
+.banner{background:var(--amber-soft);border:1px solid #5a4527;border-radius:var(--r);
+  padding:11px 14px;margin:0 0 18px;font-size:13px;color:#f0cd9a;display:flex;gap:10px;align-items:flex-start}
+.banner b{color:#ffdfb0}
+
+.sitefoot{margin-top:30px;padding:14px 0 0;border-top:1px solid var(--border);
+  color:var(--text-3);font-size:12px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.sitefoot .badge{font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--border-2);
+  border-radius:99px;padding:2px 9px;color:var(--text-2)}
+.sitefoot .off{color:var(--green);border-color:#23483a;background:var(--green-soft)}
+
+</style>
+</head>
+<body>
+<div id="app">
+  <aside>
+    <div class="brand">
+      <div class="mark">
+        <div class="glyph">GF</div>
+        <h1>Gulf Freight Systems</h1>
+      </div>
+      <p class="sub">ISMS Workbench</p>
+    </div>
+    <nav id="nav"></nav>
+    <div class="datatools" id="datatools"></div>
+    <div class="sidefoot">
+      ISO/IEC 27001:2022<br>
+      Session plan: <code>LEARNING_PLAN.md</code>
+    </div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div id="scrim"></div>
+<div id="drawer"></div>
+<div id="toast"></div>
+<noscript>
+  <p style="padding:24px;color:#e8eef5;font:15px system-ui">
+    This workbench needs JavaScript. It runs entirely in your browser and makes no network requests.
+  </p>
+</noscript>
+<script>
+/* ============================================================================
+   Gulf Freight Systems — ISMS Workbench
+   Single file, offline, no dependencies, no network. All state in localStorage.
+   Every node is built with createElement + textContent; HTML strings are never assigned.
+   ========================================================================== */
+(function () {
+'use strict';
+
+var SCHEMA = {"org_context":{"label":"Organisation & ISMS Scope","short":"Scope statement","clause":"ISO 27001:2022 cl. 4.1, 4.3, 4.4","singleton":true,"columns":[{"group":"Organisation","key":"org_name","label":"Legal entity name","type":"text"},{"group":"Organisation","key":"org_description","label":"What the organisation does","type":"textarea","help":"An auditor reads this first. Business model, size, sites, customers."},{"group":"Organisation","key":"business_context","label":"Business drivers for the ISMS","type":"textarea","help":"Why are you certifying? Customer demand, tender requirement, regulator, insurer, incident."},{"group":"Scope statement","key":"scope_statement","label":"ISMS scope statement (goes on the certificate)","type":"textarea","help":"Cl. 4.3 requires this as documented information. Keep it to 2-4 sentences: services, sites, and the boundary."},{"group":"Scope statement","key":"scope_in","label":"IN scope","type":"textarea","help":"Services, locations, business processes, technologies, people."},{"group":"Scope statement","key":"scope_out","label":"OUT of scope","type":"textarea"},{"group":"Scope statement","key":"scope_out_justification","label":"Justification for exclusions","type":"textarea","help":"Cl. 4.3 does NOT let you exclude something just because it is inconvenient. You must be able to show the excluded part cannot affect the confidentiality, integrity or availability of what is in scope."},{"group":"Boundary & dependencies","key":"interfaces","label":"Interfaces & dependencies with other organisations","type":"textarea","help":"Cl. 4.3(c). This is where most first-time scopes fail: the boundary with cloud providers, customers, and outsourced IT is undefined."},{"group":"Boundary & dependencies","key":"locations","label":"Physical locations covered","type":"textarea"},{"group":"Boundary & dependencies","key":"technologies","label":"Technology platforms covered","type":"textarea"},{"group":"Boundary & dependencies","key":"exclusion_risk_note","label":"Residual risk created by the boundary","type":"textarea","help":"If OT is out of scope but shares a network with IT, say so here. Honesty in this field prevents a major nonconformity."},{"group":"Approval","key":"approved_by","label":"Approved by","type":"text"},{"group":"Approval","key":"approved_date","label":"Approval date","type":"text","placeholder":"YYYY-MM-DD"},{"group":"Approval","key":"version","label":"Document version","type":"text"}]},"issues":{"label":"Internal & External Issues","short":"Issues","clause":"ISO 27001:2022 cl. 4.1","list":{"ref":"ref","primary":"issue","secondary":["direction","category","links_to"],"status":"status","newLabel":"New issue"},"columns":[{"key":"ref","label":"Ref","type":"text","width":"70px"},{"key":"direction","label":"Internal / External","type":"select","options":["Internal","External"],"width":"130px"},{"key":"category","label":"Category","type":"select","width":"150px","options":["Political","Economic","Social","Technological","Legal & Regulatory","Environmental","Organisational","People & Culture"]},{"key":"issue","label":"Issue","type":"textarea"},{"key":"isms_implication","label":"So what? (implication for the ISMS)","type":"textarea","help":"An issue with no consequence is decoration. Every row should drive a risk, a control, or an objective."},{"key":"links_to","label":"Feeds into","type":"text","width":"140px","help":"Risk ID, control, or objective this issue justifies."},{"key":"status","label":"Status","type":"select","options":["Complete","Draft","TODO - you"],"width":"120px"}]},"interested_parties":{"label":"Interested Parties","short":"Interested parties","clause":"ISO 27001:2022 cl. 4.2","list":{"ref":"ref","title":"party","primary":"needs","secondary":["direction","requirement_type"],"status":"status","newLabel":"New party"},"columns":[{"key":"ref","label":"Ref","type":"text","width":"70px"},{"key":"party","label":"Interested party","type":"text","width":"180px"},{"key":"direction","label":"Internal / External","type":"select","options":["Internal","External"],"width":"130px"},{"key":"needs","label":"Their needs & expectations","type":"textarea"},{"key":"requirement_type","label":"Requirement type","type":"select","width":"160px","options":["Legal / Regulatory","Contractual","Expectation only","Internal mandate"],"help":"Cl. 4.2(c) asks which of these expectations you will address as ISMS requirements. 'Expectation only' means noted, not committed."},{"key":"how_addressed","label":"How the ISMS addresses it","type":"textarea"},{"key":"status","label":"Status","type":"select","options":["Complete","Draft","TODO - you"],"width":"120px"}]}};
+var SEED   = {"org_context":[{"id":1,"org_name":"Gulf Freight Systems LLC","org_description":"Gulf Freight Systems (GFS) is a 250-person third-party logistics operator headquartered in Mussafah, Abu Dhabi, with a bonded warehouse in KIZAD and a small office in Jebel Ali. GFS provides freight forwarding, customs clearance, bonded and ambient warehousing, and last-mile distribution for industrial, retail and pharmaceutical clients across the GCC. Roughly 30% of revenue comes from European shippers moving goods into the UAE. Customers book and track shipments through the GFS Customer Portal; warehouse operations run on an automated conveyor and ASRS control system supplied and remotely supported by a European vendor.","business_context":"Three drivers: (1) two European customers now require ISO 27001 certification as a condition of contract renewal in Q3; (2) a 2025 ransomware incident at a regional competitor stopped warehouse operations for nine days and prompted the board to ask what GFS's exposure is; (3) GFS processes personal data of EU data subjects (consignee contact details) and needs a defensible position under both UAE PDPL and GDPR.","scope_statement":"The Information Security Management System covers the provision of freight forwarding, customs clearance, bonded and ambient warehousing, and distribution services to GFS customers, including the GFS Customer Portal and the supporting Microsoft 365 and Microsoft Azure environments, delivered from the Mussafah head office and the KIZAD warehouse facility. [GAP - YOU: decide whether the warehouse control system (OT) is inside this sentence, and rewrite the sentence so a certification body can print it on a certificate.]","scope_in":"- Freight forwarding and customs clearance operations (Mussafah HQ)\n- Bonded and ambient warehousing and distribution (KIZAD)\n- GFS Customer Portal (web application + API), hosted in Azure UAE North\n- Microsoft 365 tenant (Exchange Online, SharePoint, Teams, Entra ID)\n- Corporate IT network, endpoints and the IT service desk\n- All GFS employees and contractors at the two in-scope sites\n- HR, Finance and Procurement processes to the extent they support the above","scope_out":"- Jebel Ali sales office (5 staff, no data processing beyond email)   <-- is this defensible?\n- [GAP - YOU: list anything else you intend to exclude and be ready to defend it]","scope_out_justification":"[GAP - YOU: cl. 4.3 lets you exclude organisational units, but only if you can show the exclusion cannot affect the confidentiality, integrity or availability of what is in scope. The Jebel Ali office uses the same Microsoft 365 tenant and the same Entra ID directory. Write the honest justification -- or change the scope.]","interfaces":"- Microsoft (Azure + M365): infrastructure and platform under a shared responsibility model; GFS retains identity, configuration, data and access management.\n- Warehouse control system vendor (Netherlands): supplies the ASRS/conveyor control software and holds a permanent remote-support VPN into the KIZAD OT segment.\n- UAE Federal Customs / port community systems: EDI declarations submitted from the forwarding application; GFS controls its own credentials and message content only.\n- Customers: portal accounts, EDI feeds, and shipment data received under contract.\n- Outsourced last-mile subcontractors: receive consignee name, address and phone.\n- [GAP - YOU: add the managed IT support provider and state where their responsibility ends.]","locations":"- Mussafah, Abu Dhabi: head office, ~140 staff, main comms room\n- KIZAD, Abu Dhabi: warehouse, ~100 staff, OT control room and plant network\n- Jebel Ali, Dubai: sales office, 5 staff (currently proposed out of scope)\n- Azure UAE North region: Customer Portal and databases\n- Microsoft 365 tenant: data at rest in UAE / EU per service","technologies":"- Microsoft 365 (Entra ID, Exchange Online, SharePoint, Teams, Intune)\n- Microsoft Azure (App Service, Azure SQL, Storage, Front Door)\n- GFS Customer Portal (.NET, customer-facing, internet-exposed)\n- Freight forwarding / WMS application (vendor-hosted SaaS)\n- Warehouse control system: PLCs, SCADA HMI, ASRS controllers (flat OT network)\n- Handheld barcode terminals, site CCTV, badge access system","exclusion_risk_note":"[GAP - YOU: this is the field that separates a real scope from a paper one. The OT network at KIZAD currently shares VLANs and a domain controller with corporate IT, and the vendor's remote access lands inside it. Write two or three sentences describing what that means for any boundary you draw.]","approved_by":"","approved_date":"","version":"0.1 (draft)"}],"issues":[{"id":1,"ref":"EXT-01","direction":"External","category":"Legal & Regulatory","issue":"UAE Federal Decree-Law No. 45 of 2021 (Personal Data Protection Law) applies to personal data GFS processes about consignees, drivers and customer staff.","isms_implication":"The ISMS must be able to demonstrate lawful basis, data subject rights handling and breach notification. Drives A.5.34 and the records of processing.","links_to":"R-07 / A.5.34","status":"Complete"},{"id":2,"ref":"EXT-02","direction":"External","category":"Legal & Regulatory","issue":"EU GDPR applies extraterritorially (Art. 3(2)) to the processing of EU data subjects' data for European shippers, and cross-border transfers to the UAE need a valid mechanism (SCCs today; no EU adequacy decision for the UAE).","isms_implication":"Contracts with EU customers need Art. 28 processor terms and SCCs. Drives supplier and contract controls, and an obligation to support customer audits.","links_to":"R-12 / A.5.19-5.22","status":"Complete"},{"id":3,"ref":"EXT-03","direction":"External","category":"Legal & Regulatory","issue":"UAE Information Assurance Regulation (NESA/SIA) expectations flow down from semi-government customers in the energy and ports sectors, even where GFS is not itself designated critical infrastructure.","isms_implication":"Customer tenders map their questions to IA controls. ISO 27001 Annex A can be cross-mapped rather than run as a second programme.","links_to":"[YOU]","status":"Draft"},{"id":4,"ref":"EXT-04","direction":"External","category":"Technological","issue":"Ransomware targeting logistics and port operators in the region has moved from IT to OT, with attackers stopping physical movement of goods to force payment.","isms_implication":"Availability of the warehouse control system becomes a top-tier risk, not an IT annoyance. Drives backup, segmentation and continuity requirements.","links_to":"R-01, R-02","status":"Complete"},{"id":5,"ref":"EXT-05","direction":"External","category":"Economic","issue":"Customer contracts carry service credits for late delivery; margins on forwarding are thin (single-digit %).","isms_implication":"Security spend must be argued in terms of avoided downtime and retained contracts, not fear. Shapes the risk acceptance criteria the board will approve.","links_to":"Cl. 6.1.2 criteria","status":"Complete"},{"id":6,"ref":"EXT-06","direction":"External","category":"Technological","issue":"The warehouse control system vendor holds standing remote access and controls the patch cycle for the ASRS software; GFS cannot patch independently.","isms_implication":"A material dependency GFS cannot fully control. Must be managed contractually and by monitoring, not by a control GFS operates alone.","links_to":"R-03 / A.5.19-5.22","status":"Complete"},{"id":7,"ref":"EXT-07","direction":"External","category":"Social","issue":"The UAE logistics labour market is highly mobile; warehouse and driver turnover exceeds 25% per year, and many staff share devices and workstations.","isms_implication":"Joiner/mover/leaver discipline and shared-account handling are the practical weak point, not firewalls.","links_to":"R-05 / A.5.16-5.18","status":"Complete"},{"id":8,"ref":"EXT-08","direction":"External","category":"Political","issue":"Regional geopolitical tension periodically raises the level of state-aligned hacktivist activity against UAE transport and energy-adjacent targets.","isms_implication":"Justifies threat monitoring and a documented raise-the-shields posture rather than a static baseline.","links_to":"[YOU]","status":"Draft"},{"id":9,"ref":"INT-01","direction":"Internal","category":"Organisational","issue":"There is no dedicated information security function. Security work is done by a 4-person IT team whose primary KPI is service availability.","isms_implication":"Resourcing (cl. 7.1) and role definition are the first real gaps. Without an owner, the ISMS will not survive contact with peak season.","links_to":"Cl. 5.3 / 7.1","status":"Complete"},{"id":10,"ref":"INT-02","direction":"Internal","category":"Organisational","issue":"IT and OT report to different directors (IT to the CFO, warehouse engineering to the COO) with no shared change process.","isms_implication":"Any control that crosses the IT/OT boundary needs a governance answer before a technical one. Directly affects how the scope boundary can be drawn.","links_to":"R-02","status":"Complete"},{"id":11,"ref":"INT-03","direction":"Internal","category":"Technological","issue":"The Customer Portal was built by a contractor in 2019, has no current threat model, and no security testing has been performed since go-live.","isms_implication":"Highest-likelihood route to a confidentiality breach of customer shipment data. Drives A.8.25-8.29 and a testing programme.","links_to":"R-04","status":"Complete"},{"id":12,"ref":"INT-04","direction":"Internal","category":"Technological","issue":"Backups of the WMS and portal databases run nightly to Azure, but a full restore has never been tested end to end.","isms_implication":"An untested backup is an assumption, not a control. Drives A.8.13 and the continuity exercise in cl. 8.","links_to":"R-06 / A.8.13","status":"Complete"},{"id":13,"ref":"INT-05","direction":"Internal","category":"People & Culture","issue":"Security awareness training is delivered once at induction, in English only, to a workforce where a large proportion of operational staff are not fluent English speakers.","isms_implication":"Awareness (cl. 7.3) that the audience cannot understand is not awareness. Drives language and format requirements, not just completion rates.","links_to":"R-08 / A.6.3","status":"Complete"},{"id":14,"ref":"INT-06","direction":"Internal","category":"Organisational","issue":"Executive management has committed budget but has not yet set measurable information security objectives.","isms_implication":"Cl. 5.1(b) and cl. 6.2 will both be tested at the certification audit. This is a known open item.","links_to":"Cl. 6.2","status":"Draft"},{"id":15,"ref":"INT-07","direction":"Internal","category":"Technological","issue":"[YOU: describe the state of privileged access on the corporate domain and in Azure. Who holds Global Administrator? Are there shared admin accounts?]","isms_implication":"[YOU: what does it imply for the ISMS?]","links_to":"","status":"TODO - you"},{"id":16,"ref":"INT-08","direction":"Internal","category":"Organisational","issue":"[YOU: describe how change is managed today across IT. Is there a CAB, a ticketing tool, or informal WhatsApp approval?]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"},{"id":17,"ref":"EXT-09","direction":"External","category":"Environmental","issue":"[YOU: Abu Dhabi environmental/physical factors that affect availability. Think heat, humidity, dust, power, and the comms room at Mussafah.]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"},{"id":18,"ref":"EXT-10","direction":"External","category":"Economic","issue":"[YOU: what does peak season do to GFS's ability to operate security controls? When is it, and what gets skipped?]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"},{"id":19,"ref":"EXT-11","direction":"External","category":"Legal & Regulatory","issue":"[YOU: find one more UAE legal instrument that bites here -- consider the cybercrime law, customs record-keeping obligations, or free-zone data rules -- and write it up.]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"}],"interested_parties":[{"id":1,"ref":"IP-01","party":"European shipper customers (2 major accounts)","direction":"External","needs":"ISO 27001 certificate covering the services they buy; Art. 28 processor terms and SCCs; breach notification within 24h; right to audit; secure portal access.","requirement_type":"Contractual","how_addressed":"Certification scope must cover forwarding, warehousing and the portal. DPA signed with SCCs. Incident response procedure defines a 24h customer notification trigger.","status":"Complete"},{"id":2,"ref":"IP-02","party":"UAE Data Office / PDPL regulator","direction":"External","needs":"Lawful processing of personal data, data subject rights, breach notification, appropriate technical and organisational measures.","requirement_type":"Legal / Regulatory","how_addressed":"Records of processing maintained; privacy requirements folded into A.5.34; breach process includes a regulatory notification decision point.","status":"Complete"},{"id":3,"ref":"IP-03","party":"UAE Federal Customs / port community systems","direction":"External","needs":"Accurate and timely declarations; protection and correct use of GFS's EDI credentials; retention of customs records.","requirement_type":"Legal / Regulatory","how_addressed":"Credential handling under A.5.17; integrity of declaration data treated as a security property, not only a quality one.","status":"Complete"},{"id":4,"ref":"IP-04","party":"Warehouse control system vendor (NL)","direction":"External","needs":"Standing remote access to support the ASRS; predictable maintenance windows; clarity on who owns patching.","requirement_type":"Contractual","how_addressed":"Supplier agreement to be updated with security terms (A.5.20), access restricted and monitored, maintenance windows agreed with operations.","status":"Draft"},{"id":5,"ref":"IP-05","party":"Board of Directors / Managing Director","direction":"Internal","needs":"No operational stoppage; no contract loss; a defensible answer if a regulator or customer asks; visibility of residual risk in business terms.","requirement_type":"Internal mandate","how_addressed":"Management review pack reports risk posture, open findings and KPIs on one page. Risk acceptance criteria approved by the board.","status":"Complete"},{"id":6,"ref":"IP-06","party":"Warehouse and operations staff","direction":"Internal","needs":"Controls that do not slow down loading and picking; instructions in a language they read; not being blamed for reporting mistakes.","requirement_type":"Expectation only","how_addressed":"Awareness material translated; a no-blame reporting route; control design reviewed with the COO before rollout.","status":"Complete"},{"id":7,"ref":"IP-07","party":"IT team","direction":"Internal","needs":"Realistic workload; clear authority to say no to insecure change; tooling budget.","requirement_type":"Expectation only","how_addressed":"Roles and responsibilities documented under cl. 5.3; ISMS tasks written into objectives rather than added informally.","status":"Complete"},{"id":8,"ref":"IP-08","party":"Last-mile subcontractors","direction":"External","needs":"Enough consignee data to deliver; simple onboarding.","requirement_type":"Contractual","how_addressed":"Data minimisation in the feed provided to them; supplier security clauses; access removed on contract end.","status":"Draft"},{"id":9,"ref":"IP-09","party":"Cyber insurer","direction":"External","needs":"Evidence of MFA, backup testing, EDR coverage and an incident response plan at renewal.","requirement_type":"Contractual","how_addressed":"Insurer's control questionnaire mapped to Annex A so the same evidence serves both.","status":"Complete"},{"id":10,"ref":"IP-10","party":"Certification body (external auditor)","direction":"External","needs":"Documented information required by the standard; evidence controls operate; access to people and records during audit.","requirement_type":"Contractual","how_addressed":"Evidence is produced as a by-product of running the ISMS, not assembled before the audit.","status":"Complete"},{"id":11,"ref":"IP-11","party":"Employees (as data subjects)","direction":"Internal","needs":"[YOU: what do GFS employees legitimately expect about how their own personal data, HR records and any monitoring are handled?]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"},{"id":12,"ref":"IP-12","party":"Microsoft (Azure / M365)","direction":"External","needs":"[YOU: what does the cloud provider expect from GFS, and what does GFS need from them? Hint: the answer is a shared responsibility model, not 'they handle security'.]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"},{"id":13,"ref":"IP-13","party":"[YOU: name a party nobody remembers until the audit]","direction":"External","needs":"[YOU: candidates -- landlord of the KIZAD facility, the utility/DEWA-equivalent, the recruitment agency supplying warehouse labour, the shredding company]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"},{"id":14,"ref":"IP-14","party":"[YOU: one more, your choice]","direction":"Internal","needs":"[YOU]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"}]};
+
+var STORE_KEY = 'gfs-isms.v1';
+var TABLE_KEYS = Object.keys(SCHEMA);
+
+var MODULES = [
+  { id:'scope',    label:'Scope & Context',            tag:'cl.4', ready:true  },
+  { id:'assets',   label:'Asset Register',             tag:'S04',  ready:false },
+  { id:'risks',    label:'Risk Register',              tag:'S06',  ready:false },
+  { id:'controls', label:'Control Library',            tag:'S11',  ready:false },
+  { id:'soa',      label:'Statement of Applicability', tag:'S17',  ready:false },
+  { id:'policies', label:'Policy Library',             tag:'S19',  ready:false },
+  { id:'audit',    label:'Internal Audit',             tag:'S27',  ready:false },
+  { id:'review',   label:'Management Review',          tag:'S29',  ready:false }
+];
+
+var TABS = [
+  { key:'org_context',        label:'Scope statement',    kind:'form' },
+  { key:'issues',             label:'Issues',             kind:'list' },
+  { key:'interested_parties', label:'Interested parties', kind:'list' }
+];
+
+var STATUS_TONE = { 'Complete':'green', 'Draft':'blue', 'TODO - you':'amber' };
+var GAP_RE = /\[(GAP\s*-\s*)?YOU/i;
+
+var isGap  = function (v) { return GAP_RE.test(v || ''); };
+var isTodo = function (r) { return (r.status || '').indexOf('TODO') === 0; };
+
+/* ---------------------------------------------------------------- state */
+var DB = null, TAB = 'org_context', FILTER = 'all', QUERY = '', SEL = null;
+var storageOK = true, storageNote = '';
+
+function clone(x) { return JSON.parse(JSON.stringify(x)); }
+
+function colKeys(table) {
+  return SCHEMA[table].columns.map(function (c) { return c.key; });
+}
+
+/* Build a row containing only known columns, all values coerced to strings.
+   Used for both seeding and import, so nothing unexpected enters the model. */
+function safeRow(table, raw, id) {
+  var out = { id: id };
+  colKeys(table).forEach(function (k) {
+    var v = (raw && Object.prototype.hasOwnProperty.call(raw, k)) ? raw[k] : '';
+    out[k] = (v === null || v === undefined) ? '' : String(v);
+  });
+  return out;
+}
+
+function freshFromSeed() {
+  var tables = {};
+  TABLE_KEYS.forEach(function (t) {
+    tables[t] = (SEED[t] || []).map(function (r, i) { return safeRow(t, r, r.id || i + 1); });
+  });
+  return { version: 1, savedAt: new Date().toISOString(), tables: tables };
+}
+
+/* Accepts any parsed object and returns a valid DB, discarding anything else. */
+function coerceDb(obj) {
+  var src = (obj && obj.tables && typeof obj.tables === 'object') ? obj.tables : null;
+  if (!src) return null;
+  var tables = {}, found = 0;
+  TABLE_KEYS.forEach(function (t) {
+    var rows = Array.isArray(src[t]) ? src[t] : [];
+    if (rows.length) found++;
+    tables[t] = rows.map(function (r, i) {
+      var id = (r && typeof r.id === 'number' && isFinite(r.id)) ? r.id : i + 1;
+      return safeRow(t, r, id);
+    });
+  });
+  if (!found) return null;
+  if (!tables.org_context.length) tables.org_context = [safeRow('org_context', {}, 1)];
+  return { version: 1, savedAt: new Date().toISOString(), tables: tables };
+}
+
+function load() {
+  var raw = null;
+  try {
+    raw = window.localStorage.getItem(STORE_KEY);
+  } catch (e) {
+    storageOK = false;
+    storageNote = 'Browser storage is unavailable here, so changes last only until you close this tab. Use Export to keep your work.';
+  }
+  if (raw) {
+    try {
+      var parsed = coerceDb(JSON.parse(raw));
+      if (parsed) return parsed;
+    } catch (e) { /* corrupt payload: fall through to a fresh seed */ }
+  }
+  return freshFromSeed();
+}
+
+function save() {
+  if (!DB) return;
+  DB.savedAt = new Date().toISOString();
+  try {
+    window.localStorage.setItem(STORE_KEY, JSON.stringify(DB));
+    if (!storageOK) { storageOK = true; storageNote = ''; renderStorageState(); }
+  } catch (e) {
+    storageOK = false;
+    if (!storageNote) storageNote = 'Could not save — storage is full or blocked. Your work is still on screen; export it now.';
+    renderStorageState();
+  }
+}
+
+function rows(table) { return DB.tables[table] || []; }
+function nextId(table) {
+  return rows(table).reduce(function (m, r) { return Math.max(m, r.id || 0); }, 0) + 1;
+}
+
+/* ---------------------------------------------------------------- dom helpers */
+function el(tag, attrs, kids) {
+  var n = document.createElement(tag), k;
+  if (attrs) for (k in attrs) {
+    if (!Object.prototype.hasOwnProperty.call(attrs, k)) continue;
+    var v = attrs[k];
+    if (v === null || v === undefined || v === false) continue;
+    if (k === 'class') n.className = v;
+    else if (k === 'text') n.textContent = v;                 // the ONLY way text enters
+    else if (k.indexOf('on') === 0) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v);
+  }
+  append(n, kids);
+  return n;
+}
+
+function append(parent, kids) {
+  if (kids === null || kids === undefined || kids === false) return parent;
+  if (Array.isArray(kids)) { kids.forEach(function (c) { append(parent, c); }); return parent; }
+  parent.appendChild(kids.nodeType ? kids : document.createTextNode(String(kids)));
+  return parent;
+}
+
+function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); return node; }
+var $ = function (s) { return document.querySelector(s); };
+
+/* Teaching copy is authored data, not markup: {b:'…'} / {em:'…'} / {code:'…'} */
+function inline(x) {
+  if (Array.isArray(x)) {
+    var f = document.createDocumentFragment();
+    x.forEach(function (i) { f.appendChild(inline(i)); });
+    return f;
+  }
+  if (x && typeof x === 'object') {
+    var tag = Object.keys(x)[0];
+    if (tag !== 'b' && tag !== 'em' && tag !== 'code') return document.createTextNode('');
+    return el(tag, null, inline(x[tag]));
+  }
+  return document.createTextNode(String(x));
+}
+
+function rich(blocks) {
+  return blocks.map(function (blk) {
+    if (blk[0] === 'ul') {
+      return el('ul', null, blk[1].map(function (item) { return el('li', null, inline(item)); }));
+    }
+    return el(blk[0], null, inline(blk[1]));
+  });
+}
+
+function magnifier() {
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('width', '12'); svg.setAttribute('height', '12');
+  svg.setAttribute('viewBox', '0 0 16 16'); svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '1.6');
+  var c = document.createElementNS(NS, 'circle');
+  c.setAttribute('cx', '7'); c.setAttribute('cy', '7'); c.setAttribute('r', '4.5');
+  var p = document.createElementNS(NS, 'path');
+  p.setAttribute('d', 'M10.5 10.5L14 14');
+  svg.appendChild(c); svg.appendChild(p);
+  return svg;
+}
+
+var toastT;
+function toast(msg, tone) {
+  var t = $('#toast');
+  clear(t);
+  append(t, [el('span', { class: 'dot ' + (tone || 'green') }), el('span', { text: msg })]);
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(function () { t.classList.remove('show'); }, 1800);
+}
+
+function autosize(ta) { ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 2) + 'px'; }
+function truncate(s, n) { return !s ? '' : (s.length > n ? s.slice(0, n).replace(/\s+$/, '') + '…' : s); }
+function clean(s) {
+  return (s || '').replace(/\[(?:GAP\s*-\s*)?YOU:?\s*/gi, '').replace(/\]/g, '')
+                  .replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
+}
+
+/* ---------------------------------------------------------------- inputs */
+function inputFor(col, row, table, onSaved) {
+  var value = row[col.key] || '', node;
+  if (col.type === 'select') {
+    node = el('select');
+    [''].concat(col.options || []).forEach(function (o) {
+      node.appendChild(el('option', { value: o, text: o || '— not set —' }));
+    });
+    node.value = value;
+    node.addEventListener('change', function () { commit(node.value); });
+  } else if (col.type === 'textarea') {
+    node = el('textarea', { rows: 1, placeholder: col.placeholder || '' });
+    node.value = value;
+    node.addEventListener('input', function () { autosize(node); });
+    node.addEventListener('blur', function () {
+      if (node.value !== (row[col.key] || '')) commit(node.value);
+    });
+    requestAnimationFrame(function () { autosize(node); });
+  } else {
+    node = el('input', { type: 'text', placeholder: col.placeholder || '' });
+    node.value = value;
+    node.addEventListener('blur', function () {
+      if (node.value !== (row[col.key] || '')) commit(node.value);
+    });
+  }
+  if (isGap(value)) node.classList.add('gapmark');
+
+  function commit(v) {
+    row[col.key] = String(v);
+    save();
+    node.classList.toggle('gapmark', isGap(v));
+    toast('Saved · ' + col.label);
+    if (onSaved) onSaved();
+  }
+  return node;
+}
+
+function fieldFor(col, row, table, onSaved) {
+  var f = el('div', { class: 'field' }, el('label', { text: col.label }));
+  if (col.help) f.appendChild(el('p', { class: 'help', text: col.help }));
+  f.appendChild(inputFor(col, row, table, onSaved));
+  if (isGap(row[col.key])) {
+    f.appendChild(el('div', { class: 'gapnote' },
+      [el('span', { text: '◆' }), el('span', { text: 'Yours to write — the brief is in the field.' })]));
+  }
+  return f;
+}
+
+/* ---------------------------------------------------------------- drawer */
+function closeDrawer() {
+  SEL = null;
+  document.body.classList.remove('drawer-open');
+  var sel = document.querySelectorAll('.row.sel');
+  for (var i = 0; i < sel.length; i++) sel[i].classList.remove('sel');
+}
+
+function openDrawer(table, row) {
+  SEL = { table: table, id: row.id };
+  var spec = SCHEMA[table], L = spec.list, d = $('#drawer');
+  clear(d);
+  var titleKey = L.title || L.primary;
+  var heading = el('h3', { id: 'dtitle', text: truncate(clean(row[titleKey]), 70) || 'Untitled entry' });
+
+  var head = el('div', { class: 'dhead' }, [
+    el('div', { class: 'who' }, [el('div', { class: 'r', text: row[L.ref] || '—' }), heading]),
+    el('button', { class: 'iconbtn', title: 'Close  (Esc)', 'aria-label': 'Close', text: '✕', onclick: closeDrawer })
+  ]);
+
+  var body = el('div', { class: 'dbody' });
+  function refresh() {
+    heading.textContent = truncate(clean(row[titleKey]), 70) || 'Untitled entry';
+    renderTab();
+  }
+  spec.columns.forEach(function (c) { body.appendChild(fieldFor(c, row, table, refresh)); });
+
+  var foot = el('div', { class: 'dfoot' }, [
+    el('span', null, [el('kbd', { text: 'Esc' }), ' close  ', el('kbd', { text: '↑' }), el('kbd', { text: '↓' }), ' move']),
+    el('span', { class: 'spacer' }),
+    el('button', {
+      class: 'act ghost danger', text: 'Delete',
+      onclick: function () {
+        if (!window.confirm('Delete ' + (row[L.ref] || 'this entry') + '?')) return;
+        DB.tables[table] = rows(table).filter(function (r) { return r.id !== row.id; });
+        save(); closeDrawer(); renderTab(); toast('Deleted', 'amber');
+      }
+    })
+  ]);
+
+  append(d, [head, body, foot]);
+  document.body.classList.add('drawer-open');
+  var tas = d.querySelectorAll('textarea');
+  var sizeAll = function () { for (var i = 0; i < tas.length; i++) autosize(tas[i]); };
+  sizeAll(); setTimeout(sizeAll, 240);
+
+  var all = document.querySelectorAll('.row');
+  for (var i = 0; i < all.length; i++) {
+    all[i].classList.toggle('sel', Number(all[i].getAttribute('data-id')) === row.id
+                                 && all[i].getAttribute('data-table') === table);
+  }
+}
+
+function stepSelection(dir) {
+  if (!SEL) return;
+  var list = visibleRows(SEL.table);
+  var i = -1;
+  list.forEach(function (r, n) { if (r.id === SEL.id) i = n; });
+  var next = list[i + dir];
+  if (!next) return;
+  openDrawer(SEL.table, next);
+  var sel = $('.row.sel');
+  if (sel) sel.scrollIntoView({ block: 'nearest' });
+}
+
+/* ---------------------------------------------------------------- list */
+function visibleRows(table) {
+  var q = QUERY.toLowerCase();
+  return rows(table).filter(function (r) {
+    if (FILTER === 'todo'  && !isTodo(r)) return false;
+    if (FILTER === 'draft' && r.status !== 'Draft') return false;
+    if (FILTER === 'done'  && r.status !== 'Complete') return false;
+    if (!q) return true;
+    return colKeys(table).some(function (k) { return (r[k] || '').toLowerCase().indexOf(q) >= 0; });
+  });
+}
+
+function renderList(table) {
+  var spec = SCHEMA[table], L = spec.list;
+  var shown = visibleRows(table), all = rows(table);
+  var count = function (f) { return all.filter(f).length; };
+
+  var chips = [
+    ['all',   'All',      all.length],
+    ['done',  'Complete', count(function (r) { return r.status === 'Complete'; })],
+    ['draft', 'Draft',    count(function (r) { return r.status === 'Draft'; })],
+    ['todo',  'Yours',    count(isTodo)]
+  ].map(function (c) {
+    return el('button', {
+      class: 'chip' + (FILTER === c[0] ? ' on' : ''),
+      onclick: function () { FILTER = c[0]; renderTab(); }
+    }, [el('span', { text: c[1] }), el('span', { class: 'chipn', text: String(c[2]) })]);
+  });
+
+  var searchInput = el('input', { type: 'text', placeholder: 'Search…', 'aria-label': 'Search entries' });
+  searchInput.value = QUERY;
+  searchInput.addEventListener('input', function () {
+    var pos = searchInput.selectionStart;
+    QUERY = searchInput.value;
+    renderTab();
+    var again = $('.search input');
+    if (again) { again.focus(); again.setSelectionRange(pos, pos); }
+  });
+
+  var bar = el('div', { class: 'listbar' }, [
+    chips, el('span', { class: 'spacer' }),
+    el('div', { class: 'search' }, [magnifier(), searchInput])
+  ]);
+
+  var list = el('div', { class: 'list' });
+  if (!shown.length) {
+    list.appendChild(el('div', { class: 'emptyrow',
+      text: QUERY ? 'Nothing matches “' + QUERY + '”.' : 'Nothing here yet.' }));
+  }
+
+  shown.forEach(function (r) {
+    var tone = STATUS_TONE[r.status] || 'grey';
+    var raw = L.title ? r[L.title] : r[L.primary];
+    var previewKey = L.title ? L.primary : (spec.columns.filter(function (c) {
+      return c.type === 'textarea' && c.key !== L.primary && c.key !== L.title;
+    })[0] || {}).key;
+    var meta = L.secondary.map(function (k) {
+      if (!r[k]) return null;
+      return el('span', {
+        class: 'mini' + (k === 'links_to' ? ' mono' : '') + (isGap(r[k]) ? ' gap' : ''),
+        text: isGap(r[k]) ? 'to write' : r[k]
+      });
+    });
+
+    list.appendChild(el('div', {
+      class: 'row' + (isTodo(r) ? ' gap' : ''), 'data-id': r.id, 'data-table': table,
+      tabindex: '0', role: 'button',
+      onclick: function () { openDrawer(table, r); },
+      onkeydown: function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(table, r); } }
+    }, [
+      el('div', { class: 'ref', text: r[L.ref] || '—' }),
+      el('div', { class: 'main' }, [
+        el('div', { class: 'ttl' + (isGap(raw) ? ' brief' : ''), text: truncate(clean(raw), 130) || '—' }),
+        previewKey && r[previewKey]
+          ? el('div', { class: 'prev', text: truncate(clean(r[previewKey]), 240) }) : null,
+        el('div', { class: 'meta' }, meta)
+      ]),
+      el('div', { class: 'st ' + tone }, [el('span', { class: 'dot ' + tone }), el('span', { text: r.status || 'Not set' })]),
+      el('div', { class: 'chevron', text: '›' })
+    ]));
+  });
+
+  list.appendChild(el('div', { class: 'addrow' }, el('button', {
+    class: 'act', text: '+ ' + L.newLabel,
+    onclick: function () {
+      var r = safeRow(table, { status: 'TODO - you' }, nextId(table));
+      rows(table).push(r); save();
+      FILTER = 'all'; QUERY = ''; renderTab(); openDrawer(table, r);
+    }
+  })));
+
+  return el('div', null, [bar, list]);
+}
+
+/* ---------------------------------------------------------------- form */
+function renderForm(table) {
+  var row = rows(table)[0];
+  var groups = [];
+  SCHEMA[table].columns.forEach(function (c) {
+    var g = c.group || 'Details', found = null;
+    groups.forEach(function (x) { if (x.g === g) found = x; });
+    if (!found) { found = { g: g, cols: [] }; groups.push(found); }
+    found.cols.push(c);
+  });
+  return el('div', null, groups.map(function (grp) {
+    return el('section', { class: 'fieldset' }, [
+      el('h3', { text: grp.g }),
+      el('div', { class: 'fs-body' }, grp.cols.map(function (c) {
+        return fieldFor(c, row, table, renderStats);
+      }))
+    ]);
+  }));
+}
+
+/* ---------------------------------------------------------------- stats */
+function renderStats() {
+  var total = 0, done = 0;
+  TABLE_KEYS.forEach(function (t) {
+    rows(t).forEach(function (r) {
+      colKeys(t).forEach(function (k) {
+        if (k === 'status') return;
+        total++;
+        var v = (r[k] || '').replace(/^\s+|\s+$/g, '');
+        if (v && !isGap(v)) done++;
+      });
+    });
+  });
+  var pct = total ? Math.round(100 * done / total) : 0;
+  var openEntries = rows('issues').filter(isTodo).length + rows('interested_parties').filter(isTodo).length;
+  var ctx = rows('org_context')[0] || {};
+  var openScope = colKeys('org_context').filter(function (k) {
+    return isGap(ctx[k]) || !(ctx[k] || '').replace(/^\s+|\s+$/g, '');
+  }).length;
+
+  var box = $('#tiles');
+  if (!box) return;
+  clear(box);
+  append(box, [
+    el('div', { class: 'tile progress' }, [
+      el('div', { class: 'n', text: pct + '%' }),
+      el('div', { class: 'k', text: 'Clause 4 fields written' }),
+      el('div', { class: 'track' }, el('i', { style: 'width:' + pct + '%' }))
+    ]),
+    el('div', { class: 'tile' }, [
+      el('div', { class: 'n' }, [el('span', { text: String(openScope) }),
+        el('small', { text: ' / ' + colKeys('org_context').length })]),
+      el('div', { class: 'k' }, [el('span', { class: 'dot amber' }), el('span', { text: 'Scope fields open' })])
+    ]),
+    el('div', { class: 'tile' }, [
+      el('div', { class: 'n', text: String(openEntries) }),
+      el('div', { class: 'k' }, [el('span', { class: 'dot amber' }), el('span', { text: 'Register entries yours' })])
+    ]),
+    el('div', { class: 'tile' }, [
+      el('div', { class: 'n' }, [el('span', { text: String(rows('issues').length) }),
+        el('small', { text: ' · ' + rows('interested_parties').length })]),
+      el('div', { class: 'k' }, [el('span', { class: 'dot green' }), el('span', { text: 'Issues · parties' })])
+    ])
+  ]);
+}
+
+/* ---------------------------------------------------------------- teaching copy */
+var TEACH = {
+  intro: { t: 'Why clause 4 comes first', b: [
+    ['p', ['Clause 4 is the only part of ISO 27001 that asks ', { em: 'why this ISMS, for this organisation' },
+      '. Everything downstream inherits from it: your risk assessment can only find risks inside the scope, your Statement of Applicability can only justify controls against requirements identified here, and your certificate will literally print the scope statement you write on this page.']],
+    ['ul', [
+      [{ b: '4.1 Context' }, ' — internal and external issues affecting the ISMS’s intended outcome. Not a risk assessment; a description of the weather you operate in.'],
+      [{ b: '4.2 Interested parties' }, ' — who cares, what they need, and ', { em: 'which of those needs you adopt as requirements' }, '. That last part is where auditors probe.'],
+      [{ b: '4.3 Scope' }, ' — mandatory documented information. Must consider 4.1, 4.2, and interfaces and dependencies with other organisations.'],
+      [{ b: '4.4 The ISMS' }, ' — one line. Evidenced by everything else, not by prose.']
+    ]],
+    ['p', [{ b: 'The failure mode:' }, ' a beautiful context section that connects to nothing. If an issue in 4.1 never justifies a risk, a control or an objective, an auditor will ask why you wrote it — and a good one asks the reverse too: ',
+      { em: 'show me the issue that produced this risk.' }, ' Hence the “So what?” and “Feeds into” fields.']]
+  ]},
+  org_context: { t: 'Reading a scope statement like an auditor', b: [
+    ['p', 'The scope statement is the single most consequential sentence in the ISMS. Three tests:'],
+    ['ul', [
+      [{ b: 'Could a customer read it and know whether the service they buy is covered?' }, ' “Head office IT” fails.'],
+      [{ b: 'Is every exclusion justified on the basis that it cannot affect in-scope confidentiality, integrity or availability?' }, ' Convenience is not a justification.'],
+      [{ b: 'Are the interfaces named?' }, ' Cl. 4.3(c) — cloud, outsourced IT, vendor remote access, customer connections.']
+    ]],
+    ['p', [{ b: 'The GFS decision:' }, ' the warehouse control system. Put OT in scope and you inherit availability and safety risks you cannot yet treat. Leave it out and you must explain how a flat network shared with corporate IT, with a vendor VPN landing inside it, cannot affect the in-scope environment. Each answer has a defensible version. Ignoring it has none.']]
+  ]},
+  issues: { t: '4.1 — what makes an issue worth recording', b: [
+    ['p', 'Most organisations use PESTLE externally and an organisational scan internally. The format does not matter; the standard says “determine”, not “tabulate”. What matters is that each issue is specific to GFS — not “cyber threats are increasing” — and that its consequence is written down.'],
+    ['p', 'Seeded entries are worked examples. Entries with an amber edge are yours. Click any row to open it.']
+  ]},
+  interested_parties: { t: '4.2 — expectations vs requirements', b: [
+    ['p', ['The field carrying the weight is ', { b: 'Requirement type' }, '. Cl. 4.2(c) asks you to decide which needs and expectations become requirements ', { em: 'of the ISMS' },
+      '. Marking something “Expectation only” is a legitimate management decision — but you have then stated, in writing, that you are not committing to it. Marking everything “Legal / Regulatory” is the lazy answer and creates obligations you cannot evidence.']],
+    ['p', '“Interested party” is broader than “stakeholder we like”: regulators, auditors, insurers, subcontractors and your own staff as data subjects all qualify.']
+  ]}
+};
+
+function teach(key, openByDefault) {
+  var t = TEACH[key];
+  if (!t) return null;
+  var saved = null;
+  try { saved = window.localStorage.getItem('gfs-isms.teach.' + key); } catch (e) { /* ignore */ }
+  var open = saved === null ? openByDefault : saved === '1';
+  var d = el('details', { class: 'teach' }, [
+    el('summary', null, [el('span', { text: '◆ ' + t.t }), el('span', { class: 'chev', text: '▾' })]),
+    el('div', { class: 'tbody' }, rich(t.b))
+  ]);
+  if (open) d.setAttribute('open', '');
+  d.addEventListener('toggle', function () {
+    try { window.localStorage.setItem('gfs-isms.teach.' + key, d.open ? '1' : '0'); } catch (e) { /* ignore */ }
+  });
+  return d;
+}
+
+/* ---------------------------------------------------------------- export / import / reset */
+function exportJson() {
+  var payload = JSON.stringify({
+    app: 'gfs-isms', version: 1, exportedAt: new Date().toISOString(), tables: DB.tables
+  }, null, 2);
+  var blob = new Blob([payload], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = el('a', { href: url, download: 'gfs-isms-' + new Date().toISOString().slice(0, 10) + '.json' });
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  toast('Exported JSON');
+}
+
+function importJson(file) {
+  var reader = new FileReader();
+  reader.onerror = function () { toast('Could not read that file', 'amber'); };
+  reader.onload = function () {
+    var parsed;
+    try { parsed = JSON.parse(String(reader.result)); }
+    catch (e) { toast('Not valid JSON', 'amber'); return; }
+    var next = coerceDb(parsed);
+    if (!next) { toast('No ISMS data found in that file', 'amber'); return; }
+    var n = TABLE_KEYS.reduce(function (s, t) { return s + next.tables[t].length; }, 0);
+    if (!window.confirm('Replace everything currently in the app with ' + n + ' records from this file?')) return;
+    DB = next; save(); closeDrawer(); route();
+    toast('Imported ' + n + ' records');
+  };
+  reader.readAsText(file);
+}
+
+function resetAll() {
+  if (!window.confirm('Reset all data back to the original Gulf Freight Systems seed?\n\nAnything you have written will be lost. Export first if you want to keep it.')) return;
+  DB = freshFromSeed(); save(); closeDrawer(); route();
+  toast('Reset to seed data', 'amber');
+}
+
+function renderStorageState() {
+  var box = $('#storagestate');
+  if (!box) return;
+  clear(box);
+  box.className = 'storage' + (storageOK ? '' : ' bad');
+  append(box, [
+    el('span', { text: storageOK ? '●' : '▲' }),
+    el('span', { text: storageOK
+      ? 'Saved in this browser only. Nothing leaves your device.'
+      : storageNote })
+  ]);
+  var banner = $('#storagebanner');
+  if (banner) {
+    clear(banner);
+    banner.style.display = storageOK ? 'none' : '';
+    if (!storageOK) {
+      append(banner, [el('span', { text: '▲' }),
+        el('span', null, [el('b', { text: 'Storage unavailable. ' }), el('span', { text: storageNote })])]);
+    }
+  }
+}
+
+/* ---------------------------------------------------------------- pages */
+function renderTab() {
+  var host = $('#tabcontent');
+  if (!host) return;
+  clear(host);
+  var btns = document.querySelectorAll('.tabs button');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('on', btns[i].getAttribute('data-k') === TAB);
+  var spec = TABS.filter(function (t) { return t.key === TAB; })[0];
+  append(host, teach(TAB, false));
+  append(host, spec.kind === 'form' ? renderForm(TAB) : renderList(TAB));
+  renderStats();
+}
+
+function siteFooter() {
+  return el('div', { class: 'sitefoot' }, [
+    el('span', { class: 'badge', text: 'Learning project — fictional company — no real data.' }),
+    el('span', { class: 'badge off', text: 'Offline · no network calls' }),
+    el('span', { text: 'ISO/IEC 27001:2022 clause references are paraphrased for training. Legal references are illustrative, not legal advice.' })
+  ]);
+}
+
+function pageScope() {
+  var main = clear($('#main'));
+  var wrap = el('div', { class: 'wrap' });
+  main.appendChild(wrap);
+
+  append(wrap, [
+    el('div', { id: 'storagebanner', class: 'banner', style: 'display:none' }),
+    el('div', { class: 'pagehead' }, [
+      el('div', { class: 'crumb', text: 'ISO/IEC 27001:2022  ·  Clause 4.1 – 4.4' }),
+      el('h2', { text: 'Scope & Context' }),
+      el('p', { class: 'lede', text: 'Define what the ISMS is for, who it must satisfy, and where its boundary runs. Everything you build later inherits from this page.' })
+    ]),
+    el('div', { class: 'tiles', id: 'tiles' }),
+    teach('intro', true)
+  ]);
+
+  var tabs = el('div', { class: 'tabs' }, TABS.map(function (t) {
+    return el('button', {
+      'data-k': t.key,
+      onclick: function () { TAB = t.key; FILTER = 'all'; QUERY = ''; closeDrawer(); renderTab(); }
+    }, [el('span', { text: t.label }),
+        t.kind === 'list' ? el('span', { class: 'count', text: String(rows(t.key).length) }) : null]);
+  }));
+
+  append(wrap, [tabs, el('div', { id: 'tabcontent' }), siteFooter()]);
+  renderStorageState();
+  renderTab();
+}
+
+function pageLocked(m) {
+  closeDrawer();
+  var main = clear($('#main'));
+  main.appendChild(el('div', { class: 'wrap' }, [
+    el('div', { class: 'pagehead' }, [
+      el('div', { class: 'crumb', text: 'Not built yet' }),
+      el('h2', { text: m.label })
+    ]),
+    el('div', { class: 'locked-state' }, [
+      el('div', { class: 'big', text: '🔒' }),
+      el('h3', { text: 'Unlocks in session ' + m.tag.replace(/^S0?/, '') }),
+      el('p', { text: 'This module is scheduled in LEARNING_PLAN.md and gets built when you reach that session, so you meet each artefact after understanding the clause behind it — not before.' })
+    ]),
+    siteFooter()
+  ]));
+}
+
+/* ---------------------------------------------------------------- shell */
+function buildShell() {
+  var nav = $('#nav');
+  nav.appendChild(el('div', { class: 'grouphead', text: 'ISMS modules' }));
+  MODULES.forEach(function (m) {
+    nav.appendChild(el('a', { href: '#' + m.id, class: m.ready ? '' : 'locked' }, [
+      el('span', { class: 'lbl', text: m.label }),
+      el('span', { class: 'tag', text: m.ready ? m.tag : '🔒 ' + m.tag })
+    ]));
+  });
+
+  var picker = el('input', { type: 'file', accept: 'application/json,.json', style: 'display:none' });
+  picker.addEventListener('change', function () {
+    if (picker.files && picker.files[0]) importJson(picker.files[0]);
+    picker.value = '';
+  });
+
+  $('#datatools').appendChild(el('div', null, [
+    el('h4', { text: 'Your data' }),
+    el('div', { class: 'btns' }, [
+      el('button', { text: 'Export', title: 'Download everything as one JSON file', onclick: exportJson }),
+      el('button', { text: 'Import', title: 'Load a previously exported JSON file', onclick: function () { picker.click(); } }),
+      el('button', { class: 'warn', text: 'Reset', title: 'Back to the original seed data', onclick: resetAll })
+    ]),
+    picker,
+    el('div', { id: 'storagestate', class: 'storage' })
+  ]));
+}
+
+function route() {
+  var id = window.location.hash.slice(1) || 'scope';
+  var m = MODULES.filter(function (x) { return x.id === id; })[0] || MODULES[0];
+  var links = document.querySelectorAll('#nav a');
+  for (var i = 0; i < links.length; i++) {
+    links[i].classList.toggle('active', links[i].getAttribute('href') === '#' + m.id);
+  }
+  window.scrollTo(0, 0);
+  if (m.ready) pageScope(); else pageLocked(m);
+  renderStorageState();
+}
+
+document.addEventListener('keydown', function (e) {
+  if (!document.body.classList.contains('drawer-open')) return;
+  var tag = document.activeElement ? document.activeElement.tagName : '';
+  var typing = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+  if (e.key === 'Escape') {
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    closeDrawer();
+  } else if (!typing && (e.key === 'ArrowDown' || e.key === 'j')) { e.preventDefault(); stepSelection(1); }
+  else if (!typing && (e.key === 'ArrowUp' || e.key === 'k'))     { e.preventDefault(); stepSelection(-1); }
+});
+
+DB = load();
+buildShell();
+$('#scrim').addEventListener('click', closeDrawer);
+window.addEventListener('hashchange', route);
+route();
+save();
+})();
+
+</script>
+</body>
+</html>
