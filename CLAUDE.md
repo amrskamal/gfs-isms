@@ -96,14 +96,29 @@ relax the policy or the check.
 ### Structure inside `index.html`
 
 ```
-<style>      design tokens, then layout, then components
+<style>      design tokens, then layout, then components, then @media print
 <script>     SCHEMA   — column definitions: DDL-free, drives forms, lists and validation
              SEED     — the fictional GFS content, including the [YOU] gaps
              storage  — load / save / coerceDb, every localStorage call in try/catch
              el()     — the only DOM constructor; `text:` is the only way text enters
              rich()   — teaching copy built from data ({b:'…'}, {em:'…'}), never markup
-             render*  — list, drawer, form, stats
+             evidence — evidenceStatus / auditReady / riskFor: all DERIVED, never stored
+             render*  — list, drawer, form, stats, dashboard, SoA, printable report
 ```
+
+**Evidence status is computed, never stored.** `evidenceStatus()` returns Missing when
+there is no last-reviewed date, Stale when last-reviewed plus the review frequency is in
+the past, and Current otherwise. Do not add a writable status field for evidence: being
+able to declare your own evidence current is precisely the habit this module exists to
+break. `auditReady(ref)` is true only when a control has at least one Current item, and
+that single rule drives the badge on the control library, the SoA and the dashboard.
+
+**Modules built ahead of their session.** The control library (all 93 Annex A controls),
+the SoA and the Evidence Tracker were built early because the evidence tracker needs
+something to hang off. Their teaching sessions (11–16, 17, E1–E3) still happen, and the
+learner's gaps — control statuses, 89 SoA justifications, evidence for 71 controls — are
+deliberately left open. Do not fill them in. The risk register is seeded as data only, to
+rank the evidence dashboard; its module stays locked until Session 6.
 
 Adding a module = add a table to `SCHEMA`, seed it in `SEED`, add a render function,
 flip `ready: true` in `MODULES`. All in the same file. Keep it under 2 MB.

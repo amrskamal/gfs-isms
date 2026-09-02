@@ -268,6 +268,86 @@ kbd{font-family:var(--mono);font-size:10px;background:var(--surface-3);border:1p
   border-radius:99px;padding:2px 9px;color:var(--text-2)}
 .sitefoot .off{color:var(--green);border-color:#23483a;background:var(--green-soft)}
 
+/* ============ evidence / controls / SoA ============ */
+.st.red{color:var(--red)} .dot.red{background:var(--red)}
+.row.hot{box-shadow:inset 2px 0 0 var(--red)}
+
+.rb{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;white-space:nowrap;
+  border:1px solid var(--border-2);border-radius:99px;padding:2px 8px;background:var(--surface-2);color:var(--text-2)}
+.rb.yes{color:var(--green);border-color:#23483a;background:var(--green-soft)}
+.rb.no{color:var(--amber);border-color:#5a4527;background:var(--amber-soft)}
+
+.secttl{display:flex;align-items:center;gap:9px;margin:26px 0 4px;font-size:14px;font-weight:600}
+.secttl .sectn{font-family:var(--mono);font-size:11px;color:var(--text-3);
+  background:var(--surface-3);border-radius:9px;padding:1px 7px}
+.secthint{margin:0 0 12px;font-size:12.5px;color:var(--text-3);max-width:74ch;line-height:1.55}
+
+/* evidence panel inside a control drawer */
+.subsec{margin-top:22px;border-top:1px solid var(--border);padding-top:16px}
+.subsec>h4{margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-2);
+  display:flex;align-items:center;gap:10px}
+.evlist{margin-bottom:11px}
+.evrow{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border:1px solid var(--border);
+  border-radius:var(--r-sm);margin-bottom:6px;cursor:pointer;background:var(--surface-2);transition:.12s}
+.evrow:hover{border-color:var(--accent)}
+.evmain{flex:1;min-width:0}
+.evttl{font-size:13px;margin-bottom:4px}
+.evmeta{display:flex;flex-wrap:wrap;gap:5px}
+.evempty{font-size:12.5px;color:var(--amber);background:var(--amber-soft);border:1px solid #5a4527;
+  border-radius:var(--r-sm);padding:10px 12px;margin-bottom:11px;line-height:1.5}
+
+/* computed-status panel at the top of an evidence drawer */
+.evstatus{border:1px solid var(--border-2);border-left-width:3px;border-radius:var(--r-sm);
+  padding:11px 13px;margin-bottom:20px;background:var(--surface-2)}
+.evstatus.green{border-left-color:var(--green)}
+.evstatus.amber{border-left-color:var(--amber)}
+.evstatus.red{border-left-color:var(--red)}
+.evstop{display:flex;align-items:center;gap:10px;margin-bottom:5px}
+.evshint{font-size:10.5px;color:var(--text-3);font-style:italic;margin-left:auto}
+.evswhy{margin:0;font-size:12.5px;color:var(--text-2);line-height:1.5}
+.evswhy+.evswhy{margin-top:4px}
+
+/* SoA table */
+.soa{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;
+  container-type:inline-size}
+.soahead,.soarow{display:grid;grid-template-columns:minmax(210px,2.1fr) 110px 150px minmax(180px,2fr) 118px;
+  gap:12px;padding:11px 15px;align-items:start}
+.soahead{background:var(--surface-2);border-bottom:1px solid var(--border);
+  font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);font-weight:600}
+.soarow{border-bottom:1px solid #1c232c;cursor:pointer;font-size:12.5px}
+.soarow:last-child{border-bottom:none}
+.soarow:hover{background:var(--surface-2)}
+.soaref{font-family:var(--mono);font-size:11px;color:var(--text-3)}
+.soattl{font-size:13px;margin-top:2px}
+.soajust{color:var(--text-2);line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.soajust.todo{color:var(--amber);font-style:italic}
+@container (max-width:760px){
+  .soahead{display:none}
+  .soarow{grid-template-columns:1fr;gap:7px;padding:14px}
+}
+
+/* ============ printable audit pack ============ */
+#printroot{display:none}
+@media screen{ body.printing #printroot{display:none} }
+@media print{
+  @page{margin:16mm}
+  #app,#drawer,#scrim,#toast{display:none!important}
+  #printroot{display:block!important;background:#fff;color:#111;
+    font:11pt/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+  #printroot h1{font-size:19pt;margin:0 0 4px}
+  #printroot h2{font-size:13pt;margin:22px 0 7px;border-bottom:1px solid #999;padding-bottom:3px;
+    page-break-after:avoid}
+  #printroot .rmeta{color:#555;font-size:9pt;margin:0 0 14px}
+  #printroot p{margin:0 0 9px}
+  #printroot table.rt{width:100%;border-collapse:collapse;margin:6px 0 14px;font-size:9pt}
+  #printroot table.rt th,#printroot table.rt td{border:1px solid #bbb;padding:4px 6px;
+    text-align:left;vertical-align:top}
+  #printroot table.rt th{background:#eee;font-weight:600;width:34%}
+  #printroot table.rt.wide th{width:auto;background:#eee}
+  #printroot tr{page-break-inside:avoid}
+}
+
 </style>
 </head>
 <body>
@@ -292,6 +372,7 @@ kbd{font-family:var(--mono);font-size:10px;background:var(--surface-3);border:1p
 <div id="scrim"></div>
 <div id="drawer"></div>
 <div id="toast"></div>
+<div id="printroot"></div>
 <noscript>
   <p style="padding:24px;color:#e8eef5;font:15px system-ui">
     This workbench needs JavaScript. It runs entirely in your browser and makes no network requests.
@@ -306,8 +387,8 @@ kbd{font-family:var(--mono);font-size:10px;background:var(--surface-3);border:1p
 (function () {
 'use strict';
 
-var SCHEMA = {"org_context":{"label":"Organisation & ISMS Scope","short":"Scope statement","clause":"ISO 27001:2022 cl. 4.1, 4.3, 4.4","singleton":true,"columns":[{"group":"Organisation","key":"org_name","label":"Legal entity name","type":"text"},{"group":"Organisation","key":"org_description","label":"What the organisation does","type":"textarea","help":"An auditor reads this first. Business model, size, sites, customers."},{"group":"Organisation","key":"business_context","label":"Business drivers for the ISMS","type":"textarea","help":"Why are you certifying? Customer demand, tender requirement, regulator, insurer, incident."},{"group":"Scope statement","key":"scope_statement","label":"ISMS scope statement (goes on the certificate)","type":"textarea","help":"Cl. 4.3 requires this as documented information. Keep it to 2-4 sentences: services, sites, and the boundary."},{"group":"Scope statement","key":"scope_in","label":"IN scope","type":"textarea","help":"Services, locations, business processes, technologies, people."},{"group":"Scope statement","key":"scope_out","label":"OUT of scope","type":"textarea"},{"group":"Scope statement","key":"scope_out_justification","label":"Justification for exclusions","type":"textarea","help":"Cl. 4.3 does NOT let you exclude something just because it is inconvenient. You must be able to show the excluded part cannot affect the confidentiality, integrity or availability of what is in scope."},{"group":"Boundary & dependencies","key":"interfaces","label":"Interfaces & dependencies with other organisations","type":"textarea","help":"Cl. 4.3(c). This is where most first-time scopes fail: the boundary with cloud providers, customers, and outsourced IT is undefined."},{"group":"Boundary & dependencies","key":"locations","label":"Physical locations covered","type":"textarea"},{"group":"Boundary & dependencies","key":"technologies","label":"Technology platforms covered","type":"textarea"},{"group":"Boundary & dependencies","key":"exclusion_risk_note","label":"Residual risk created by the boundary","type":"textarea","help":"If OT is out of scope but shares a network with IT, say so here. Honesty in this field prevents a major nonconformity."},{"group":"Approval","key":"approved_by","label":"Approved by","type":"text"},{"group":"Approval","key":"approved_date","label":"Approval date","type":"text","placeholder":"YYYY-MM-DD"},{"group":"Approval","key":"version","label":"Document version","type":"text"}]},"issues":{"label":"Internal & External Issues","short":"Issues","clause":"ISO 27001:2022 cl. 4.1","list":{"ref":"ref","primary":"issue","secondary":["direction","category","links_to"],"status":"status","newLabel":"New issue"},"columns":[{"key":"ref","label":"Ref","type":"text","width":"70px"},{"key":"direction","label":"Internal / External","type":"select","options":["Internal","External"],"width":"130px"},{"key":"category","label":"Category","type":"select","width":"150px","options":["Political","Economic","Social","Technological","Legal & Regulatory","Environmental","Organisational","People & Culture"]},{"key":"issue","label":"Issue","type":"textarea"},{"key":"isms_implication","label":"So what? (implication for the ISMS)","type":"textarea","help":"An issue with no consequence is decoration. Every row should drive a risk, a control, or an objective."},{"key":"links_to","label":"Feeds into","type":"text","width":"140px","help":"Risk ID, control, or objective this issue justifies."},{"key":"status","label":"Status","type":"select","options":["Complete","Draft","TODO - you"],"width":"120px"}]},"interested_parties":{"label":"Interested Parties","short":"Interested parties","clause":"ISO 27001:2022 cl. 4.2","list":{"ref":"ref","title":"party","primary":"needs","secondary":["direction","requirement_type"],"status":"status","newLabel":"New party"},"columns":[{"key":"ref","label":"Ref","type":"text","width":"70px"},{"key":"party","label":"Interested party","type":"text","width":"180px"},{"key":"direction","label":"Internal / External","type":"select","options":["Internal","External"],"width":"130px"},{"key":"needs","label":"Their needs & expectations","type":"textarea"},{"key":"requirement_type","label":"Requirement type","type":"select","width":"160px","options":["Legal / Regulatory","Contractual","Expectation only","Internal mandate"],"help":"Cl. 4.2(c) asks which of these expectations you will address as ISMS requirements. 'Expectation only' means noted, not committed."},{"key":"how_addressed","label":"How the ISMS addresses it","type":"textarea"},{"key":"status","label":"Status","type":"select","options":["Complete","Draft","TODO - you"],"width":"120px"}]}};
-var SEED   = {"org_context":[{"id":1,"org_name":"Gulf Freight Systems LLC","org_description":"Gulf Freight Systems (GFS) is a 250-person third-party logistics operator headquartered in Mussafah, Abu Dhabi, with a bonded warehouse in KIZAD and a small office in Jebel Ali. GFS provides freight forwarding, customs clearance, bonded and ambient warehousing, and last-mile distribution for industrial, retail and pharmaceutical clients across the GCC. Roughly 30% of revenue comes from European shippers moving goods into the UAE. Customers book and track shipments through the GFS Customer Portal; warehouse operations run on an automated conveyor and ASRS control system supplied and remotely supported by a European vendor.","business_context":"Three drivers: (1) two European customers now require ISO 27001 certification as a condition of contract renewal in Q3; (2) a 2025 ransomware incident at a regional competitor stopped warehouse operations for nine days and prompted the board to ask what GFS's exposure is; (3) GFS processes personal data of EU data subjects (consignee contact details) and needs a defensible position under both UAE PDPL and GDPR.","scope_statement":"The Information Security Management System covers the provision of freight forwarding, customs clearance, bonded and ambient warehousing, and distribution services to GFS customers, including the GFS Customer Portal and the supporting Microsoft 365 and Microsoft Azure environments, delivered from the Mussafah head office and the KIZAD warehouse facility. [GAP - YOU: decide whether the warehouse control system (OT) is inside this sentence, and rewrite the sentence so a certification body can print it on a certificate.]","scope_in":"- Freight forwarding and customs clearance operations (Mussafah HQ)\n- Bonded and ambient warehousing and distribution (KIZAD)\n- GFS Customer Portal (web application + API), hosted in Azure UAE North\n- Microsoft 365 tenant (Exchange Online, SharePoint, Teams, Entra ID)\n- Corporate IT network, endpoints and the IT service desk\n- All GFS employees and contractors at the two in-scope sites\n- HR, Finance and Procurement processes to the extent they support the above","scope_out":"- Jebel Ali sales office (5 staff, no data processing beyond email)   <-- is this defensible?\n- [GAP - YOU: list anything else you intend to exclude and be ready to defend it]","scope_out_justification":"[GAP - YOU: cl. 4.3 lets you exclude organisational units, but only if you can show the exclusion cannot affect the confidentiality, integrity or availability of what is in scope. The Jebel Ali office uses the same Microsoft 365 tenant and the same Entra ID directory. Write the honest justification -- or change the scope.]","interfaces":"- Microsoft (Azure + M365): infrastructure and platform under a shared responsibility model; GFS retains identity, configuration, data and access management.\n- Warehouse control system vendor (Netherlands): supplies the ASRS/conveyor control software and holds a permanent remote-support VPN into the KIZAD OT segment.\n- UAE Federal Customs / port community systems: EDI declarations submitted from the forwarding application; GFS controls its own credentials and message content only.\n- Customers: portal accounts, EDI feeds, and shipment data received under contract.\n- Outsourced last-mile subcontractors: receive consignee name, address and phone.\n- [GAP - YOU: add the managed IT support provider and state where their responsibility ends.]","locations":"- Mussafah, Abu Dhabi: head office, ~140 staff, main comms room\n- KIZAD, Abu Dhabi: warehouse, ~100 staff, OT control room and plant network\n- Jebel Ali, Dubai: sales office, 5 staff (currently proposed out of scope)\n- Azure UAE North region: Customer Portal and databases\n- Microsoft 365 tenant: data at rest in UAE / EU per service","technologies":"- Microsoft 365 (Entra ID, Exchange Online, SharePoint, Teams, Intune)\n- Microsoft Azure (App Service, Azure SQL, Storage, Front Door)\n- GFS Customer Portal (.NET, customer-facing, internet-exposed)\n- Freight forwarding / WMS application (vendor-hosted SaaS)\n- Warehouse control system: PLCs, SCADA HMI, ASRS controllers (flat OT network)\n- Handheld barcode terminals, site CCTV, badge access system","exclusion_risk_note":"[GAP - YOU: this is the field that separates a real scope from a paper one. The OT network at KIZAD currently shares VLANs and a domain controller with corporate IT, and the vendor's remote access lands inside it. Write two or three sentences describing what that means for any boundary you draw.]","approved_by":"","approved_date":"","version":"0.1 (draft)"}],"issues":[{"id":1,"ref":"EXT-01","direction":"External","category":"Legal & Regulatory","issue":"UAE Federal Decree-Law No. 45 of 2021 (Personal Data Protection Law) applies to personal data GFS processes about consignees, drivers and customer staff.","isms_implication":"The ISMS must be able to demonstrate lawful basis, data subject rights handling and breach notification. Drives A.5.34 and the records of processing.","links_to":"R-07 / A.5.34","status":"Complete"},{"id":2,"ref":"EXT-02","direction":"External","category":"Legal & Regulatory","issue":"EU GDPR applies extraterritorially (Art. 3(2)) to the processing of EU data subjects' data for European shippers, and cross-border transfers to the UAE need a valid mechanism (SCCs today; no EU adequacy decision for the UAE).","isms_implication":"Contracts with EU customers need Art. 28 processor terms and SCCs. Drives supplier and contract controls, and an obligation to support customer audits.","links_to":"R-12 / A.5.19-5.22","status":"Complete"},{"id":3,"ref":"EXT-03","direction":"External","category":"Legal & Regulatory","issue":"UAE Information Assurance Regulation (NESA/SIA) expectations flow down from semi-government customers in the energy and ports sectors, even where GFS is not itself designated critical infrastructure.","isms_implication":"Customer tenders map their questions to IA controls. ISO 27001 Annex A can be cross-mapped rather than run as a second programme.","links_to":"[YOU]","status":"Draft"},{"id":4,"ref":"EXT-04","direction":"External","category":"Technological","issue":"Ransomware targeting logistics and port operators in the region has moved from IT to OT, with attackers stopping physical movement of goods to force payment.","isms_implication":"Availability of the warehouse control system becomes a top-tier risk, not an IT annoyance. Drives backup, segmentation and continuity requirements.","links_to":"R-01, R-02","status":"Complete"},{"id":5,"ref":"EXT-05","direction":"External","category":"Economic","issue":"Customer contracts carry service credits for late delivery; margins on forwarding are thin (single-digit %).","isms_implication":"Security spend must be argued in terms of avoided downtime and retained contracts, not fear. Shapes the risk acceptance criteria the board will approve.","links_to":"Cl. 6.1.2 criteria","status":"Complete"},{"id":6,"ref":"EXT-06","direction":"External","category":"Technological","issue":"The warehouse control system vendor holds standing remote access and controls the patch cycle for the ASRS software; GFS cannot patch independently.","isms_implication":"A material dependency GFS cannot fully control. Must be managed contractually and by monitoring, not by a control GFS operates alone.","links_to":"R-03 / A.5.19-5.22","status":"Complete"},{"id":7,"ref":"EXT-07","direction":"External","category":"Social","issue":"The UAE logistics labour market is highly mobile; warehouse and driver turnover exceeds 25% per year, and many staff share devices and workstations.","isms_implication":"Joiner/mover/leaver discipline and shared-account handling are the practical weak point, not firewalls.","links_to":"R-05 / A.5.16-5.18","status":"Complete"},{"id":8,"ref":"EXT-08","direction":"External","category":"Political","issue":"Regional geopolitical tension periodically raises the level of state-aligned hacktivist activity against UAE transport and energy-adjacent targets.","isms_implication":"Justifies threat monitoring and a documented raise-the-shields posture rather than a static baseline.","links_to":"[YOU]","status":"Draft"},{"id":9,"ref":"INT-01","direction":"Internal","category":"Organisational","issue":"There is no dedicated information security function. Security work is done by a 4-person IT team whose primary KPI is service availability.","isms_implication":"Resourcing (cl. 7.1) and role definition are the first real gaps. Without an owner, the ISMS will not survive contact with peak season.","links_to":"Cl. 5.3 / 7.1","status":"Complete"},{"id":10,"ref":"INT-02","direction":"Internal","category":"Organisational","issue":"IT and OT report to different directors (IT to the CFO, warehouse engineering to the COO) with no shared change process.","isms_implication":"Any control that crosses the IT/OT boundary needs a governance answer before a technical one. Directly affects how the scope boundary can be drawn.","links_to":"R-02","status":"Complete"},{"id":11,"ref":"INT-03","direction":"Internal","category":"Technological","issue":"The Customer Portal was built by a contractor in 2019, has no current threat model, and no security testing has been performed since go-live.","isms_implication":"Highest-likelihood route to a confidentiality breach of customer shipment data. Drives A.8.25-8.29 and a testing programme.","links_to":"R-04","status":"Complete"},{"id":12,"ref":"INT-04","direction":"Internal","category":"Technological","issue":"Backups of the WMS and portal databases run nightly to Azure, but a full restore has never been tested end to end.","isms_implication":"An untested backup is an assumption, not a control. Drives A.8.13 and the continuity exercise in cl. 8.","links_to":"R-06 / A.8.13","status":"Complete"},{"id":13,"ref":"INT-05","direction":"Internal","category":"People & Culture","issue":"Security awareness training is delivered once at induction, in English only, to a workforce where a large proportion of operational staff are not fluent English speakers.","isms_implication":"Awareness (cl. 7.3) that the audience cannot understand is not awareness. Drives language and format requirements, not just completion rates.","links_to":"R-08 / A.6.3","status":"Complete"},{"id":14,"ref":"INT-06","direction":"Internal","category":"Organisational","issue":"Executive management has committed budget but has not yet set measurable information security objectives.","isms_implication":"Cl. 5.1(b) and cl. 6.2 will both be tested at the certification audit. This is a known open item.","links_to":"Cl. 6.2","status":"Draft"},{"id":15,"ref":"INT-07","direction":"Internal","category":"Technological","issue":"[YOU: describe the state of privileged access on the corporate domain and in Azure. Who holds Global Administrator? Are there shared admin accounts?]","isms_implication":"[YOU: what does it imply for the ISMS?]","links_to":"","status":"TODO - you"},{"id":16,"ref":"INT-08","direction":"Internal","category":"Organisational","issue":"[YOU: describe how change is managed today across IT. Is there a CAB, a ticketing tool, or informal WhatsApp approval?]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"},{"id":17,"ref":"EXT-09","direction":"External","category":"Environmental","issue":"[YOU: Abu Dhabi environmental/physical factors that affect availability. Think heat, humidity, dust, power, and the comms room at Mussafah.]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"},{"id":18,"ref":"EXT-10","direction":"External","category":"Economic","issue":"[YOU: what does peak season do to GFS's ability to operate security controls? When is it, and what gets skipped?]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"},{"id":19,"ref":"EXT-11","direction":"External","category":"Legal & Regulatory","issue":"[YOU: find one more UAE legal instrument that bites here -- consider the cybercrime law, customs record-keeping obligations, or free-zone data rules -- and write it up.]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"}],"interested_parties":[{"id":1,"ref":"IP-01","party":"European shipper customers (2 major accounts)","direction":"External","needs":"ISO 27001 certificate covering the services they buy; Art. 28 processor terms and SCCs; breach notification within 24h; right to audit; secure portal access.","requirement_type":"Contractual","how_addressed":"Certification scope must cover forwarding, warehousing and the portal. DPA signed with SCCs. Incident response procedure defines a 24h customer notification trigger.","status":"Complete"},{"id":2,"ref":"IP-02","party":"UAE Data Office / PDPL regulator","direction":"External","needs":"Lawful processing of personal data, data subject rights, breach notification, appropriate technical and organisational measures.","requirement_type":"Legal / Regulatory","how_addressed":"Records of processing maintained; privacy requirements folded into A.5.34; breach process includes a regulatory notification decision point.","status":"Complete"},{"id":3,"ref":"IP-03","party":"UAE Federal Customs / port community systems","direction":"External","needs":"Accurate and timely declarations; protection and correct use of GFS's EDI credentials; retention of customs records.","requirement_type":"Legal / Regulatory","how_addressed":"Credential handling under A.5.17; integrity of declaration data treated as a security property, not only a quality one.","status":"Complete"},{"id":4,"ref":"IP-04","party":"Warehouse control system vendor (NL)","direction":"External","needs":"Standing remote access to support the ASRS; predictable maintenance windows; clarity on who owns patching.","requirement_type":"Contractual","how_addressed":"Supplier agreement to be updated with security terms (A.5.20), access restricted and monitored, maintenance windows agreed with operations.","status":"Draft"},{"id":5,"ref":"IP-05","party":"Board of Directors / Managing Director","direction":"Internal","needs":"No operational stoppage; no contract loss; a defensible answer if a regulator or customer asks; visibility of residual risk in business terms.","requirement_type":"Internal mandate","how_addressed":"Management review pack reports risk posture, open findings and KPIs on one page. Risk acceptance criteria approved by the board.","status":"Complete"},{"id":6,"ref":"IP-06","party":"Warehouse and operations staff","direction":"Internal","needs":"Controls that do not slow down loading and picking; instructions in a language they read; not being blamed for reporting mistakes.","requirement_type":"Expectation only","how_addressed":"Awareness material translated; a no-blame reporting route; control design reviewed with the COO before rollout.","status":"Complete"},{"id":7,"ref":"IP-07","party":"IT team","direction":"Internal","needs":"Realistic workload; clear authority to say no to insecure change; tooling budget.","requirement_type":"Expectation only","how_addressed":"Roles and responsibilities documented under cl. 5.3; ISMS tasks written into objectives rather than added informally.","status":"Complete"},{"id":8,"ref":"IP-08","party":"Last-mile subcontractors","direction":"External","needs":"Enough consignee data to deliver; simple onboarding.","requirement_type":"Contractual","how_addressed":"Data minimisation in the feed provided to them; supplier security clauses; access removed on contract end.","status":"Draft"},{"id":9,"ref":"IP-09","party":"Cyber insurer","direction":"External","needs":"Evidence of MFA, backup testing, EDR coverage and an incident response plan at renewal.","requirement_type":"Contractual","how_addressed":"Insurer's control questionnaire mapped to Annex A so the same evidence serves both.","status":"Complete"},{"id":10,"ref":"IP-10","party":"Certification body (external auditor)","direction":"External","needs":"Documented information required by the standard; evidence controls operate; access to people and records during audit.","requirement_type":"Contractual","how_addressed":"Evidence is produced as a by-product of running the ISMS, not assembled before the audit.","status":"Complete"},{"id":11,"ref":"IP-11","party":"Employees (as data subjects)","direction":"Internal","needs":"[YOU: what do GFS employees legitimately expect about how their own personal data, HR records and any monitoring are handled?]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"},{"id":12,"ref":"IP-12","party":"Microsoft (Azure / M365)","direction":"External","needs":"[YOU: what does the cloud provider expect from GFS, and what does GFS need from them? Hint: the answer is a shared responsibility model, not 'they handle security'.]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"},{"id":13,"ref":"IP-13","party":"[YOU: name a party nobody remembers until the audit]","direction":"External","needs":"[YOU: candidates -- landlord of the KIZAD facility, the utility/DEWA-equivalent, the recruitment agency supplying warehouse labour, the shredding company]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"},{"id":14,"ref":"IP-14","party":"[YOU: one more, your choice]","direction":"Internal","needs":"[YOU]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"}]};
+var SCHEMA = {"org_context":{"label":"Organisation & ISMS Scope","short":"Scope statement","clause":"ISO 27001:2022 cl. 4.1, 4.3, 4.4","singleton":true,"columns":[{"group":"Organisation","key":"org_name","label":"Legal entity name","type":"text"},{"group":"Organisation","key":"org_description","label":"What the organisation does","type":"textarea","help":"An auditor reads this first. Business model, size, sites, customers."},{"group":"Organisation","key":"business_context","label":"Business drivers for the ISMS","type":"textarea","help":"Why are you certifying? Customer demand, tender requirement, regulator, insurer, incident."},{"group":"Scope statement","key":"scope_statement","label":"ISMS scope statement (goes on the certificate)","type":"textarea","help":"Cl. 4.3 requires this as documented information. Keep it to 2-4 sentences: services, sites, and the boundary."},{"group":"Scope statement","key":"scope_in","label":"IN scope","type":"textarea","help":"Services, locations, business processes, technologies, people."},{"group":"Scope statement","key":"scope_out","label":"OUT of scope","type":"textarea"},{"group":"Scope statement","key":"scope_out_justification","label":"Justification for exclusions","type":"textarea","help":"Cl. 4.3 does NOT let you exclude something just because it is inconvenient. You must be able to show the excluded part cannot affect the confidentiality, integrity or availability of what is in scope."},{"group":"Boundary & dependencies","key":"interfaces","label":"Interfaces & dependencies with other organisations","type":"textarea","help":"Cl. 4.3(c). This is where most first-time scopes fail: the boundary with cloud providers, customers, and outsourced IT is undefined."},{"group":"Boundary & dependencies","key":"locations","label":"Physical locations covered","type":"textarea"},{"group":"Boundary & dependencies","key":"technologies","label":"Technology platforms covered","type":"textarea"},{"group":"Boundary & dependencies","key":"exclusion_risk_note","label":"Residual risk created by the boundary","type":"textarea","help":"If OT is out of scope but shares a network with IT, say so here. Honesty in this field prevents a major nonconformity."},{"group":"Approval","key":"approved_by","label":"Approved by","type":"text"},{"group":"Approval","key":"approved_date","label":"Approval date","type":"text","placeholder":"YYYY-MM-DD"},{"group":"Approval","key":"version","label":"Document version","type":"text"}]},"issues":{"label":"Internal & External Issues","short":"Issues","clause":"ISO 27001:2022 cl. 4.1","list":{"ref":"ref","primary":"issue","secondary":["direction","category","links_to"],"status":"status","newLabel":"New issue"},"columns":[{"key":"ref","label":"Ref","type":"text","width":"70px"},{"key":"direction","label":"Internal / External","type":"select","options":["Internal","External"],"width":"130px"},{"key":"category","label":"Category","type":"select","width":"150px","options":["Political","Economic","Social","Technological","Legal & Regulatory","Environmental","Organisational","People & Culture"]},{"key":"issue","label":"Issue","type":"textarea"},{"key":"isms_implication","label":"So what? (implication for the ISMS)","type":"textarea","help":"An issue with no consequence is decoration. Every row should drive a risk, a control, or an objective."},{"key":"links_to","label":"Feeds into","type":"text","width":"140px","help":"Risk ID, control, or objective this issue justifies."},{"key":"status","label":"Status","type":"select","options":["Complete","Draft","TODO - you"],"width":"120px"}]},"interested_parties":{"label":"Interested Parties","short":"Interested parties","clause":"ISO 27001:2022 cl. 4.2","list":{"ref":"ref","title":"party","primary":"needs","secondary":["direction","requirement_type"],"status":"status","newLabel":"New party"},"columns":[{"key":"ref","label":"Ref","type":"text","width":"70px"},{"key":"party","label":"Interested party","type":"text","width":"180px"},{"key":"direction","label":"Internal / External","type":"select","options":["Internal","External"],"width":"130px"},{"key":"needs","label":"Their needs & expectations","type":"textarea"},{"key":"requirement_type","label":"Requirement type","type":"select","width":"160px","options":["Legal / Regulatory","Contractual","Expectation only","Internal mandate"],"help":"Cl. 4.2(c) asks which of these expectations you will address as ISMS requirements. 'Expectation only' means noted, not committed."},{"key":"how_addressed","label":"How the ISMS addresses it","type":"textarea"},{"key":"status","label":"Status","type":"select","options":["Complete","Draft","TODO - you"],"width":"120px"}]},"controls":{"label":"Annex A Controls","short":"Controls","clause":"ISO 27001:2022 Annex A","list":{"ref":"ref","title":"title","primary":"plain_english","secondary":["theme","applicability"],"status":"status","allowAdd":false},"columns":[{"key":"ref","label":"Control","type":"text","width":"80px"},{"key":"theme","label":"Theme","type":"select","width":"150px","options":["Organizational","People","Physical","Technological"]},{"key":"title","label":"Control name","type":"text"},{"key":"plain_english","label":"What it asks for, in plain English","type":"textarea","help":"Our paraphrase. The standard's own wording is copyrighted — read it in your copy of ISO/IEC 27001:2022."},{"key":"example_evidence","label":"Evidence that typically satisfies it","type":"textarea","help":"A starting point, not a checklist. What convinces an auditor depends on how you actually run the control."},{"key":"applicability","label":"Applicability (SoA)","type":"select","width":"130px","options":["Included","Excluded"],"help":"Cl. 6.1.3(d): the SoA must state whether each control is necessary, and justify both inclusion and exclusion."},{"key":"status","label":"Implementation status","type":"select","width":"170px","options":["Implemented","Partially implemented","Planned","Not applicable","Not assessed"]},{"key":"owner","label":"Control owner","type":"text","width":"150px"},{"key":"justification","label":"SoA justification","type":"textarea","help":"Why this control is necessary (point at a risk, a legal obligation or a contract), or why its exclusion cannot affect in-scope confidentiality, integrity or availability."}]},"evidence":{"label":"Evidence","short":"Evidence","clause":"ISO 27001:2022 cl. 8.1, 9.1, 9.2","list":{"ref":"control_ref","title":"title","primary":"description","secondary":["type","owner","location"],"status":"__derived","newLabel":"Log evidence"},"columns":[{"key":"control_ref","label":"Control","type":"select","width":"90px","options":["A.5.1","A.5.2","A.5.3","A.5.4","A.5.5","A.5.6","A.5.7","A.5.8","A.5.9","A.5.10","A.5.11","A.5.12","A.5.13","A.5.14","A.5.15","A.5.16","A.5.17","A.5.18","A.5.19","A.5.20","A.5.21","A.5.22","A.5.23","A.5.24","A.5.25","A.5.26","A.5.27","A.5.28","A.5.29","A.5.30","A.5.31","A.5.32","A.5.33","A.5.34","A.5.35","A.5.36","A.5.37","A.6.1","A.6.2","A.6.3","A.6.4","A.6.5","A.6.6","A.6.7","A.6.8","A.7.1","A.7.2","A.7.3","A.7.4","A.7.5","A.7.6","A.7.7","A.7.8","A.7.9","A.7.10","A.7.11","A.7.12","A.7.13","A.7.14","A.8.1","A.8.2","A.8.3","A.8.4","A.8.5","A.8.6","A.8.7","A.8.8","A.8.9","A.8.10","A.8.11","A.8.12","A.8.13","A.8.14","A.8.15","A.8.16","A.8.17","A.8.18","A.8.19","A.8.20","A.8.21","A.8.22","A.8.23","A.8.24","A.8.25","A.8.26","A.8.27","A.8.28","A.8.29","A.8.30","A.8.31","A.8.32","A.8.33","A.8.34"],"help":"Which Annex A control this evidence supports."},{"key":"title","label":"Evidence title","type":"text","help":"Name the artefact, not the intention. 'Q3 access review — file shares', not 'we do access reviews'."},{"key":"type","label":"Type","type":"select","width":"140px","options":["Policy","Procedure","Record","Screenshot","Log","Ticket","Interview","Demonstration"],"help":"Policy says what should happen. Record proves it did. Demonstration shows it happening now. Auditors want the second and third."},{"key":"description","label":"What it shows","type":"textarea","help":"What an auditor would conclude from it — and honestly, what it does not cover."},{"key":"location","label":"Where it lives","type":"text","help":"A path someone else could follow without you, e.g. 'SharePoint > ISMS > 05 Evidence > IAM'."},{"key":"owner","label":"Owner","type":"text","width":"150px","help":"The person who produces and refreshes it, not the person who filed it once."},{"key":"date_collected","label":"Date collected","type":"text","width":"120px","placeholder":"YYYY-MM-DD"},{"key":"frequency","label":"Review frequency","type":"select","width":"130px","options":["Monthly","Quarterly","Annual"],"help":"How often this evidence must be refreshed to stay meaningful."},{"key":"last_reviewed","label":"Last reviewed","type":"text","width":"120px","placeholder":"YYYY-MM-DD","help":"Leave blank if it has never actually been collected — the tracker will show it as Missing rather than pretending."}]},"risks":{"label":"Risk linkage","short":"Risks","clause":"ISO 27001:2022 cl. 6.1.2 (register built in Session 6)","hidden":true,"list":{"ref":"ref","title":"scenario","primary":"scenario","secondary":["controls"],"status":"status"},"columns":[{"key":"ref","label":"Risk","type":"text","width":"70px"},{"key":"scenario","label":"Risk scenario","type":"textarea"},{"key":"residual","label":"Residual score","type":"text","width":"110px"},{"key":"controls","label":"Controls treating it","type":"text"},{"key":"status","label":"Status","type":"select","options":["Seeded","Draft","TODO - you"],"width":"110px"}]}};
+var SEED   = {"org_context":[{"id":1,"org_name":"Gulf Freight Systems LLC","org_description":"Gulf Freight Systems (GFS) is a 250-person third-party logistics operator headquartered in Mussafah, Abu Dhabi, with a bonded warehouse in KIZAD and a small office in Jebel Ali. GFS provides freight forwarding, customs clearance, bonded and ambient warehousing, and last-mile distribution for industrial, retail and pharmaceutical clients across the GCC. Roughly 30% of revenue comes from European shippers moving goods into the UAE. Customers book and track shipments through the GFS Customer Portal; warehouse operations run on an automated conveyor and ASRS control system supplied and remotely supported by a European vendor.","business_context":"Three drivers: (1) two European customers now require ISO 27001 certification as a condition of contract renewal in Q3; (2) a 2025 ransomware incident at a regional competitor stopped warehouse operations for nine days and prompted the board to ask what GFS's exposure is; (3) GFS processes personal data of EU data subjects (consignee contact details) and needs a defensible position under both UAE PDPL and GDPR.","scope_statement":"The Information Security Management System covers the provision of freight forwarding, customs clearance, bonded and ambient warehousing, and distribution services to GFS customers, including the GFS Customer Portal and the supporting Microsoft 365 and Microsoft Azure environments, delivered from the Mussafah head office and the KIZAD warehouse facility. [GAP - YOU: decide whether the warehouse control system (OT) is inside this sentence, and rewrite the sentence so a certification body can print it on a certificate.]","scope_in":"- Freight forwarding and customs clearance operations (Mussafah HQ)\n- Bonded and ambient warehousing and distribution (KIZAD)\n- GFS Customer Portal (web application + API), hosted in Azure UAE North\n- Microsoft 365 tenant (Exchange Online, SharePoint, Teams, Entra ID)\n- Corporate IT network, endpoints and the IT service desk\n- All GFS employees and contractors at the two in-scope sites\n- HR, Finance and Procurement processes to the extent they support the above","scope_out":"- Jebel Ali sales office (5 staff, no data processing beyond email)   <-- is this defensible?\n- [GAP - YOU: list anything else you intend to exclude and be ready to defend it]","scope_out_justification":"[GAP - YOU: cl. 4.3 lets you exclude organisational units, but only if you can show the exclusion cannot affect the confidentiality, integrity or availability of what is in scope. The Jebel Ali office uses the same Microsoft 365 tenant and the same Entra ID directory. Write the honest justification -- or change the scope.]","interfaces":"- Microsoft (Azure + M365): infrastructure and platform under a shared responsibility model; GFS retains identity, configuration, data and access management.\n- Warehouse control system vendor (Netherlands): supplies the ASRS/conveyor control software and holds a permanent remote-support VPN into the KIZAD OT segment.\n- UAE Federal Customs / port community systems: EDI declarations submitted from the forwarding application; GFS controls its own credentials and message content only.\n- Customers: portal accounts, EDI feeds, and shipment data received under contract.\n- Outsourced last-mile subcontractors: receive consignee name, address and phone.\n- [GAP - YOU: add the managed IT support provider and state where their responsibility ends.]","locations":"- Mussafah, Abu Dhabi: head office, ~140 staff, main comms room\n- KIZAD, Abu Dhabi: warehouse, ~100 staff, OT control room and plant network\n- Jebel Ali, Dubai: sales office, 5 staff (currently proposed out of scope)\n- Azure UAE North region: Customer Portal and databases\n- Microsoft 365 tenant: data at rest in UAE / EU per service","technologies":"- Microsoft 365 (Entra ID, Exchange Online, SharePoint, Teams, Intune)\n- Microsoft Azure (App Service, Azure SQL, Storage, Front Door)\n- GFS Customer Portal (.NET, customer-facing, internet-exposed)\n- Freight forwarding / WMS application (vendor-hosted SaaS)\n- Warehouse control system: PLCs, SCADA HMI, ASRS controllers (flat OT network)\n- Handheld barcode terminals, site CCTV, badge access system","exclusion_risk_note":"[GAP - YOU: this is the field that separates a real scope from a paper one. The OT network at KIZAD currently shares VLANs and a domain controller with corporate IT, and the vendor's remote access lands inside it. Write two or three sentences describing what that means for any boundary you draw.]","approved_by":"","approved_date":"","version":"0.1 (draft)"}],"issues":[{"id":1,"ref":"EXT-01","direction":"External","category":"Legal & Regulatory","issue":"UAE Federal Decree-Law No. 45 of 2021 (Personal Data Protection Law) applies to personal data GFS processes about consignees, drivers and customer staff.","isms_implication":"The ISMS must be able to demonstrate lawful basis, data subject rights handling and breach notification. Drives A.5.34 and the records of processing.","links_to":"R-07 / A.5.34","status":"Complete"},{"id":2,"ref":"EXT-02","direction":"External","category":"Legal & Regulatory","issue":"EU GDPR applies extraterritorially (Art. 3(2)) to the processing of EU data subjects' data for European shippers, and cross-border transfers to the UAE need a valid mechanism (SCCs today; no EU adequacy decision for the UAE).","isms_implication":"Contracts with EU customers need Art. 28 processor terms and SCCs. Drives supplier and contract controls, and an obligation to support customer audits.","links_to":"R-12 / A.5.19-5.22","status":"Complete"},{"id":3,"ref":"EXT-03","direction":"External","category":"Legal & Regulatory","issue":"UAE Information Assurance Regulation (NESA/SIA) expectations flow down from semi-government customers in the energy and ports sectors, even where GFS is not itself designated critical infrastructure.","isms_implication":"Customer tenders map their questions to IA controls. ISO 27001 Annex A can be cross-mapped rather than run as a second programme.","links_to":"[YOU]","status":"Draft"},{"id":4,"ref":"EXT-04","direction":"External","category":"Technological","issue":"Ransomware targeting logistics and port operators in the region has moved from IT to OT, with attackers stopping physical movement of goods to force payment.","isms_implication":"Availability of the warehouse control system becomes a top-tier risk, not an IT annoyance. Drives backup, segmentation and continuity requirements.","links_to":"R-01, R-02","status":"Complete"},{"id":5,"ref":"EXT-05","direction":"External","category":"Economic","issue":"Customer contracts carry service credits for late delivery; margins on forwarding are thin (single-digit %).","isms_implication":"Security spend must be argued in terms of avoided downtime and retained contracts, not fear. Shapes the risk acceptance criteria the board will approve.","links_to":"Cl. 6.1.2 criteria","status":"Complete"},{"id":6,"ref":"EXT-06","direction":"External","category":"Technological","issue":"The warehouse control system vendor holds standing remote access and controls the patch cycle for the ASRS software; GFS cannot patch independently.","isms_implication":"A material dependency GFS cannot fully control. Must be managed contractually and by monitoring, not by a control GFS operates alone.","links_to":"R-03 / A.5.19-5.22","status":"Complete"},{"id":7,"ref":"EXT-07","direction":"External","category":"Social","issue":"The UAE logistics labour market is highly mobile; warehouse and driver turnover exceeds 25% per year, and many staff share devices and workstations.","isms_implication":"Joiner/mover/leaver discipline and shared-account handling are the practical weak point, not firewalls.","links_to":"R-05 / A.5.16-5.18","status":"Complete"},{"id":8,"ref":"EXT-08","direction":"External","category":"Political","issue":"Regional geopolitical tension periodically raises the level of state-aligned hacktivist activity against UAE transport and energy-adjacent targets.","isms_implication":"Justifies threat monitoring and a documented raise-the-shields posture rather than a static baseline.","links_to":"[YOU]","status":"Draft"},{"id":9,"ref":"INT-01","direction":"Internal","category":"Organisational","issue":"There is no dedicated information security function. Security work is done by a 4-person IT team whose primary KPI is service availability.","isms_implication":"Resourcing (cl. 7.1) and role definition are the first real gaps. Without an owner, the ISMS will not survive contact with peak season.","links_to":"Cl. 5.3 / 7.1","status":"Complete"},{"id":10,"ref":"INT-02","direction":"Internal","category":"Organisational","issue":"IT and OT report to different directors (IT to the CFO, warehouse engineering to the COO) with no shared change process.","isms_implication":"Any control that crosses the IT/OT boundary needs a governance answer before a technical one. Directly affects how the scope boundary can be drawn.","links_to":"R-02","status":"Complete"},{"id":11,"ref":"INT-03","direction":"Internal","category":"Technological","issue":"The Customer Portal was built by a contractor in 2019, has no current threat model, and no security testing has been performed since go-live.","isms_implication":"Highest-likelihood route to a confidentiality breach of customer shipment data. Drives A.8.25-8.29 and a testing programme.","links_to":"R-04","status":"Complete"},{"id":12,"ref":"INT-04","direction":"Internal","category":"Technological","issue":"Backups of the WMS and portal databases run nightly to Azure, but a full restore has never been tested end to end.","isms_implication":"An untested backup is an assumption, not a control. Drives A.8.13 and the continuity exercise in cl. 8.","links_to":"R-06 / A.8.13","status":"Complete"},{"id":13,"ref":"INT-05","direction":"Internal","category":"People & Culture","issue":"Security awareness training is delivered once at induction, in English only, to a workforce where a large proportion of operational staff are not fluent English speakers.","isms_implication":"Awareness (cl. 7.3) that the audience cannot understand is not awareness. Drives language and format requirements, not just completion rates.","links_to":"R-08 / A.6.3","status":"Complete"},{"id":14,"ref":"INT-06","direction":"Internal","category":"Organisational","issue":"Executive management has committed budget but has not yet set measurable information security objectives.","isms_implication":"Cl. 5.1(b) and cl. 6.2 will both be tested at the certification audit. This is a known open item.","links_to":"Cl. 6.2","status":"Draft"},{"id":15,"ref":"INT-07","direction":"Internal","category":"Technological","issue":"[YOU: describe the state of privileged access on the corporate domain and in Azure. Who holds Global Administrator? Are there shared admin accounts?]","isms_implication":"[YOU: what does it imply for the ISMS?]","links_to":"","status":"TODO - you"},{"id":16,"ref":"INT-08","direction":"Internal","category":"Organisational","issue":"[YOU: describe how change is managed today across IT. Is there a CAB, a ticketing tool, or informal WhatsApp approval?]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"},{"id":17,"ref":"EXT-09","direction":"External","category":"Environmental","issue":"[YOU: Abu Dhabi environmental/physical factors that affect availability. Think heat, humidity, dust, power, and the comms room at Mussafah.]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"},{"id":18,"ref":"EXT-10","direction":"External","category":"Economic","issue":"[YOU: what does peak season do to GFS's ability to operate security controls? When is it, and what gets skipped?]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"},{"id":19,"ref":"EXT-11","direction":"External","category":"Legal & Regulatory","issue":"[YOU: find one more UAE legal instrument that bites here -- consider the cybercrime law, customs record-keeping obligations, or free-zone data rules -- and write it up.]","isms_implication":"[YOU]","links_to":"","status":"TODO - you"}],"interested_parties":[{"id":1,"ref":"IP-01","party":"European shipper customers (2 major accounts)","direction":"External","needs":"ISO 27001 certificate covering the services they buy; Art. 28 processor terms and SCCs; breach notification within 24h; right to audit; secure portal access.","requirement_type":"Contractual","how_addressed":"Certification scope must cover forwarding, warehousing and the portal. DPA signed with SCCs. Incident response procedure defines a 24h customer notification trigger.","status":"Complete"},{"id":2,"ref":"IP-02","party":"UAE Data Office / PDPL regulator","direction":"External","needs":"Lawful processing of personal data, data subject rights, breach notification, appropriate technical and organisational measures.","requirement_type":"Legal / Regulatory","how_addressed":"Records of processing maintained; privacy requirements folded into A.5.34; breach process includes a regulatory notification decision point.","status":"Complete"},{"id":3,"ref":"IP-03","party":"UAE Federal Customs / port community systems","direction":"External","needs":"Accurate and timely declarations; protection and correct use of GFS's EDI credentials; retention of customs records.","requirement_type":"Legal / Regulatory","how_addressed":"Credential handling under A.5.17; integrity of declaration data treated as a security property, not only a quality one.","status":"Complete"},{"id":4,"ref":"IP-04","party":"Warehouse control system vendor (NL)","direction":"External","needs":"Standing remote access to support the ASRS; predictable maintenance windows; clarity on who owns patching.","requirement_type":"Contractual","how_addressed":"Supplier agreement to be updated with security terms (A.5.20), access restricted and monitored, maintenance windows agreed with operations.","status":"Draft"},{"id":5,"ref":"IP-05","party":"Board of Directors / Managing Director","direction":"Internal","needs":"No operational stoppage; no contract loss; a defensible answer if a regulator or customer asks; visibility of residual risk in business terms.","requirement_type":"Internal mandate","how_addressed":"Management review pack reports risk posture, open findings and KPIs on one page. Risk acceptance criteria approved by the board.","status":"Complete"},{"id":6,"ref":"IP-06","party":"Warehouse and operations staff","direction":"Internal","needs":"Controls that do not slow down loading and picking; instructions in a language they read; not being blamed for reporting mistakes.","requirement_type":"Expectation only","how_addressed":"Awareness material translated; a no-blame reporting route; control design reviewed with the COO before rollout.","status":"Complete"},{"id":7,"ref":"IP-07","party":"IT team","direction":"Internal","needs":"Realistic workload; clear authority to say no to insecure change; tooling budget.","requirement_type":"Expectation only","how_addressed":"Roles and responsibilities documented under cl. 5.3; ISMS tasks written into objectives rather than added informally.","status":"Complete"},{"id":8,"ref":"IP-08","party":"Last-mile subcontractors","direction":"External","needs":"Enough consignee data to deliver; simple onboarding.","requirement_type":"Contractual","how_addressed":"Data minimisation in the feed provided to them; supplier security clauses; access removed on contract end.","status":"Draft"},{"id":9,"ref":"IP-09","party":"Cyber insurer","direction":"External","needs":"Evidence of MFA, backup testing, EDR coverage and an incident response plan at renewal.","requirement_type":"Contractual","how_addressed":"Insurer's control questionnaire mapped to Annex A so the same evidence serves both.","status":"Complete"},{"id":10,"ref":"IP-10","party":"Certification body (external auditor)","direction":"External","needs":"Documented information required by the standard; evidence controls operate; access to people and records during audit.","requirement_type":"Contractual","how_addressed":"Evidence is produced as a by-product of running the ISMS, not assembled before the audit.","status":"Complete"},{"id":11,"ref":"IP-11","party":"Employees (as data subjects)","direction":"Internal","needs":"[YOU: what do GFS employees legitimately expect about how their own personal data, HR records and any monitoring are handled?]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"},{"id":12,"ref":"IP-12","party":"Microsoft (Azure / M365)","direction":"External","needs":"[YOU: what does the cloud provider expect from GFS, and what does GFS need from them? Hint: the answer is a shared responsibility model, not 'they handle security'.]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"},{"id":13,"ref":"IP-13","party":"[YOU: name a party nobody remembers until the audit]","direction":"External","needs":"[YOU: candidates -- landlord of the KIZAD facility, the utility/DEWA-equivalent, the recruitment agency supplying warehouse labour, the shredding company]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"},{"id":14,"ref":"IP-14","party":"[YOU: one more, your choice]","direction":"Internal","needs":"[YOU]","requirement_type":"","how_addressed":"[YOU]","status":"TODO - you"}],"controls":[{"ref":"A.5.1","theme":"Organizational","title":"Policies for information security","plain_english":"Management writes down the rules, approves them, publishes them, and reviews them on a schedule or after a significant change.","example_evidence":"Signed policy set with an approval date, a review date, and a distribution/acknowledgement record.","applicability":"Included","status":"Implemented","owner":"","justification":"Required by cl. 5.2 and by every customer questionnaire GFS answers. Included."},{"ref":"A.5.2","theme":"Organizational","title":"Information security roles and responsibilities","plain_english":"Someone is named for each security responsibility, and they know it.","example_evidence":"Role descriptions or a RACI, signed off, plus the appointment record for the ISMS owner.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.3","theme":"Organizational","title":"Segregation of duties","plain_english":"No single person can create, approve and conceal the same action.","example_evidence":"A conflicting-duties matrix, and evidence a request needed a second approver.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.4","theme":"Organizational","title":"Management responsibilities","plain_english":"Managers actively require their people to follow the rules, rather than assuming they will.","example_evidence":"Team meeting minutes covering a security topic; a manager-led control check record.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.5","theme":"Organizational","title":"Contact with authorities","plain_english":"You know who to call at the regulator, police or CERT before you need them, not during.","example_evidence":"A documented contact list with names and numbers, plus a record of the last contact or test.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.6","theme":"Organizational","title":"Contact with special interest groups","plain_english":"You stay connected to sources of security knowledge outside the company.","example_evidence":"Membership records, advisory feeds subscribed, or notes from an industry forum.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.7","theme":"Organizational","title":"Threat intelligence","plain_english":"You gather information about threats relevant to you and actually do something with it.","example_evidence":"A threat brief with a decision or action logged against it, not just a feed subscription.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.8","theme":"Organizational","title":"Information security in project management","plain_english":"Security requirements are raised at project start, not bolted on at go-live.","example_evidence":"A project gate checklist with a security sign-off, for a real project.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.9","theme":"Organizational","title":"Inventory of information and other associated assets","plain_english":"You have a current list of what you hold and who owns each item.","example_evidence":"Asset register export with owner and classification, plus the date of the last reconciliation.","applicability":"Included","status":"Implemented","owner":"","justification":""},{"ref":"A.5.10","theme":"Organizational","title":"Acceptable use of information and other associated assets","plain_english":"People are told what they may and may not do with company information and equipment.","example_evidence":"The acceptable use policy plus acknowledgement records covering current staff.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.11","theme":"Organizational","title":"Return of assets","plain_english":"Leavers hand everything back, and you can prove it.","example_evidence":"Completed exit checklists showing laptop, badge and phone returned, for named leavers.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.12","theme":"Organizational","title":"Classification of information","plain_english":"Information is graded by how much harm its loss would cause.","example_evidence":"The classification scheme, and examples of real documents carrying a grade.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.13","theme":"Organizational","title":"Labelling of information","plain_english":"The grade is visible on the information itself, so people handle it correctly.","example_evidence":"Screenshots of labelled documents or emails, plus the labelling procedure.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.14","theme":"Organizational","title":"Information transfer","plain_english":"Sending information in or out follows rules — channels, encryption, agreements.","example_evidence":"Transfer procedure plus an example: an SFTP configuration or a signed data transfer agreement.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.15","theme":"Organizational","title":"Access control","plain_english":"Access is granted on a defined basis, not on request alone.","example_evidence":"The access control policy and an approved access request showing the business justification.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.16","theme":"Organizational","title":"Identity management","plain_english":"Every identity is unique and traceable to a person or a service.","example_evidence":"A directory export showing no unexplained shared accounts, with owners for service accounts.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.17","theme":"Organizational","title":"Authentication information","plain_english":"Passwords, keys and tokens are issued, stored and reset securely.","example_evidence":"Password/MFA policy plus the enforcement configuration and its exception list.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.18","theme":"Organizational","title":"Access rights","plain_english":"Access is granted, changed and removed as people join, move and leave, and reviewed periodically.","example_evidence":"A completed access review with the reviewer, the date, and the removals that followed.","applicability":"Included","status":"Partially implemented","owner":"","justification":""},{"ref":"A.5.19","theme":"Organizational","title":"Information security in supplier relationships","plain_english":"You decide what security you need from suppliers before you depend on them.","example_evidence":"Supplier register with risk tiers and the assessment record for a named supplier.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.20","theme":"Organizational","title":"Addressing information security within supplier agreements","plain_english":"The security requirements are actually in the contract.","example_evidence":"The executed contract or DPA showing the security clauses, not a template.","applicability":"Included","status":"Implemented","owner":"","justification":""},{"ref":"A.5.21","theme":"Organizational","title":"Managing information security in the ICT supply chain","plain_english":"You look past your direct supplier at what they depend on.","example_evidence":"Supplier's own certification or subprocessor list, reviewed and recorded.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.22","theme":"Organizational","title":"Monitoring, review and change management of supplier services","plain_english":"You check that suppliers keep delivering what they promised.","example_evidence":"Service review minutes, SLA reports, or the review of a supplier's latest audit report.","applicability":"Included","status":"Planned","owner":"","justification":""},{"ref":"A.5.23","theme":"Organizational","title":"Information security for use of cloud services","plain_english":"Cloud services are selected, configured and exited under defined rules.","example_evidence":"Cloud service register with the shared-responsibility split documented and configuration baselines.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.24","theme":"Organizational","title":"Information security incident management planning and preparation","plain_english":"You have decided in advance who does what when something goes wrong.","example_evidence":"The incident response plan with named roles, plus the date and outcome of the last exercise.","applicability":"Included","status":"Implemented","owner":"","justification":""},{"ref":"A.5.25","theme":"Organizational","title":"Assessment and decision on information security events","plain_english":"Someone decides whether an event is an incident, and how serious it is.","example_evidence":"Triage records showing the severity assigned, by whom, and when.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.26","theme":"Organizational","title":"Response to information security incidents","plain_english":"Incidents are handled according to the plan.","example_evidence":"A closed incident record showing timeline, actions, decisions and notifications.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.27","theme":"Organizational","title":"Learning from information security incidents","plain_english":"Incidents change something afterwards.","example_evidence":"Post-incident review with actions, owners and evidence those actions were completed.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.28","theme":"Organizational","title":"Collection of evidence","plain_english":"When it matters, you can preserve information in a way that would stand up later.","example_evidence":"Forensic/evidence handling procedure plus a chain-of-custody record from a real case.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.29","theme":"Organizational","title":"Information security during disruption","plain_english":"Security does not collapse when the business is running on its backup arrangements.","example_evidence":"Continuity plan showing security controls in degraded mode, plus exercise notes.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.30","theme":"Organizational","title":"ICT readiness for business continuity","plain_english":"IT can recover within the times the business needs.","example_evidence":"RTO/RPO agreed with the business and a recovery test report measured against them.","applicability":"Included","status":"Planned","owner":"","justification":""},{"ref":"A.5.31","theme":"Organizational","title":"Legal, statutory, regulatory and contractual requirements","plain_english":"You know which laws and contract terms bind you, and where.","example_evidence":"A legal register naming each obligation, its owner and how it is met.","applicability":"Included","status":"Partially implemented","owner":"","justification":""},{"ref":"A.5.32","theme":"Organizational","title":"Intellectual property rights","plain_english":"You do not use software or content you have no right to use.","example_evidence":"Software licence inventory reconciled against installed software.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.33","theme":"Organizational","title":"Protection of records","plain_english":"Records that must be kept are kept, intact, for as long as required.","example_evidence":"Retention schedule plus evidence of protected, tamper-evident storage for a record class.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.34","theme":"Organizational","title":"Privacy and protection of PII","plain_english":"Personal data is handled according to the law that applies to it.","example_evidence":"Records of processing, a DPIA, and the data subject request log.","applicability":"Included","status":"Not assessed","owner":"","justification":"Included: GFS processes consignee personal data under UAE PDPL and, for EU shippers, GDPR."},{"ref":"A.5.35","theme":"Organizational","title":"Independent review of information security","plain_english":"Someone other than the people running security checks that it works.","example_evidence":"Internal audit report or an external assessment, with management's response.","applicability":"Included","status":"Planned","owner":"","justification":""},{"ref":"A.5.36","theme":"Organizational","title":"Compliance with policies, rules and standards for information security","plain_english":"You check that people actually follow the rules you wrote.","example_evidence":"Compliance check results — a sampled review, with findings and corrections.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.5.37","theme":"Organizational","title":"Documented operating procedures","plain_english":"The routine work is written down so it survives the person who does it.","example_evidence":"A current, versioned operating procedure and evidence it is the one being followed.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.6.1","theme":"People","title":"Screening","plain_english":"People are checked before they are given access, proportionate to the role.","example_evidence":"Screening records for recent hires, and the policy setting what is checked for which roles.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.6.2","theme":"People","title":"Terms and conditions of employment","plain_english":"Security obligations are part of the employment contract.","example_evidence":"The contract clause plus signed contracts for current staff and contractors.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.6.3","theme":"People","title":"Information security awareness, education and training","plain_english":"People know the rules, the threats, and their part in it — in a form they can absorb.","example_evidence":"Training records with completion dates, the material itself, and a measure of effect.","applicability":"Included","status":"Implemented","owner":"","justification":""},{"ref":"A.6.4","theme":"People","title":"Disciplinary process","plain_english":"There is a defined consequence for breaking the rules, and people know it exists.","example_evidence":"The documented process, communicated, plus (if any) an anonymised applied case.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.6.5","theme":"People","title":"Responsibilities after termination or change of employment","plain_english":"Obligations that outlive employment are stated and enforceable.","example_evidence":"Exit letters or contract clauses covering confidentiality after leaving.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.6.6","theme":"People","title":"Confidentiality or non-disclosure agreements","plain_english":"Confidentiality commitments are documented and current.","example_evidence":"Signed NDAs for staff, contractors and suppliers, with a review date.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.6.7","theme":"People","title":"Remote working","plain_english":"Working away from the office has defined security rules.","example_evidence":"Remote working policy plus device configuration evidence (disk encryption, VPN).","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.6.8","theme":"People","title":"Information security event reporting","plain_english":"People have an easy route to report something odd, and they use it.","example_evidence":"The reporting channel, plus a log showing reports actually arriving from staff.","applicability":"Included","status":"Partially implemented","owner":"","justification":""},{"ref":"A.7.1","theme":"Physical","title":"Physical security perimeters","plain_english":"There is a defined boundary around areas holding information.","example_evidence":"Site plan marking perimeters, plus photographs or a survey of the barriers.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.7.2","theme":"Physical","title":"Physical entry","plain_english":"Only authorised people get in, and entry is recorded.","example_evidence":"Access control list for a secure area plus badge system logs for a sample period.","applicability":"Included","status":"Implemented","owner":"","justification":""},{"ref":"A.7.3","theme":"Physical","title":"Securing offices, rooms and facilities","plain_english":"Sensitive areas are protected in proportion to what is inside them.","example_evidence":"Room security assessment and the resulting measures for the comms room.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.7.4","theme":"Physical","title":"Physical security monitoring","plain_english":"Premises are watched for unauthorised access.","example_evidence":"CCTV/alarm coverage plan, retention setting, and a record of a reviewed alert.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.7.5","theme":"Physical","title":"Protecting against physical and environmental threats","plain_english":"You have accounted for fire, flood, heat, dust and power.","example_evidence":"Environmental risk assessment plus fire suppression and cooling maintenance records.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.7.6","theme":"Physical","title":"Working in secure areas","plain_english":"There are rules for what happens inside a secure area.","example_evidence":"Secure area rules posted and acknowledged, plus a supervision or escort record.","applicability":"Included","status":"Not assessed","owner":"","justification":"[YOU: is the OT control room a 'secure area'? Your answer here has to match what you wrote in the clause 4 scope.]"},{"ref":"A.7.7","theme":"Physical","title":"Clear desk and clear screen","plain_english":"Information is not left visible or unattended.","example_evidence":"The rule, plus dated walkthrough findings and the corrections made.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.7.8","theme":"Physical","title":"Equipment siting and protection","plain_english":"Equipment is placed so it is not easily damaged, overheard or stolen.","example_evidence":"Comms room layout with rationale, plus environmental monitoring readings.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.7.9","theme":"Physical","title":"Security of assets off-premises","plain_english":"Equipment leaving the site is still protected.","example_evidence":"Asset issue log for handhelds and laptops, plus the off-site handling rules.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.7.10","theme":"Physical","title":"Storage media","plain_english":"Removable media is controlled through its whole life.","example_evidence":"Media register plus the disposal or sanitisation certificates.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.7.11","theme":"Physical","title":"Supporting utilities","plain_english":"Power, cooling and comms failures do not silently take you down.","example_evidence":"UPS and generator test records with dates and results.","applicability":"Included","status":"Partially implemented","owner":"","justification":""},{"ref":"A.7.12","theme":"Physical","title":"Cabling security","plain_english":"Power and data cabling cannot be easily tapped or damaged.","example_evidence":"Cabling survey or photographs showing protected routing and labelling.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.7.13","theme":"Physical","title":"Equipment maintenance","plain_english":"Equipment is maintained so it does not fail in a way that costs you information.","example_evidence":"Maintenance schedule and completed maintenance records for critical equipment.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.7.14","theme":"Physical","title":"Secure disposal or re-use of equipment","plain_english":"Nothing readable leaves the building on discarded equipment.","example_evidence":"Destruction or wipe certificates matched to asset tags.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.1","theme":"Technological","title":"User endpoint devices","plain_english":"Laptops, phones and handhelds are configured and protected to a standard.","example_evidence":"MDM/Intune compliance report showing encryption and policy state across the fleet.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.2","theme":"Technological","title":"Privileged access rights","plain_english":"Administrative access is restricted, justified, and reviewed.","example_evidence":"List of privileged accounts with business justification, plus the last review record.","applicability":"Included","status":"Partially implemented","owner":"","justification":""},{"ref":"A.8.3","theme":"Technological","title":"Information access restriction","plain_english":"People see only the information their role requires.","example_evidence":"Permission model for a system plus a sample check that it matches reality.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.4","theme":"Technological","title":"Access to source code","plain_english":"Source code is not readable or changeable by anyone who wants it.","example_evidence":"Repository permission export plus the branch protection settings.","applicability":"Included","status":"Not assessed","owner":"","justification":"[YOU: GFS does not develop the portal in-house any more. Decide whether A.8.4 is included, and justify it either way — remember the 2019 contractor still holds the repository.]"},{"ref":"A.8.5","theme":"Technological","title":"Secure authentication","plain_english":"Logging in is hard to fake — strong factors, sensibly enforced.","example_evidence":"MFA enforcement policy, the coverage report, and the documented exception list.","applicability":"Included","status":"Implemented","owner":"","justification":""},{"ref":"A.8.6","theme":"Technological","title":"Capacity management","plain_english":"Resources are monitored so you do not fail by simply running out.","example_evidence":"Capacity trend reports with thresholds and an example of action taken.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.7","theme":"Technological","title":"Protection against malware","plain_english":"Malicious code is prevented, detected and responded to.","example_evidence":"EDR/AV coverage report showing estate percentage and an example detection handled.","applicability":"Included","status":"Implemented","owner":"","justification":""},{"ref":"A.8.8","theme":"Technological","title":"Management of technical vulnerabilities","plain_english":"You find out about weaknesses and fix them within a defined time.","example_evidence":"Vulnerability scan reports, the remediation SLA, and evidence of closure against it.","applicability":"Included","status":"Partially implemented","owner":"","justification":""},{"ref":"A.8.9","theme":"Technological","title":"Configuration management","plain_english":"Systems are built and kept to a defined secure configuration.","example_evidence":"Hardening baselines plus a drift/compliance report against them.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.10","theme":"Technological","title":"Information deletion","plain_english":"Information is deleted when it is no longer needed or required.","example_evidence":"Deletion procedure plus a completed deletion record for a real data set.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.11","theme":"Technological","title":"Data masking","plain_english":"Sensitive data is hidden or obscured where full visibility is not needed.","example_evidence":"Masking rules in a system and evidence that non-production data is masked.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.12","theme":"Technological","title":"Data leakage prevention","plain_english":"Attempts to move information out are detected or prevented.","example_evidence":"DLP policy configuration plus a report of triggered rules and how they were handled.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.13","theme":"Technological","title":"Information backup","plain_english":"Backups exist, and you have proven you can restore from them.","example_evidence":"Backup job report plus a dated restore test naming the system, the verifier and the time taken.","applicability":"Included","status":"Partially implemented","owner":"","justification":"Included: treats R-01 and R-06. Backup exists; restore testing is the open gap."},{"ref":"A.8.14","theme":"Technological","title":"Redundancy of information processing facilities","plain_english":"Critical processing does not have a single point of failure.","example_evidence":"Architecture showing redundancy plus a failover test record.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.15","theme":"Technological","title":"Logging","plain_english":"Activity that matters is recorded and kept.","example_evidence":"Logging standard listing what is logged, retention setting, and a sample log extract.","applicability":"Included","status":"Partially implemented","owner":"","justification":""},{"ref":"A.8.16","theme":"Technological","title":"Monitoring activities","plain_english":"Someone or something is watching the logs and reacting.","example_evidence":"Alert rules, plus a triage record showing an alert being reviewed and closed.","applicability":"Included","status":"Planned","owner":"","justification":""},{"ref":"A.8.17","theme":"Technological","title":"Clock synchronization","plain_english":"System clocks agree, so logs can be correlated.","example_evidence":"NTP configuration across systems and a check showing drift within tolerance.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.18","theme":"Technological","title":"Use of privileged utility programs","plain_english":"Tools that can override controls are restricted and tracked.","example_evidence":"List of such tools, who may run them, and logs of their use.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.19","theme":"Technological","title":"Installation of software on operational systems","plain_english":"Only approved software gets installed on production systems.","example_evidence":"Change records for software installation plus an application allowlist configuration.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.20","theme":"Technological","title":"Networks security","plain_english":"Networks are designed and managed to protect what crosses them.","example_evidence":"Network diagram, firewall rule base, and evidence of the last rule review.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.21","theme":"Technological","title":"Security of network services","plain_english":"Network services carry defined security terms, whoever provides them.","example_evidence":"Service agreements with security terms, plus monitoring of delivery.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.22","theme":"Technological","title":"Segregation of networks","plain_english":"Different trust zones are actually separated, not just drawn separately.","example_evidence":"Firewall/VLAN configuration proving the IT–OT boundary, plus a validation test.","applicability":"Included","status":"Planned","owner":"","justification":"Included: treats R-02, the highest residual risk on the register (IT/OT segregation)."},{"ref":"A.8.23","theme":"Technological","title":"Web filtering","plain_english":"Access to known-harmful web content is restricted.","example_evidence":"Filtering configuration and a report of blocked categories.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.24","theme":"Technological","title":"Use of cryptography","plain_english":"Encryption is used according to a decided rule, and keys are managed.","example_evidence":"Cryptographic policy naming algorithms and key lifecycle, plus a key inventory.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.25","theme":"Technological","title":"Secure development life cycle","plain_english":"Security is part of how software is built, not a final check.","example_evidence":"The documented SDLC with security gates and evidence one was applied.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.26","theme":"Technological","title":"Application security requirements","plain_english":"Security requirements are stated for applications before they are built or bought.","example_evidence":"Requirement documents or user stories with security acceptance criteria.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.27","theme":"Technological","title":"Secure system architecture and engineering principles","plain_english":"Systems are designed on stated security principles.","example_evidence":"Design standards plus an architecture review record for a real system.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.28","theme":"Technological","title":"Secure coding","plain_english":"Code is written to avoid known classes of flaw.","example_evidence":"Coding standard, plus SAST results and code review records.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.29","theme":"Technological","title":"Security testing in development and acceptance","plain_english":"Software is tested for security before it goes live.","example_evidence":"Penetration test or DAST report and the retest confirming fixes.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.30","theme":"Technological","title":"Outsourced development","plain_english":"Work done by others is held to your security standard.","example_evidence":"Contract security requirements for the developer plus your review of their output.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.31","theme":"Technological","title":"Separation of development, test and production environments","plain_english":"Environments are separate so mistakes and test data do not reach live.","example_evidence":"Environment inventory showing separation and different credentials per environment.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.32","theme":"Technological","title":"Change management","plain_english":"Changes are assessed, approved and recorded before they happen.","example_evidence":"Change tickets showing risk assessment, approval, implementation and back-out plan.","applicability":"Included","status":"Implemented","owner":"","justification":""},{"ref":"A.8.33","theme":"Technological","title":"Test information","plain_english":"Real data is not casually used for testing.","example_evidence":"Procedure plus evidence test data sets are synthetic or masked.","applicability":"Included","status":"Not assessed","owner":"","justification":""},{"ref":"A.8.34","theme":"Technological","title":"Protection of information systems during audit testing","plain_english":"Audit activity does not itself break production.","example_evidence":"Agreed audit test plan with scope, timing and read-only access constraints.","applicability":"Included","status":"Not assessed","owner":"","justification":""}],"evidence":[{"control_ref":"A.5.1","title":"Information Security Policy v2.1 (approved)","type":"Policy","description":"Board-approved policy covering the ISMS, signed by the Managing Director.","location":"SharePoint > ISMS > 01 Policies > InfoSec Policy v2.1.pdf","owner":"M. Al Hosani (MD)","date_collected":"2026-02-10","frequency":"Annual","last_reviewed":"2026-02-10"},{"control_ref":"A.5.1","title":"Policy acknowledgement register","type":"Record","description":"Acknowledgement records for 231 of 250 staff; 19 outstanding are warehouse night shift.","location":"SharePoint > ISMS > 01 Policies > Acknowledgements.xlsx","owner":"HR Manager","date_collected":"2026-07-04","frequency":"Quarterly","last_reviewed":"2026-07-04"},{"control_ref":"A.8.5","title":"Entra ID MFA enforcement — Conditional Access policy","type":"Screenshot","description":"Screenshot of the CA policy requiring MFA for all users on all cloud apps.","location":"SharePoint > ISMS > 05 Evidence > IAM > CA-MFA-2026-08.png","owner":"IT Manager","date_collected":"2026-08-18","frequency":"Quarterly","last_reviewed":"2026-08-18"},{"control_ref":"A.8.5","title":"MFA exception register","type":"Record","description":"12 service accounts excluded from MFA, each with a named owner and compensating control.","location":"SharePoint > ISMS > 05 Evidence > IAM > MFA-exceptions.xlsx","owner":"IT Manager","date_collected":"2026-08-18","frequency":"Monthly","last_reviewed":"2026-08-20"},{"control_ref":"A.8.7","title":"Defender for Endpoint coverage report","type":"Log","description":"Coverage report showing 243/247 managed endpoints reporting healthy.","location":"Defender portal > Reports > Device health (exported monthly)","owner":"IT Manager","date_collected":"2026-08-25","frequency":"Monthly","last_reviewed":"2026-08-25"},{"control_ref":"A.5.24","title":"Incident Response Plan v1.3 with named roles","type":"Procedure","description":"IR plan with the 24-hour customer notification trigger and the escalation tree.","location":"SharePoint > ISMS > 02 Procedures > IRP v1.3.docx","owner":"IT Manager","date_collected":"2026-06-12","frequency":"Annual","last_reviewed":"2026-06-12"},{"control_ref":"A.6.3","title":"Induction security training pack (EN/HI/UR)","type":"Record","description":"Training material translated after the awareness gap was raised; delivered at induction.","location":"SharePoint > ISMS > 04 Awareness > Induction pack","owner":"HR Manager","date_collected":"2026-07-20","frequency":"Annual","last_reviewed":"2026-07-20"},{"control_ref":"A.7.2","title":"KIZAD badge access list — secure areas","type":"Record","description":"Export of who holds access to the OT control room and the comms room.","location":"Gallagher system > Reports > Access by area (exported)","owner":"Facilities Lead","date_collected":"2026-08-01","frequency":"Quarterly","last_reviewed":"2026-08-01"},{"control_ref":"A.5.20","title":"Signed DPA and SCCs — EU customer (Rotterdam account)","type":"Policy","description":"Executed data processing agreement with Standard Contractual Clauses attached.","location":"SharePoint > Legal > Contracts > Rotterdam > DPA-signed.pdf","owner":"Commercial Director","date_collected":"2026-03-30","frequency":"Annual","last_reviewed":"2026-03-30"},{"control_ref":"A.5.9","title":"Asset register export","type":"Record","description":"Current asset inventory with owner and classification for IT assets.","location":"SharePoint > ISMS > 03 Registers > Assets.xlsx","owner":"IT Manager","date_collected":"2026-07-15","frequency":"Quarterly","last_reviewed":"2026-07-15"},{"control_ref":"A.8.32","title":"Change tickets — August sample","type":"Ticket","description":"Twenty change records sampled, showing assessment, approval and back-out plan.","location":"Freshservice > Changes > filter: Aug 2026","owner":"IT Manager","date_collected":"2026-08-31","frequency":"Monthly","last_reviewed":"2026-08-31"},{"control_ref":"A.8.13","title":"Nightly backup job report — WMS and portal databases","type":"Log","description":"Azure Backup job report showing successful nightly backups.","location":"Azure portal > Backup center > Jobs (exported)","owner":"IT Manager","date_collected":"2026-01-20","frequency":"Monthly","last_reviewed":"2026-01-20"},{"control_ref":"A.8.2","title":"Privileged account review — Q4 2025","type":"Record","description":"Review of Global Administrators and Azure Owner assignments. Not repeated since.","location":"SharePoint > ISMS > 05 Evidence > IAM > PrivReview-Q4-2025.xlsx","owner":"IT Manager","date_collected":"2025-12-15","frequency":"Quarterly","last_reviewed":"2025-12-15"},{"control_ref":"A.5.18","title":"Access review — corporate file shares","type":"Record","description":"Manager-attested review of file share permissions. One cycle only, never repeated.","location":"SharePoint > ISMS > 05 Evidence > IAM > ShareReview-2025.xlsx","owner":"IT Manager","date_collected":"2025-11-02","frequency":"Quarterly","last_reviewed":"2025-11-02"},{"control_ref":"A.8.8","title":"Qualys external scan report","type":"Log","description":"External vulnerability scan of the portal perimeter. Findings not retested.","location":"SharePoint > ISMS > 05 Evidence > Vuln > Qualys-2026-02.pdf","owner":"IT Manager","date_collected":"2026-02-28","frequency":"Quarterly","last_reviewed":"2026-02-28"},{"control_ref":"A.7.11","title":"UPS load test certificate","type":"Record","description":"Annual UPS test for the Mussafah comms room. Generator not covered.","location":"Facilities > Maintenance > UPS-test-2024.pdf","owner":"Facilities Lead","date_collected":"2024-11-08","frequency":"Annual","last_reviewed":"2024-11-08"},{"control_ref":"A.5.31","title":"Legal and regulatory register","type":"Record","description":"Register of PDPL, GDPR and customs obligations. Predates the 2026 contract changes.","location":"SharePoint > ISMS > 03 Registers > Legal.xlsx","owner":"Commercial Director","date_collected":"2025-06-01","frequency":"Annual","last_reviewed":"2025-06-01"},{"control_ref":"A.8.15","title":"Log retention settings — portal and WMS","type":"Screenshot","description":"Screenshot of retention configuration. Taken once, never re-checked.","location":"SharePoint > ISMS > 05 Evidence > Logging > retention-2025.png","owner":"IT Manager","date_collected":"2025-09-10","frequency":"Annual","last_reviewed":"2025-09-10"},{"control_ref":"A.8.22","title":"IT/OT firewall rule base and VLAN configuration","type":"Screenshot","description":"Intended evidence of the IT–OT boundary. Nothing captured — the boundary is not built.","location":"(not yet held)","owner":"IT Manager","date_collected":"","frequency":"Quarterly","last_reviewed":""},{"control_ref":"A.5.30","title":"WMS restore test report","type":"Record","description":"A full restore test measured against an agreed RTO. Never performed.","location":"(not yet held)","owner":"IT Manager","date_collected":"","frequency":"Quarterly","last_reviewed":""},{"control_ref":"A.5.22","title":"OT vendor service review minutes","type":"Record","description":"Evidence the vendor's security performance is reviewed. No review has been held.","location":"(not yet held)","owner":"COO","date_collected":"","frequency":"Quarterly","last_reviewed":""},{"control_ref":"A.8.16","title":"Alert triage records","type":"Record","description":"Evidence someone reviews security alerts. No monitoring process exists yet.","location":"(not yet held)","owner":"IT Manager","date_collected":"","frequency":"Monthly","last_reviewed":""},{"control_ref":"A.5.35","title":"Independent review of information security","type":"Record","description":"Internal audit has not yet run; the first cycle is planned for Session 27.","location":"(not yet held)","owner":"ISMS Owner","date_collected":"","frequency":"Annual","last_reviewed":""},{"control_ref":"A.6.8","title":"Security event reporting log","type":"Record","description":"Evidence staff actually report events. The channel exists but nothing is logged.","location":"(not yet held)","owner":"IT Manager","date_collected":"","frequency":"Quarterly","last_reviewed":""}],"risks":[{"ref":"R-01","scenario":"Ransomware encrypts the WMS and shared file storage, halting dispatch across both sites","residual":"16","controls":"A.8.7, A.8.13, A.8.8, A.5.24","status":"Seeded"},{"ref":"R-02","scenario":"Malware crosses from corporate IT into the flat OT network and stops the ASRS and conveyors","residual":"20","controls":"A.8.22, A.8.20, A.5.30, A.8.7","status":"Seeded"},{"ref":"R-03","scenario":"The OT vendor's standing remote-support VPN is abused or compromised","residual":"15","controls":"A.5.20, A.8.2, A.8.16, A.5.22","status":"Seeded"},{"ref":"R-04","scenario":"A vulnerability in the Customer Portal exposes shipment and consignee data","residual":"16","controls":"A.8.29, A.8.8, A.8.26, A.8.28","status":"Seeded"},{"ref":"R-05","scenario":"A leaver keeps working access after departure, on shared warehouse terminals","residual":"12","controls":"A.5.18, A.5.16, A.6.5, A.5.11","status":"Seeded"},{"ref":"R-06","scenario":"Backups prove unrecoverable when needed, because restores were never tested","residual":"15","controls":"A.8.13, A.5.30","status":"Seeded"},{"ref":"R-07","scenario":"A personal data breach triggers PDPL and GDPR notification obligations GFS cannot meet in time","residual":"12","controls":"A.5.34, A.5.24, A.5.26","status":"Seeded"},{"ref":"R-08","scenario":"Staff are phished and credentials are used for invoice fraud against customers","residual":"12","controls":"A.6.3, A.8.5, A.8.23, A.6.8","status":"Seeded"},{"ref":"R-09","scenario":"Customs EDI credentials are misused and false declarations are submitted in GFS's name","residual":"9","controls":"A.5.17, A.8.15, A.5.31","status":"Seeded"},{"ref":"R-10","scenario":"The Mussafah comms room fails on heat or power, taking the portal and WMS offline","residual":"10","controls":"A.7.11, A.7.5, A.8.14","status":"Seeded"},{"ref":"R-11","scenario":"A privileged Entra ID or Azure account is compromised and used to reach everything","residual":"15","controls":"A.8.2, A.8.5, A.8.16","status":"Seeded"},{"ref":"R-12","scenario":"An EU customer contract is lost after GFS fails their security audit or cannot evidence SCCs","residual":"9","controls":"A.5.19, A.5.20, A.5.31, A.5.35","status":"Seeded"},{"ref":"R-13","scenario":"A last-mile subcontractor leaks consignee names, addresses and phone numbers","residual":"8","controls":"A.5.19, A.5.20, A.5.34, A.8.11","status":"Seeded"},{"ref":"R-14","scenario":"Unpatched ASRS software is exploited; GFS cannot patch it without the vendor","residual":"12","controls":"A.8.8, A.5.21, A.5.22","status":"Seeded"},{"ref":"R-15","scenario":"An insider misuses WMS access to divert high-value cargo","residual":"10","controls":"A.5.3, A.8.3, A.8.15, A.8.16","status":"Seeded"}]};
 
 var STORE_KEY = 'gfs-isms.v1';
 var TABLE_KEYS = Object.keys(SCHEMA);
@@ -316,8 +397,9 @@ var MODULES = [
   { id:'scope',    label:'Scope & Context',            tag:'cl.4', ready:true  },
   { id:'assets',   label:'Asset Register',             tag:'S04',  ready:false },
   { id:'risks',    label:'Risk Register',              tag:'S06',  ready:false },
-  { id:'controls', label:'Control Library',            tag:'S11',  ready:false },
-  { id:'soa',      label:'Statement of Applicability', tag:'S17',  ready:false },
+  { id:'controls', label:'Control Library',            tag:'A.5–A.8', ready:true },
+  { id:'evidence', label:'Evidence Tracker',           tag:'S25', ready:true },
+  { id:'soa',      label:'Statement of Applicability', tag:'S17',  ready:true },
   { id:'policies', label:'Policy Library',             tag:'S19',  ready:false },
   { id:'audit',    label:'Internal Audit',             tag:'S27',  ready:false },
   { id:'review',   label:'Management Review',          tag:'S29',  ready:false }
@@ -329,7 +411,13 @@ var TABS = [
   { key:'interested_parties', label:'Interested parties', kind:'list' }
 ];
 
-var STATUS_TONE = { 'Complete':'green', 'Draft':'blue', 'TODO - you':'amber' };
+var STATUS_TONE = {
+  'Complete':'green', 'Draft':'blue', 'TODO - you':'amber',
+  'Implemented':'green', 'Partially implemented':'blue', 'Planned':'amber',
+  'Not applicable':'grey', 'Not assessed':'grey',
+  'Included':'green', 'Excluded':'blue', 'Seeded':'grey',
+  'Current':'green', 'Stale':'amber', 'Missing':'red'
+};
 var GAP_RE = /\[(GAP\s*-\s*)?YOU/i;
 
 var isGap  = function (v) { return GAP_RE.test(v || ''); };
@@ -337,6 +425,7 @@ var isTodo = function (r) { return (r.status || '').indexOf('TODO') === 0; };
 
 /* ---------------------------------------------------------------- state */
 var DB = null, TAB = 'org_context', FILTER = 'all', QUERY = '', SEL = null;
+var VIEW = { tabs: [], current: '', host: null };
 var storageOK = true, storageNote = '';
 
 function clone(x) { return JSON.parse(JSON.stringify(x)); }
@@ -370,9 +459,16 @@ function coerceDb(obj) {
   if (!src) return null;
   var tables = {}, found = 0;
   TABLE_KEYS.forEach(function (t) {
-    var rows = Array.isArray(src[t]) ? src[t] : [];
-    if (rows.length) found++;
-    tables[t] = rows.map(function (r, i) {
+    /* A table the payload has never heard of is seeded, so data saved by an
+       earlier version gains new modules instead of losing them. A table that
+       is present but empty stays empty — that was the user's choice. */
+    if (!Object.prototype.hasOwnProperty.call(src, t) || !Array.isArray(src[t])) {
+      tables[t] = (SEED[t] || []).map(function (r, i) { return safeRow(t, r, r.id || i + 1); });
+      return;
+    }
+    var incoming = src[t];
+    if (incoming.length) found++;
+    tables[t] = incoming.map(function (r, i) {
       var id = (r && typeof r.id === 'number' && isFinite(r.id)) ? r.id : i + 1;
       return safeRow(t, r, id);
     });
@@ -569,9 +665,13 @@ function openDrawer(table, row) {
   var body = el('div', { class: 'dbody' });
   function refresh() {
     heading.textContent = truncate(clean(row[titleKey]), 70) || 'Untitled entry';
-    renderTab();
+    if (evPanel) updateEvidenceBlock(evPanel, row);
+    renderCurrentTab();
   }
+  var evPanel = (table === 'evidence') ? evidenceBlock(row) : null;
+  if (evPanel) body.appendChild(evPanel);
   spec.columns.forEach(function (c) { body.appendChild(fieldFor(c, row, table, refresh)); });
+  if (table === 'controls') body.appendChild(controlDrawerExtras(row));
 
   var foot = el('div', { class: 'dfoot' }, [
     el('span', null, [el('kbd', { text: 'Esc' }), ' close  ', el('kbd', { text: '↑' }), el('kbd', { text: '↓' }), ' move']),
@@ -581,7 +681,7 @@ function openDrawer(table, row) {
       onclick: function () {
         if (!window.confirm('Delete ' + (row[L.ref] || 'this entry') + '?')) return;
         DB.tables[table] = rows(table).filter(function (r) { return r.id !== row.id; });
-        save(); closeDrawer(); renderTab(); toast('Deleted', 'amber');
+        save(); closeDrawer(); renderCurrentTab(); toast('Deleted', 'amber');
       }
     })
   ]);
@@ -612,12 +712,25 @@ function stepSelection(dir) {
 }
 
 /* ---------------------------------------------------------------- list */
+/* Evidence status is computed; everything else stores its own. */
+function rowStatus(table, row) {
+  var L = SCHEMA[table].list || {};
+  if (L.status === '__derived') return evidenceStatus(row);
+  return row[L.status || 'status'] || '';
+}
+function statusValues(table) {
+  var L = SCHEMA[table].list || {};
+  if (L.status === '__derived') return ['Current', 'Stale', 'Missing'];
+  var key = L.status || 'status';
+  var col = SCHEMA[table].columns.filter(function (c) { return c.key === key; })[0];
+  return (col && col.options) ? col.options : [];
+}
+function statusLabel(v) { return v.indexOf('TODO') === 0 ? 'Yours' : v; }
+
 function visibleRows(table) {
   var q = QUERY.toLowerCase();
   return rows(table).filter(function (r) {
-    if (FILTER === 'todo'  && !isTodo(r)) return false;
-    if (FILTER === 'draft' && r.status !== 'Draft') return false;
-    if (FILTER === 'done'  && r.status !== 'Complete') return false;
+    if (FILTER !== 'all' && rowStatus(table, r) !== FILTER) return false;
     if (!q) return true;
     return colKeys(table).some(function (k) { return (r[k] || '').toLowerCase().indexOf(q) >= 0; });
   });
@@ -628,15 +741,13 @@ function renderList(table) {
   var shown = visibleRows(table), all = rows(table);
   var count = function (f) { return all.filter(f).length; };
 
-  var chips = [
-    ['all',   'All',      all.length],
-    ['done',  'Complete', count(function (r) { return r.status === 'Complete'; })],
-    ['draft', 'Draft',    count(function (r) { return r.status === 'Draft'; })],
-    ['todo',  'Yours',    count(isTodo)]
-  ].map(function (c) {
+  var chipDefs = [['all', 'All', all.length]].concat(statusValues(table).map(function (v) {
+    return [v, statusLabel(v), count(function (r) { return rowStatus(table, r) === v; })];
+  }));
+  var chips = chipDefs.map(function (c) {
     return el('button', {
       class: 'chip' + (FILTER === c[0] ? ' on' : ''),
-      onclick: function () { FILTER = c[0]; renderTab(); }
+      onclick: function () { FILTER = c[0]; renderCurrentTab(); }
     }, [el('span', { text: c[1] }), el('span', { class: 'chipn', text: String(c[2]) })]);
   });
 
@@ -662,7 +773,8 @@ function renderList(table) {
   }
 
   shown.forEach(function (r) {
-    var tone = STATUS_TONE[r.status] || 'grey';
+    var rs = rowStatus(table, r);
+    var tone = STATUS_TONE[rs] || 'grey';
     var raw = L.title ? r[L.title] : r[L.primary];
     var previewKey = L.title ? L.primary : (spec.columns.filter(function (c) {
       return c.type === 'textarea' && c.key !== L.primary && c.key !== L.title;
@@ -676,7 +788,7 @@ function renderList(table) {
     });
 
     list.appendChild(el('div', {
-      class: 'row' + (isTodo(r) ? ' gap' : ''), 'data-id': r.id, 'data-table': table,
+      class: 'row' + (isTodo(r) || rs === 'Missing' ? ' gap' : ''), 'data-id': r.id, 'data-table': table,
       tabindex: '0', role: 'button',
       onclick: function () { openDrawer(table, r); },
       onkeydown: function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(table, r); } }
@@ -688,19 +800,23 @@ function renderList(table) {
           ? el('div', { class: 'prev', text: truncate(clean(r[previewKey]), 240) }) : null,
         el('div', { class: 'meta' }, meta)
       ]),
-      el('div', { class: 'st ' + tone }, [el('span', { class: 'dot ' + tone }), el('span', { text: r.status || 'Not set' })]),
+      el('div', { class: 'st ' + tone }, [el('span', { class: 'dot ' + tone }), el('span', { text: rs || 'Not set' })]),
+      table === 'controls' ? readyBadge(r.ref) : null,
       el('div', { class: 'chevron', text: '›' })
     ]));
   });
 
-  list.appendChild(el('div', { class: 'addrow' }, el('button', {
-    class: 'act', text: '+ ' + L.newLabel,
-    onclick: function () {
-      var r = safeRow(table, { status: 'TODO - you' }, nextId(table));
-      rows(table).push(r); save();
-      FILTER = 'all'; QUERY = ''; renderTab(); openDrawer(table, r);
-    }
-  })));
+  if (L.allowAdd !== false) {
+    list.appendChild(el('div', { class: 'addrow' }, el('button', {
+      class: 'act', text: '+ ' + (L.newLabel || 'New entry'),
+      onclick: function () {
+        var blank = (table === 'evidence') ? { frequency: 'Quarterly' } : { status: 'TODO - you' };
+        var r = safeRow(table, blank, nextId(table));
+        rows(table).push(r); save();
+        FILTER = 'all'; QUERY = ''; renderCurrentTab(); openDrawer(table, r);
+      }
+    })));
+  }
 
   return el('div', null, [bar, list]);
 }
@@ -728,7 +844,7 @@ function renderForm(table) {
 /* ---------------------------------------------------------------- stats */
 function renderStats() {
   var total = 0, done = 0;
-  TABLE_KEYS.forEach(function (t) {
+  ['org_context', 'issues', 'interested_parties'].forEach(function (t) {
     rows(t).forEach(function (r) {
       colKeys(t).forEach(function (k) {
         if (k === 'status') return;
@@ -797,6 +913,29 @@ var TEACH = {
   issues: { t: '4.1 — what makes an issue worth recording', b: [
     ['p', 'Most organisations use PESTLE externally and an organisational scan internally. The format does not matter; the standard says “determine”, not “tabulate”. What matters is that each issue is specific to GFS — not “cyber threats are increasing” — and that its consequence is written down.'],
     ['p', 'Seeded entries are worked examples. Entries with an amber edge are yours. Click any row to open it.']
+  ]},
+  controls: { t: 'Annex A is a completeness check, not a shopping list', b: [
+    ['p', ['Clause 6.1.3 has an order: choose treatment options, ', { b: 'determine the controls you need' },
+      ', and only then compare against Annex A to check you have not missed anything. Starting from the 93 and working backwards produces a control set nobody can trace to a risk — and an auditor will ask for that trace.']],
+    ['p', ['The four themes are Organizational (37), People (8), Physical (14) and Technological (34). The 2022 edition also gives each control five attributes for filtering; using them is optional.']],
+    ['p', [{ b: 'Audit-ready' }, ' on this page means one specific thing: at least one piece of evidence exists for the control and it is still current. A control marked Implemented with nothing behind it is a claim, not a control.']]
+  ]},
+  soa: { t: 'What the SoA is actually for', b: [
+    ['p', ['The Statement of Applicability is a required output of cl. 6.1.3(d). For every one of the 93 controls it records whether the control is necessary, and the ', { b: 'justification for including it and for excluding it' }, '. Certification bodies read it before anything else.']],
+    ['p', ['Two distinctions people collapse and auditors do not: ', { b: 'not applicable' }, ' means the control could not apply to your organisation at all; ', { b: 'not implemented' }, ' means it applies and you have not done it yet. The second is a plan, not an exclusion.']],
+    ['p', 'A justification that says "not relevant to our business" is not a justification. A good one points at a risk, a legal obligation, a contract, or a fact about the organisation that an auditor can test.']
+  ]},
+  evidence: { t: 'What counts as audit evidence', b: [
+    ['p', ['An auditor is not asking whether you believe the control works. They are asking what you can ', { b: 'show' }, ' them that would convince a reasonable third party — and ISO 27001 cl. 8.1 puts it plainly: keep documented information to the extent necessary to have confidence the processes were carried out as planned.']],
+    ['ul', [
+      [{ b: 'A policy' }, ' says what should happen. It proves intent and authority, and nothing else.'],
+      [{ b: 'A record' }, ' proves something did happen, once, on a date, by someone. Tickets, signed reviews, test reports, logs.'],
+      [{ b: 'A demonstration' }, ' shows the control working now, in front of the auditor. The strongest and the least forgeable.']
+    ]],
+    ['p', [{ b: 'Sufficient evidence' }, ' is current, attributable to a named person, reproducible from the location you recorded, and covers the whole population rather than one convenient example. ',
+      { b: 'Weak evidence' }, ' is undated, screenshotted once, produced the week of the audit, or describes the intention rather than the event.']],
+    ['p', ['That is why status here is ', { em: 'computed' },
+      ' from the last review date and the review frequency. You cannot mark your own evidence current.']]
   ]},
   interested_parties: { t: '4.2 — expectations vs requirements', b: [
     ['p', ['The field carrying the weight is ', { b: 'Requirement type' }, '. Cl. 4.2(c) asks you to decide which needs and expectations become requirements ', { em: 'of the ISMS' },
@@ -883,17 +1022,7 @@ function renderStorageState() {
 }
 
 /* ---------------------------------------------------------------- pages */
-function renderTab() {
-  var host = $('#tabcontent');
-  if (!host) return;
-  clear(host);
-  var btns = document.querySelectorAll('.tabs button');
-  for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('on', btns[i].getAttribute('data-k') === TAB);
-  var spec = TABS.filter(function (t) { return t.key === TAB; })[0];
-  append(host, teach(TAB, false));
-  append(host, spec.kind === 'form' ? renderForm(TAB) : renderList(TAB));
-  renderStats();
-}
+function renderTab() { renderCurrentTab(); }
 
 function siteFooter() {
   return el('div', { class: 'sitefoot' }, [
@@ -904,32 +1033,21 @@ function siteFooter() {
 }
 
 function pageScope() {
-  var main = clear($('#main'));
-  var wrap = el('div', { class: 'wrap' });
-  main.appendChild(wrap);
-
-  append(wrap, [
-    el('div', { id: 'storagebanner', class: 'banner', style: 'display:none' }),
-    el('div', { class: 'pagehead' }, [
-      el('div', { class: 'crumb', text: 'ISO/IEC 27001:2022  ·  Clause 4.1 – 4.4' }),
-      el('h2', { text: 'Scope & Context' }),
-      el('p', { class: 'lede', text: 'Define what the ISMS is for, who it must satisfy, and where its boundary runs. Everything you build later inherits from this page.' })
-    ]),
-    el('div', { class: 'tiles', id: 'tiles' }),
-    teach('intro', true)
-  ]);
-
-  var tabs = el('div', { class: 'tabs' }, TABS.map(function (t) {
-    return el('button', {
-      'data-k': t.key,
-      onclick: function () { TAB = t.key; FILTER = 'all'; QUERY = ''; closeDrawer(); renderTab(); }
-    }, [el('span', { text: t.label }),
-        t.kind === 'list' ? el('span', { class: 'count', text: String(rows(t.key).length) }) : null]);
+  var wrap = pageShell('ISO/IEC 27001:2022  ·  Clause 4.1 – 4.4', 'Scope & Context',
+    'Define what the ISMS is for, who it must satisfy, and where its boundary runs. Everything you build later inherits from this page.');
+  wrap.appendChild(el('div', { class: 'tiles', id: 'tiles' }));
+  append(wrap, teach('intro', true));
+  mountTabs(wrap, TABS.map(function (t) {
+    return {
+      key: t.key, label: t.label, teach: t.key,
+      count: t.kind === 'list' ? rows(t.key).length : null,
+      render: (function (tt) {
+        return function () { return tt.kind === 'form' ? renderForm(tt.key) : renderList(tt.key); };
+      })(t)
+    };
   }));
-
-  append(wrap, [tabs, el('div', { id: 'tabcontent' }), siteFooter()]);
+  wrap.appendChild(siteFooter());
   renderStorageState();
-  renderTab();
 }
 
 function pageLocked(m) {
@@ -971,6 +1089,7 @@ function buildShell() {
     el('div', { class: 'btns' }, [
       el('button', { text: 'Export', title: 'Download everything as one JSON file', onclick: exportJson }),
       el('button', { text: 'Import', title: 'Load a previously exported JSON file', onclick: function () { picker.click(); } }),
+      el('button', { text: 'Report', title: 'Printable audit pack (scope, SoA, evidence register)', onclick: printReport }),
       el('button', { class: 'warn', text: 'Reset', title: 'Back to the original seed data', onclick: resetAll })
     ]),
     picker,
@@ -986,7 +1105,9 @@ function route() {
     links[i].classList.toggle('active', links[i].getAttribute('href') === '#' + m.id);
   }
   window.scrollTo(0, 0);
-  if (m.ready) pageScope(); else pageLocked(m);
+  VIEW.current = ''; FILTER = 'all'; QUERY = '';
+  var PAGES = { scope: pageScope, controls: pageControls, evidence: pageEvidence, soa: pageSoa };
+  if (m.ready && PAGES[m.id]) PAGES[m.id](); else pageLocked(m);
   renderStorageState();
 }
 
@@ -1000,6 +1121,417 @@ document.addEventListener('keydown', function (e) {
   } else if (!typing && (e.key === 'ArrowDown' || e.key === 'j')) { e.preventDefault(); stepSelection(1); }
   else if (!typing && (e.key === 'ArrowUp' || e.key === 'k'))     { e.preventDefault(); stepSelection(-1); }
 });
+
+
+/* ================================================================== evidence
+   Evidence status is DERIVED, never stored. You cannot declare your own
+   evidence current; the date and the review frequency decide.
+   ================================================================== */
+var FREQ_MONTHS = { 'Monthly': 1, 'Quarterly': 3, 'Annual': 12 };
+
+function parseDate(s) {
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec((s || '').replace(/^\s+|\s+$/g, ''));
+  if (!m) return null;
+  var d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  return isNaN(d.getTime()) ? null : d;
+}
+function addMonths(d, n) { return new Date(d.getFullYear(), d.getMonth() + n, d.getDate()); }
+function today() { var t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()); }
+function fmtDate(d) {
+  return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+}
+
+/* Missing = never reviewed/collected. Stale = last review + frequency is past. */
+function evidenceStatus(row) {
+  var d = parseDate(row.last_reviewed);
+  if (!d) return 'Missing';
+  var due = addMonths(d, FREQ_MONTHS[row.frequency] || 12);
+  return due.getTime() < today().getTime() ? 'Stale' : 'Current';
+}
+function evidenceDue(row) {
+  var d = parseDate(row.last_reviewed);
+  return d ? fmtDate(addMonths(d, FREQ_MONTHS[row.frequency] || 12)) : '—';
+}
+
+function evidenceFor(ref) {
+  return rows('evidence').filter(function (e) { return (e.control_ref || '') === ref; });
+}
+function auditReady(ref) {
+  return evidenceFor(ref).some(function (e) { return evidenceStatus(e) === 'Current'; });
+}
+function inScopeControls() {
+  return rows('controls').filter(function (c) { return c.applicability !== 'Excluded'; });
+}
+
+/* Highest residual risk treated by this control, for dashboard ordering. */
+function riskFor(ref) {
+  var best = null;
+  rows('risks').forEach(function (r) {
+    var linked = (r.controls || '').split(',').map(function (s) { return s.replace(/^\s+|\s+$/g, ''); });
+    if (linked.indexOf(ref) < 0) return;
+    var score = Number(r.residual) || 0;
+    if (!best || score > best.score) best = { score: score, ref: r.ref, scenario: r.scenario };
+  });
+  return best;
+}
+
+function readyBadge(ref) {
+  var ok = auditReady(ref);
+  return el('span', { class: 'rb ' + (ok ? 'yes' : 'no'), title: ok
+      ? 'At least one current evidence item'
+      : 'No current evidence — this control is not audit-ready' },
+    [el('span', { class: 'dot ' + (ok ? 'green' : 'amber') }),
+     el('span', { text: ok ? 'Audit-ready' : 'Not ready' })]);
+}
+
+/* ================================================================== controls */
+function controlDrawerExtras(control) {
+  var box = el('div', { class: 'subsec' });
+  var list = el('div', { class: 'evlist' });
+
+  function paint() {
+    clear(list);
+    var items = evidenceFor(control.ref);
+    if (!items.length) {
+      list.appendChild(el('div', { class: 'evempty',
+        text: 'No evidence logged. This control cannot be audit-ready until something is here.' }));
+    }
+    items.forEach(function (e) {
+      var st = evidenceStatus(e), tone = st === 'Current' ? 'green' : (st === 'Stale' ? 'amber' : 'red');
+      list.appendChild(el('div', { class: 'evrow', onclick: function () { openDrawer('evidence', e); } }, [
+        el('div', { class: 'evmain' }, [
+          el('div', { class: 'evttl', text: e.title || '(untitled)' }),
+          el('div', { class: 'evmeta' }, [
+            el('span', { class: 'mini', text: e.type || 'unclassified' }),
+            el('span', { class: 'mini', text: e.frequency || 'no frequency' }),
+            el('span', { class: 'mini mono', text: 'due ' + evidenceDue(e) })
+          ])
+        ]),
+        el('div', { class: 'st ' + tone }, [el('span', { class: 'dot ' + tone }), el('span', { text: st })])
+      ]));
+    });
+  }
+  paint();
+
+  box.appendChild(el('h4', null, [el('span', { text: 'Evidence' }), readyBadge(control.ref)]));
+  box.appendChild(list);
+  box.appendChild(el('button', {
+    class: 'act', text: '+ Log evidence for ' + control.ref,
+    onclick: function () {
+      var r = safeRow('evidence', { control_ref: control.ref, frequency: 'Quarterly' }, nextId('evidence'));
+      rows('evidence').push(r); save();
+      openDrawer('evidence', r);
+    }
+  }));
+  return box;
+}
+
+function pageControls() {
+  var wrap = pageShell('ISO/IEC 27001:2022  ·  Annex A', 'Control Library',
+    'All 93 Annex A controls in the four themes. A control is audit-ready only when it has at least one current piece of evidence behind it.');
+  var tiles = el('div', { class: 'tiles' });
+  wrap.appendChild(tiles);
+  var scoped = inScopeControls();
+  var ready = scoped.filter(function (c) { return auditReady(c.ref); }).length;
+  append(tiles, [
+    statTile(String(scoped.length), 'Controls in scope', 'grey'),
+    statTile(String(ready), 'Audit-ready', 'green'),
+    statTile(String(scoped.length - ready), 'Not evidenced', 'amber'),
+    statTile(String(rows('controls').filter(function (c) { return c.applicability === 'Excluded'; }).length),
+             'Excluded from SoA', 'grey')
+  ]);
+  append(wrap, teach('controls', true));
+  mountTabs(wrap, [{ key: 'controls', label: 'All controls', render: function () { return renderList('controls'); } }]);
+  wrap.appendChild(siteFooter());
+}
+
+/* ================================================================== SoA */
+function pageSoa() {
+  var wrap = pageShell('ISO/IEC 27001:2022  ·  Clause 6.1.3(d)', 'Statement of Applicability',
+    'Generated from the control library. For every control: whether it is necessary, its status, the justification, and whether evidence actually backs it.');
+  append(wrap, teach('soa', true));
+  var host = el('div');
+  wrap.appendChild(host);
+
+  var missingJust = rows('controls').filter(function (c) {
+    return !(c.justification || '').replace(/^\s+|\s+$/g, '') || isGap(c.justification);
+  }).length;
+  var tiles = el('div', { class: 'tiles' });
+  append(tiles, [
+    statTile(String(rows('controls').length), 'Controls stated', 'grey'),
+    statTile(String(inScopeControls().length), 'Included', 'green'),
+    statTile(String(rows('controls').length - inScopeControls().length), 'Excluded', 'blue'),
+    statTile(String(missingJust), 'Justifications to write', 'amber')
+  ]);
+  wrap.insertBefore(tiles, host.previousSibling);
+
+  var table = el('div', { class: 'soa' });
+  table.appendChild(el('div', { class: 'soahead' }, [
+    el('div', { text: 'Control' }), el('div', { text: 'Applicability' }),
+    el('div', { text: 'Status' }), el('div', { text: 'Justification' }), el('div', { text: 'Evidence' })
+  ]));
+  rows('controls').forEach(function (c) {
+    table.appendChild(el('div', { class: 'soarow', onclick: function () { openDrawer('controls', c); } }, [
+      el('div', null, [el('div', { class: 'soaref', text: c.ref }), el('div', { class: 'soattl', text: c.title })]),
+      el('div', null, el('span', { class: 'mini', text: c.applicability || '—' })),
+      el('div', null, el('span', { class: 'mini', text: c.status || 'Not assessed' })),
+      el('div', { class: 'soajust' + (isGap(c.justification) || !c.justification ? ' todo' : ''),
+                  text: isGap(c.justification) ? 'Yours to write' : (c.justification || 'Not stated') }),
+      el('div', null, readyBadge(c.ref))
+    ]));
+  });
+  host.appendChild(table);
+  wrap.appendChild(siteFooter());
+}
+
+/* ================================================================== dashboard */
+function renderDashboard() {
+  var box = el('div');
+  var scoped = inScopeControls();
+  var withEv = scoped.filter(function (c) { return evidenceFor(c.ref).length > 0; });
+  var ready = scoped.filter(function (c) { return auditReady(c.ref); });
+  var ev = rows('evidence');
+  var stale = ev.filter(function (e) { return evidenceStatus(e) === 'Stale'; });
+  var missing = ev.filter(function (e) { return evidenceStatus(e) === 'Missing'; });
+  var pct = scoped.length ? Math.round(100 * withEv.length / scoped.length) : 0;
+  var readyPct = scoped.length ? Math.round(100 * ready.length / scoped.length) : 0;
+
+  var tiles = el('div', { class: 'tiles' });
+  var cov = el('div', { class: 'tile progress' }, [
+    el('div', { class: 'n', text: pct + '%' }),
+    el('div', { class: 'k', text: 'Controls with any evidence' }),
+    el('div', { class: 'track' }, el('i', { style: 'width:' + pct + '%' }))
+  ]);
+  var rdy = el('div', { class: 'tile progress' }, [
+    el('div', { class: 'n', text: readyPct + '%' }),
+    el('div', { class: 'k', text: 'Controls audit-ready' }),
+    el('div', { class: 'track' }, el('i', { style: 'width:' + readyPct + '%' }))
+  ]);
+  append(tiles, [cov, rdy, statTile(String(stale.length), 'Stale evidence items', 'amber'),
+                 statTile(String(missing.length), 'Never collected', 'red')]);
+  box.appendChild(tiles);
+
+  /* Controls with no evidence at all, worst risk first. */
+  var gaps = scoped.filter(function (c) { return evidenceFor(c.ref).length === 0; })
+    .map(function (c) { return { c: c, risk: riskFor(c.ref) }; })
+    .sort(function (a, b) {
+      var x = a.risk ? a.risk.score : -1, y = b.risk ? b.risk.score : -1;
+      if (x !== y) return y - x;
+      return a.c.ref.localeCompare(b.c.ref);
+    });
+
+  box.appendChild(el('h3', { class: 'secttl' },
+    [el('span', { text: 'Controls with no evidence' }),
+     el('span', { class: 'sectn', text: String(gaps.length) })]));
+  box.appendChild(el('p', { class: 'secthint',
+    text: 'Ordered by the highest residual risk each control treats, so the top of this list is where an auditor and an attacker both start. Risk scores come from the seeded register; the register itself unlocks in Session 6.' }));
+
+  var glist = el('div', { class: 'list' });
+  gaps.slice(0, 40).forEach(function (g) {
+    glist.appendChild(el('div', { class: 'row' + (g.risk && g.risk.score >= 15 ? ' hot' : ''),
+      onclick: (function (c) { return function () { location.hash = '#controls'; setTimeout(function () { openDrawer('controls', c); }, 80); }; })(g.c) }, [
+      el('div', { class: 'ref', text: g.c.ref }),
+      el('div', { class: 'main' }, [
+        el('div', { class: 'ttl', text: g.c.title }),
+        g.risk ? el('div', { class: 'prev', text: 'Treats ' + g.risk.ref + ' — ' + g.risk.scenario }) : null,
+        el('div', { class: 'meta' }, [
+          el('span', { class: 'mini', text: g.c.theme }),
+          el('span', { class: 'mini', text: g.c.status || 'Not assessed' })
+        ])
+      ]),
+      el('div', { class: 'st ' + (g.risk && g.risk.score >= 15 ? 'red' : (g.risk ? 'amber' : 'grey')) },
+        [el('span', { text: g.risk ? 'residual ' + g.risk.score : 'no linked risk' })]),
+      el('div', { class: 'chevron', text: '›' })
+    ]));
+  });
+  if (gaps.length > 40) {
+    glist.appendChild(el('div', { class: 'emptyrow', text: 'and ' + (gaps.length - 40) + ' more…' }));
+  }
+  if (!gaps.length) glist.appendChild(el('div', { class: 'emptyrow', text: 'Every in-scope control has at least one evidence item.' }));
+  box.appendChild(glist);
+
+  /* Attention list */
+  var attn = stale.concat(missing);
+  box.appendChild(el('h3', { class: 'secttl' },
+    [el('span', { text: 'Evidence needing attention' }),
+     el('span', { class: 'sectn', text: String(attn.length) })]));
+  var alist = el('div', { class: 'list' });
+  if (!attn.length) alist.appendChild(el('div', { class: 'emptyrow', text: 'Nothing stale or missing.' }));
+  attn.forEach(function (e) {
+    var st = evidenceStatus(e), tone = st === 'Stale' ? 'amber' : 'red';
+    alist.appendChild(el('div', { class: 'row', onclick: function () { openDrawer('evidence', e); } }, [
+      el('div', { class: 'ref', text: e.control_ref || '—' }),
+      el('div', { class: 'main' }, [
+        el('div', { class: 'ttl', text: e.title || '(untitled)' }),
+        el('div', { class: 'prev', text: st === 'Stale'
+          ? 'Last reviewed ' + e.last_reviewed + ' · ' + (e.frequency || 'annual').toLowerCase() + ' review was due ' + evidenceDue(e)
+          : 'Never collected or reviewed — ' + (e.location || 'no location recorded') }),
+        el('div', { class: 'meta' }, [el('span', { class: 'mini', text: e.type || '—' }),
+                                      el('span', { class: 'mini', text: e.owner || 'no owner' })])
+      ]),
+      el('div', { class: 'st ' + tone }, [el('span', { class: 'dot ' + tone }), el('span', { text: st })]),
+      el('div', { class: 'chevron', text: '›' })
+    ]));
+  });
+  box.appendChild(alist);
+  return box;
+}
+
+function pageEvidence() {
+  var wrap = pageShell('ISO/IEC 27001:2022  ·  clause 8.1, 9.1, 9.2', 'Evidence Tracker',
+    'What you could actually put in front of an auditor, for each control — and how much of it has gone out of date.');
+  append(wrap, teach('evidence', true));
+  mountTabs(wrap, [
+    { key: 'dash', label: 'Dashboard', render: renderDashboard },
+    { key: 'all',  label: 'All evidence', count: rows('evidence').length, render: function () { return renderList('evidence'); } }
+  ]);
+  wrap.appendChild(siteFooter());
+}
+
+/* ================================================================== print */
+function buildReport() {
+  var root = clear($('#printroot'));
+  var ctx = rows('org_context')[0] || {};
+  var scoped = inScopeControls();
+  var ready = scoped.filter(function (c) { return auditReady(c.ref); });
+  var ev = rows('evidence');
+  var cnt = function (s) { return ev.filter(function (e) { return evidenceStatus(e) === s; }).length; };
+
+  append(root, [
+    el('h1', { text: 'Gulf Freight Systems — ISMS audit pack' }),
+    el('p', { class: 'rmeta', text: 'Generated ' + fmtDate(today()) + ' · ISO/IEC 27001:2022 · Fictional training data, not a real ISMS' }),
+
+    el('h2', { text: '1. Scope' }),
+    el('p', { text: ctx.scope_statement || '(not written)' }),
+    el('table', { class: 'rt' }, [
+      el('tr', null, [el('th', { text: 'Approved by' }), el('td', { text: ctx.approved_by || '—' })]),
+      el('tr', null, [el('th', { text: 'Approval date' }), el('td', { text: ctx.approved_date || '—' })]),
+      el('tr', null, [el('th', { text: 'Version' }), el('td', { text: ctx.version || '—' })])
+    ]),
+
+    el('h2', { text: '2. Evidence position' }),
+    el('table', { class: 'rt' }, [
+      el('tr', null, [el('th', { text: 'Controls in scope' }), el('td', { text: String(scoped.length) })]),
+      el('tr', null, [el('th', { text: 'Audit-ready (current evidence)' }), el('td', { text: ready.length + ' (' + (scoped.length ? Math.round(100 * ready.length / scoped.length) : 0) + '%)' })]),
+      el('tr', null, [el('th', { text: 'Evidence items held' }), el('td', { text: String(ev.length) })]),
+      el('tr', null, [el('th', { text: 'Current / Stale / Never collected' }), el('td', { text: cnt('Current') + ' / ' + cnt('Stale') + ' / ' + cnt('Missing') })])
+    ]),
+
+    el('h2', { text: '3. Statement of Applicability' })
+  ]);
+
+  var soa = el('table', { class: 'rt wide' });
+  soa.appendChild(el('tr', null, [el('th', { text: 'Control' }), el('th', { text: 'Applicability' }),
+    el('th', { text: 'Status' }), el('th', { text: 'Audit-ready' }), el('th', { text: 'Justification' })]));
+  rows('controls').forEach(function (c) {
+    soa.appendChild(el('tr', null, [
+      el('td', { text: c.ref + ' ' + c.title }),
+      el('td', { text: c.applicability || '—' }),
+      el('td', { text: c.status || 'Not assessed' }),
+      el('td', { text: auditReady(c.ref) ? 'Yes' : 'No' }),
+      el('td', { text: isGap(c.justification) ? '(not written)' : (c.justification || '(not stated)') })
+    ]));
+  });
+  root.appendChild(soa);
+
+  root.appendChild(el('h2', { text: '4. Evidence register' }));
+  var et = el('table', { class: 'rt wide' });
+  et.appendChild(el('tr', null, [el('th', { text: 'Control' }), el('th', { text: 'Evidence' }), el('th', { text: 'Type' }),
+    el('th', { text: 'Location' }), el('th', { text: 'Owner' }), el('th', { text: 'Last reviewed' }),
+    el('th', { text: 'Next due' }), el('th', { text: 'Status' })]));
+  ev.slice().sort(function (a, b) { return (a.control_ref || '').localeCompare(b.control_ref || ''); })
+    .forEach(function (e) {
+      et.appendChild(el('tr', null, [
+        el('td', { text: e.control_ref || '—' }), el('td', { text: e.title || '—' }),
+        el('td', { text: e.type || '—' }), el('td', { text: e.location || '—' }),
+        el('td', { text: e.owner || '—' }), el('td', { text: e.last_reviewed || 'never' }),
+        el('td', { text: evidenceDue(e) }), el('td', { text: evidenceStatus(e) })
+      ]));
+    });
+  root.appendChild(et);
+  root.appendChild(el('p', { class: 'rmeta', text: 'Learning project — fictional company — no real data.' }));
+}
+
+function printReport() {
+  buildReport();
+  document.body.classList.add('printing');
+  window.print();
+  setTimeout(function () { document.body.classList.remove('printing'); }, 500);
+}
+
+/* ================================================================== shared page bits */
+function pageShell(crumb, title, lede) {
+  var main = clear($('#main'));
+  var wrap = el('div', { class: 'wrap' });
+  main.appendChild(wrap);
+  wrap.appendChild(el('div', { id: 'storagebanner', class: 'banner', style: 'display:none' }));
+  wrap.appendChild(el('div', { class: 'pagehead' }, [
+    el('div', { class: 'crumb', text: crumb }),
+    el('h2', { text: title }),
+    el('p', { class: 'lede', text: lede })
+  ]));
+  return wrap;
+}
+
+function statTile(n, label, tone) {
+  return el('div', { class: 'tile' }, [
+    el('div', { class: 'n', text: n }),
+    el('div', { class: 'k' }, [tone ? el('span', { class: 'dot ' + tone }) : null, el('span', { text: label })])
+  ]);
+}
+
+function mountTabs(wrap, tabs) {
+  VIEW.tabs = tabs;
+  if (!tabs.filter(function (t) { return t.key === VIEW.current; }).length) VIEW.current = tabs[0].key;
+  var bar = el('div', { class: 'tabs' }, tabs.map(function (t) {
+    return el('button', {
+      'data-k': t.key,
+      onclick: function () { VIEW.current = t.key; FILTER = 'all'; QUERY = ''; closeDrawer(); renderCurrentTab(); }
+    }, [el('span', { text: t.label }),
+        typeof t.count === 'number' ? el('span', { class: 'count', text: String(t.count) }) : null]);
+  }));
+  VIEW.host = el('div', { id: 'tabcontent' });
+  append(wrap, [bar, VIEW.host]);
+  renderCurrentTab();
+}
+
+function renderCurrentTab() {
+  if (!VIEW.host) return;
+  var t = VIEW.tabs.filter(function (x) { return x.key === VIEW.current; })[0];
+  if (!t) return;
+  clear(VIEW.host);
+  var btns = document.querySelectorAll('.tabs button');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('on', btns[i].getAttribute('data-k') === VIEW.current);
+  if (t.teach) append(VIEW.host, teach(t.teach, false));
+  append(VIEW.host, t.render());
+  if (typeof renderStats === 'function') renderStats();
+}
+
+/* Derived-status panel shown at the top of an evidence drawer. */
+function evidenceBlock(row) {
+  var node = el('div', { class: 'evstatus' });
+  updateEvidenceBlock(node, row);
+  return node;
+}
+function updateEvidenceBlock(node, row) {
+  clear(node);
+  var st = evidenceStatus(row);
+  var tone = st === 'Current' ? 'green' : (st === 'Stale' ? 'amber' : 'red');
+  var why = st === 'Missing'
+    ? 'No last-reviewed date, so nothing has actually been collected or checked.'
+    : 'Last reviewed ' + row.last_reviewed + ' · ' + (row.frequency || 'Annual').toLowerCase()
+      + ' review · next due ' + evidenceDue(row) + (st === 'Stale' ? ' — overdue' : '');
+  node.className = 'evstatus ' + tone;
+  append(node, [
+    el('div', { class: 'evstop' }, [
+      el('span', { class: 'st ' + tone }, [el('span', { class: 'dot ' + tone }), el('span', { text: st })]),
+      el('span', { class: 'evshint', text: 'computed, not editable' })
+    ]),
+    el('p', { class: 'evswhy', text: why }),
+    row.control_ref ? el('p', { class: 'evswhy', text: 'Control ' + row.control_ref + ' is '
+      + (auditReady(row.control_ref) ? 'audit-ready.' : 'not audit-ready.') }) : null
+  ]);
+}
 
 DB = load();
 buildShell();

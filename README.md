@@ -47,10 +47,18 @@ The three buttons are in the sidebar under **Your data**.
 |---|---|
 | **Export** | Downloads everything as one plain JSON file, `gfs-isms-YYYY-MM-DD.json`. Nothing but data — no scripts, no formatting, no macros. Safe to email, archive, or read in any text editor. |
 | **Import** | Opens a file picker, then asks you to confirm before replacing what is currently in the app. Unknown fields are discarded and every value is treated as plain text, so a malformed or hostile file cannot do anything except fail to import. |
+| **Report** | Builds a printable audit pack — scope, evidence position, the full Statement of Applicability and the evidence register — and opens your browser's print dialog. Print to PDF to hand it to someone. |
 | **Reset** | Puts everything back to the original Gulf Freight Systems seed data. Asks first. Export before you use it. |
+
+The export covers everything: scope and context, issues, interested parties, all 93
+Annex A controls with their statuses and SoA justifications, every evidence item, and the
+seeded risk linkage.
 
 Typical workflow across machines: **Export** on the laptop where you did the work,
 carry the JSON file, **Import** on the other machine.
+
+Importing a file saved by an older version is safe: tables that file has never heard of
+are filled from the seed rather than emptied, so nothing is lost when new modules land.
 
 ## It makes no network calls
 
@@ -102,8 +110,12 @@ company information into a copy you intend to publish.
 ## Status
 
 - [x] Session 1 — Scope & Context (clause 4)
-- [ ] Asset register (S4) · Risk register (S6) · Control library (S11) · SoA (S17)
-- [ ] Policy library (S19) · Internal audit (S27) · Management review (S29)
+- [x] Control library — all 93 Annex A controls, with audit-ready badges
+- [x] Evidence Tracker — evidence per control, auto-staleness, coverage dashboard
+- [x] Statement of Applicability — generated from the control library
+- [x] Printable audit pack
+- [ ] Asset register (S4) · Risk register (S6) · Policy library (S19)
+- [ ] Internal audit (S27) · Management review (S29)
 
 Gulf Freight Systems is fictional. Legal references are illustrative training material
 and are not legal advice.

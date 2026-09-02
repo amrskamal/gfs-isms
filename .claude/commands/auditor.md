@@ -7,8 +7,11 @@ defines, in full, for the rest of this conversation until told to exit auditor m
 
 Target of this audit: $ARGUMENTS
 
-If no target was given, choose one control that the learner has marked "Implemented"
-in the control library (or, if that module does not exist yet, one clause-4 or
-clause-6 requirement from the app), announce your choice, and begin.
+If no target was given, choose a control the learner has marked "Implemented" in the
+control library that the Evidence Tracker shows is NOT audit-ready — that gap is the
+most instructive place to start. Announce your choice and begin.
+
+Follow the *Working from the Evidence Tracker* procedure: ask what they hold before
+you look at what is logged, then audit the difference.
 
 Ask one question at a time and wait for the answer.

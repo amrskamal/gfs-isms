@@ -1,4 +1,7 @@
-# LEARNING_PLAN.md — 30 sessions to a working ISMS
+# LEARNING_PLAN.md — 33 sessions to a working ISMS
+
+30 core sessions following the standard's own order, plus a three-session
+**Evidence track (E1–E3)** that runs alongside them.
 
 One session per sitting (60–90 min). Each has: **Concept** (what you must understand
 before touching the app), **Build/Task** (what happens in the app — some sessions I
@@ -10,7 +13,7 @@ clause and tell you where a certification auditor would push back.
 Clause numbers refer to ISO/IEC 27001:2022. Annex A control IDs are from the same
 edition (93 controls, 4 themes). ISO/IEC 27005:2022 is referenced for risk method.
 
-Legend: 🔨 = I build a module · ✍️ = you produce the content · 🎤 = auditor mode
+Legend: 🔨 = I build a module · ✍️ = you produce the content · 🎤 = auditor mode · 📁 = evidence work
 
 ---
 
@@ -243,6 +246,8 @@ information, and audit test protection.
 ## Week 3 — Applicability, policy, and operation
 
 ### Session 17 — Statement of Applicability 🔨
+*(The SoA and the control library were built early to support the Evidence Tracker — the
+justifications are still yours, and this session is where you learn what makes one hold.)*
 **Concept.** The SoA is the ISMS's spine: for all 93 controls, whether it is necessary
 (and why), whether it is implemented, and the justification for excluding any control.
 It is the document a certification body reads first, and it is a mandatory output of
@@ -343,6 +348,73 @@ system, and design the backup restore test that A.8.13 needs.
 3. Why is "we have backups in Azure" not an answer to A.5.30?
 4. What must a restore test produce as evidence?
 5. Does ISO 27001 require a BIA? Does anything require it?
+
+---
+
+## Evidence track — E1, E2, E3 📁
+
+Take **E1 after Session 11** (once you have met the control library), **E2 after Session
+16** (once you have been through all four themes), and **E3 after Session 25** (once you
+understand what clause 8.1 means by evidence of operation). They are short and they are
+the difference between an ISMS that exists and one that survives an audit.
+
+Every one of them ends the same way: **you log evidence for ten controls yourself.**
+Not nine, not "a few". Ten, with a real location, a named owner, and an honest review date.
+
+### E1 — What evidence actually is 📁
+**Concept.** An auditor is not asking whether you believe the control works; they are
+asking what you can show that would convince a reasonable third party. Cl. 8.1 requires
+documented information to the extent necessary to have confidence processes were carried
+out as planned. Three kinds, doing three different jobs: a **policy** proves intent and
+authority; a **record** proves an event happened, once, on a date, by someone; a
+**demonstration** shows the control working now. Sufficiency is not length — it is
+currency, attribution, reproducibility from the location you wrote down, and coverage of
+the whole population rather than one convenient example.
+**Task.** ✍️ Log evidence for **ten A.5 controls** you would claim are implemented at GFS.
+For each: the artefact, its type, where it lives (a path someone else could follow
+without you), the owner as a named person, and the last review date. Then look at how
+many of your ten went straight to Missing, and why.
+**Quiz.**
+1. A policy, a record and a demonstration for A.5.18 — give one of each, and say which you would lead with in an audit.
+2. Your evidence for A.8.7 is a screenshot of the EDR console from the day before the audit. Attack it as an auditor would.
+3. What makes evidence "attributable", and why does a department name fail that test?
+4. GFS marks A.6.3 Implemented and holds 100% training completion records, but the phishing failure rate is 31%. Is the evidence sufficient? Sufficient for what?
+5. Why is "we would be able to produce that" not an answer, and what clause does it fail?
+
+### E2 — Freshness, frequency and sampling 📁
+**Concept.** Evidence decays. The tracker computes status from the last review date plus
+the review frequency, which means the frequency you choose is a control design decision,
+not an admin setting — pick monthly and you have committed to twelve reviews a year that
+an auditor can ask for. Note the difference between **stale** (it existed, it has aged)
+and **missing** (it was never collected): stale raises a question about whether the
+control kept operating; missing means the control has never been evidenced at all.
+**Task.** ✍️ Log evidence for **ten more controls**, this time across A.6 and A.7, setting
+the review frequency deliberately for each and being ready to defend it. Then deal with
+the six stale items already in the tracker: for each, decide whether to refresh it, change
+its frequency, or admit the control is not operating.
+**Quiz.**
+1. You set A.8.2 to monthly review. What have you just committed GFS to, and what happens at the audit if eleven of twelve months exist?
+2. Distinguish stale and missing evidence in terms of what each one tells an auditor about the control.
+3. Your access review evidence covers the Mussafah head office only. What is the finding, and is it major or minor?
+4. What is the right review frequency for the OT vendor's remote access, and what drives your answer?
+5. An evidence item is Current but the control owner left in June. What is wrong, and which control does that engage?
+
+### E3 — Evidence under audit conditions 🎤 📁
+**Concept.** In a real Stage 2 the auditor moves in one direction: claim → artefact →
+proof the artefact is real and current → proof it was acted on. Your evidence has to
+survive all four, and it has to trace upward — to the risk it treats, to the SoA
+justification that says the control is necessary, and to the clause 4 requirement behind
+that. Evidence that cannot be traced upward is filing, not an ISMS.
+**Task.** ✍️ Log evidence for **ten A.8 controls**, prioritising the ones the Evidence
+Dashboard puts at the top of "controls with no evidence" — those treat the highest
+residual risks. Then 🎤 run auditor mode against three of them and record what Elena asks
+for next.
+**Quiz.**
+1. Take the top control on your dashboard. Trace it upward: which risk, which SoA justification, which clause 4 issue?
+2. The auditor asks for the population, not the sample. What does that mean for A.8.8 at GFS?
+3. What single artefact would most improve GFS's position on A.8.22, and why is a firewall screenshot not it?
+4. Your SoA says A.5.30 is Implemented. The tracker says no evidence has ever been collected. What has the organisation actually done wrong — and under which clause?
+5. Coverage is at 24%. Is that a finding? Justify your answer in terms of what the standard requires rather than what looks bad.
 
 ---
 

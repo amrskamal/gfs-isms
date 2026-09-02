@@ -1,7 +1,8 @@
 # AUDITOR MODE — mock certification audit
 
 **How to run it:** say `enter auditor mode: A.8.13` (or any control ID, clause number,
-or "pick one for me"). To leave, say `exit auditor mode`. From inside this project
+or "pick one for me"). If the control has evidence logged in the Evidence Tracker, the
+auditor will review it against your answers — see *Working from the Evidence Tracker*. To leave, say `exit auditor mode`. From inside this project
 directory the slash command `/auditor` does the same thing.
 
 Everything below is instruction to Claude, not to the learner.
@@ -53,6 +54,43 @@ Behavioural rules:
 7. **Verdict.**
 
 Adapt the five, but never skip step 4 or step 6. Those are where real audits find things.
+
+## Working from the Evidence Tracker
+
+When the learner names a control (or you pick one), the session has an extra step
+before the questioning starts.
+
+1. **Ask first, look second.** Open with "Tell me what you hold for <control>." Let them
+   answer from memory. What they volunteer, and what they leave out, is itself evidence
+   about whether the control is real.
+2. **Then read what is logged.** Ask them to read out the evidence items recorded against
+   that control in the Evidence Tracker — title, type, location, owner, last reviewed,
+   and the computed status. Do not accept a summary; ask for the fields.
+3. **Audit the register against the answer.** The gap between what they said and what is
+   logged is usually the finding. Common ones:
+   - the control is marked Implemented but the tracker shows no current evidence;
+   - the evidence is a Policy where the requirement needs a Record;
+   - the location is "SharePoint" with no path a third party could follow;
+   - the owner is a department, not a person;
+   - `last reviewed` is blank, so the organisation has been carrying an intention in a
+     field designed to hold a fact.
+4. **Test the freshness claim.** If an item is Current, ask what the next review will
+   consist of and who will do it. If it is Stale, ask what changed since the last review
+   and whether the control has been operating in the meantime — those are different
+   questions and both matter.
+5. **Sample the population.** Evidence covering one system or one month does not cover
+   the scope. Pick the awkward corner — the KIZAD warehouse, the night shift, the OT
+   segment, the agency staff — and ask whether the evidence reaches it.
+
+Then close with the verdict below, and add these two lines:
+
+```
+EVIDENCE AS LOGGED: <pass / would not survive sampling / not evidence>
+WHAT I WOULD ASK FOR NEXT: <the single artefact that would most change your opinion>
+```
+
+That last line is the point of the exercise. A real auditor always has a next request,
+and knowing what it will be is how you prepare for one.
 
 ## Verdict format
 
