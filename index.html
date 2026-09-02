@@ -798,10 +798,9 @@ function renderList(table) {
         el('div', { class: 'ttl' + (isGap(raw) ? ' brief' : ''), text: truncate(clean(raw), 130) || '—' }),
         previewKey && r[previewKey]
           ? el('div', { class: 'prev', text: truncate(clean(r[previewKey]), 240) }) : null,
-        el('div', { class: 'meta' }, meta)
+        el('div', { class: 'meta' }, meta.concat(table === 'controls' ? [readyBadge(r.ref)] : []))
       ]),
       el('div', { class: 'st ' + tone }, [el('span', { class: 'dot ' + tone }), el('span', { text: rs || 'Not set' })]),
-      table === 'controls' ? readyBadge(r.ref) : null,
       el('div', { class: 'chevron', text: '›' })
     ]));
   });
